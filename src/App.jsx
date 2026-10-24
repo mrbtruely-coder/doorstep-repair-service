@@ -38,25 +38,26 @@ export default function App() {
     return null;
   };
 
+  const getCityFromPath = () => {
+    const p = (window.location.pathname + window.location.hash).toLowerCase();
+    if (p.includes('guntur')) return 'guntur';
+    if (p.includes('nellore')) return 'nellore';
+    if (p.includes('vijayawada')) return 'vijayawada';
+    if (p.includes('service-center') || p.includes('location')) return 'all';
+    return 'all';
+  };
+
   const [activePage, setActivePage] = useState(getPageFromPathOrHash);
   const [selectedService, setSelectedService] = useState('AC SERVICE');
   const [selectedCategory, setSelectedCategory] = useState(getCategoryFromPath);
   const [selectedSubLocation, setSelectedSubLocation] = useState(null);
-  const [selectedCity, setSelectedCity] = useState(() => {
-    const p = (window.location.pathname + window.location.hash).toLowerCase();
-    if (p.includes('guntur')) return 'guntur';
-    if (p.includes('nellore')) return 'nellore';
-    return 'vijayawada';
-  });
+  const [selectedCity, setSelectedCity] = useState(getCityFromPath);
 
   useEffect(() => {
     const handlePopState = () => {
       setActivePage(getPageFromPathOrHash());
       setSelectedCategory(getCategoryFromPath());
-      const p = (window.location.pathname + window.location.hash).toLowerCase();
-      if (p.includes('guntur')) setSelectedCity('guntur');
-      else if (p.includes('nellore')) setSelectedCity('nellore');
-      else if (p.includes('vijayawada')) setSelectedCity('vijayawada');
+      setSelectedCity(getCityFromPath());
     };
     window.addEventListener('popstate', handlePopState);
     window.addEventListener('hashchange', handlePopState);
@@ -76,9 +77,9 @@ export default function App() {
       setSelectedCategory(param);
       url = param ? `/services/${param}` : '/services';
     } else if (pageId === 'location') {
-      const city = (param !== null ? param : selectedCity || 'vijayawada').toLowerCase();
+      const city = (param !== null ? param : 'all').toLowerCase();
       setSelectedCity(city);
-      url = `/service-center/${city}`;
+      url = city === 'all' ? '/service-center' : `/service-center/${city}`;
     } else if (pageId === 'book') {
       if (param !== null) setSelectedService(param);
       url = '/book';
@@ -115,7 +116,7 @@ export default function App() {
         return (
           <LocationPage
             selectedCity={selectedCity}
-            setSelectedCity={setSelectedCity}
+            setSelectedCity={(cityId) => navigateTo('location', cityId)}
             setActivePage={navigateTo}
             setSelectedService={setSelectedService}
             selectedSubLocation={selectedSubLocation}

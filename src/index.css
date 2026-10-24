@@ -572,4 +572,19 @@ button {
   }
 }
 
+/* All Cities Hubs Grid Responsive */
+.all-cities-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+@media (max-width: 960px) {
+  .all-cities-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+}
+
+
 

@@ -425,7 +425,7 @@ export default function Header({ activePage, setActivePage }) {
 
                   {/* Dropdown Card Footer */}
                   <div 
-                    onClick={() => handleNavClick('location', 'vijayawada')}
+                    onClick={() => handleNavClick('location', 'all')}
                     style={{
                       padding: '13px 20px',
                       borderTop: '1px solid #f1f5f9',
@@ -681,6 +681,21 @@ export default function Header({ activePage, setActivePage }) {
                       <span>{city.name}</span>
                     </div>
                   ))}
+                  <div
+                    onClick={() => handleNavClick('location', 'all')}
+                    style={{
+                      padding: '8px 10px',
+                      color: '#008ba6',
+                      fontWeight: 700,
+                      fontSize: '13px',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '6px'
+                    }}
+                  >
+                    All City Hubs & Coverage →
+                  </div>
                 </div>
               )}
             </div>
