@@ -180,7 +180,7 @@ export default function Footer({ setActivePage }) {
               {serviceLocations.map((loc, idx) => (
                 <li key={idx}>
                   <button
-                    onClick={() => navigateTo('contact')}
+                    onClick={() => navigateTo('location', loc.city.toLowerCase())}
                     style={{
                       background: 'transparent',
                       border: 'none',

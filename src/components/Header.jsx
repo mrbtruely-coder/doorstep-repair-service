@@ -75,7 +75,7 @@ export default function Header({ activePage, setActivePage }) {
   };
 
   const isCategoriesActive = activePage === 'services';
-  const isLocationsActive = false;
+  const isLocationsActive = activePage === 'location';
 
   return (
     <header style={{ position: 'sticky', top: 0, zIndex: 1000, background: '#ffffff', borderBottom: '1px solid #e2e8f0' }} ref={navRef}>
@@ -371,7 +371,7 @@ export default function Header({ activePage, setActivePage }) {
                     {CITIES.map((city) => (
                       <div
                         key={city.id}
-                        onClick={() => handleNavClick('book')}
+                        onClick={() => handleNavClick('location', city.id)}
                         style={{
                           display: 'flex',
                           alignItems: 'center',
@@ -429,7 +429,7 @@ export default function Header({ activePage, setActivePage }) {
                             overflow: 'hidden',
                             textOverflow: 'ellipsis'
                           }}>
-                            Andhra Pradesh • {city.hub}
+                            Andhra Pradesh • 10 KM Radius ({city.hub})
                           </div>
                         </div>
                       </div>
@@ -438,7 +438,7 @@ export default function Header({ activePage, setActivePage }) {
 
                   {/* Dropdown Card Footer */}
                   <div 
-                    onClick={() => handleNavClick('contact')}
+                    onClick={() => handleNavClick('location', 'vijayawada')}
                     style={{
                       padding: '13px 20px',
                       borderTop: '1px solid #f1f5f9',
@@ -678,7 +678,7 @@ export default function Header({ activePage, setActivePage }) {
                   {CITIES.map((city) => (
                     <div
                       key={city.id}
-                      onClick={() => handleNavClick('book')}
+                      onClick={() => handleNavClick('location', city.id)}
                       style={{
                         padding: '8px 10px',
                         display: 'flex',
@@ -691,7 +691,7 @@ export default function Header({ activePage, setActivePage }) {
                       }}
                     >
                       <MapPin size={16} color="#008ba6" />
-                      <span>{city.name}</span>
+                      <span>{city.name} (10 KM Radius)</span>
                     </div>
                   ))}
                 </div>

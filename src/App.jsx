@@ -6,6 +6,7 @@ import FloatingActions from './components/FloatingActions';
 import HomePage from './pages/HomePage';
 import ServicesPage from './pages/ServicesPage';
 import BookServicePage from './pages/BookServicePage';
+import LocationPage from './pages/LocationPage';
 import AboutPage from './pages/AboutPage';
 import FAQPage from './pages/FAQPage';
 import ContactPage from './pages/ContactPage';
@@ -17,6 +18,7 @@ export default function App() {
     const path = window.location.pathname.replace(/^\//, '').toLowerCase();
     const hash = window.location.hash.replace(/^#\/?/, '').toLowerCase();
     const target = path || hash;
+    if (target.includes('location')) return 'location';
     if (target.includes('book')) return 'book';
     if (target.includes('service')) return 'services';
     if (target.includes('about')) return 'about';
@@ -30,10 +32,20 @@ export default function App() {
   const [activePage, setActivePage] = useState(getPageFromPathOrHash);
   const [selectedService, setSelectedService] = useState('AC SERVICE');
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCity, setSelectedCity] = useState(() => {
+    const p = (window.location.pathname + window.location.hash).toLowerCase();
+    if (p.includes('guntur')) return 'guntur';
+    if (p.includes('nellore')) return 'nellore';
+    return 'vijayawada';
+  });
 
   useEffect(() => {
     const handlePopState = () => {
       setActivePage(getPageFromPathOrHash());
+      const p = (window.location.pathname + window.location.hash).toLowerCase();
+      if (p.includes('guntur')) setSelectedCity('guntur');
+      else if (p.includes('nellore')) setSelectedCity('nellore');
+      else if (p.includes('vijayawada')) setSelectedCity('vijayawada');
     };
     window.addEventListener('popstate', handlePopState);
     window.addEventListener('hashchange', handlePopState);
@@ -43,12 +55,20 @@ export default function App() {
     };
   }, []);
 
-  const navigateTo = (pageId, categoryId = null) => {
+  const navigateTo = (pageId, param = null) => {
     setActivePage(pageId);
-    if (categoryId !== null) {
-      setSelectedCategory(categoryId);
+    let urlSuffix = '';
+    if (pageId === 'services') {
+      if (param !== null) setSelectedCategory(param);
+      if (param) urlSuffix = `/${param}`;
+    } else if (pageId === 'location') {
+      if (param !== null) setSelectedCity(param.toLowerCase());
+      urlSuffix = `/${param ? param.toLowerCase() : selectedCity}`;
+    } else if (pageId === 'book') {
+      if (param !== null) setSelectedService(param);
     }
-    window.history.pushState(null, '', pageId === 'home' ? '/' : `/${pageId}`);
+    const url = pageId === 'home' ? '/' : `/${pageId}${urlSuffix}`;
+    window.history.pushState(null, '', url);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -71,10 +91,20 @@ export default function App() {
             setSelectedCategory={setSelectedCategory}
           />
         );
+      case 'location':
+        return (
+          <LocationPage
+            selectedCity={selectedCity}
+            setSelectedCity={setSelectedCity}
+            setActivePage={navigateTo}
+            setSelectedService={setSelectedService}
+          />
+        );
       case 'book':
         return (
           <BookServicePage
             preselectedService={selectedService}
+            preselectedCity={selectedCity}
           />
         );
       case 'about':

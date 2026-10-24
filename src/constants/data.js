@@ -4,9 +4,96 @@ export const COMPANY_WHATSAPP_LINK = "https://wa.me/919515661677?text=Hello%20Do
 export const COMPANY_CALL_LINK = "tel:9515661677";
 
 export const CITIES = [
-  { id: "vijayawada", name: "Vijayawada", tag: "Popular", hub: "Benz Circle, MG Road, One Town, Gunadala" },
-  { id: "guntur", name: "Guntur", tag: "Fast Response", hub: "Arundelpet, Brodipet, Pattabhipuram, Amaravathi Rd" },
-  { id: "nellore", name: "Nellore", tag: "Verified Techs", hub: "Trunk Road, Magunta Layout, Balaji Nagar, Vedayapalem" }
+  {
+    id: "vijayawada",
+    name: "Vijayawada",
+    tag: "Primary Hub",
+    coverageRadius: "10 KM Radial Zone",
+    hub: "Benz Circle Dispatch Hub",
+    dispatchTime: "60 - 90 Minutes",
+    state: "Andhra Pradesh",
+    pincode: "520010",
+    phone: "9515661677",
+    description: "Full doorstep appliance repair coverage across all residential colonies and commercial hubs within a 10 KM radius of Benz Circle.",
+    keyColonies: [
+      "Benz Circle (Central Hub)",
+      "MG Road / Bandar Road",
+      "One Town & Two Town",
+      "Gunadala & Ramavarappadu",
+      "Patamata & Auto Nagar",
+      "Bhavanipuram & Vidyadharapuram",
+      "Governorpet & Gandhinagar",
+      "Kanuru & Enikepadu",
+      "Poranki & Penamaluru",
+      "Gollapudi & Bhavanipuram Bypass"
+    ],
+    highlights: [
+      { title: "10 KM Free Doorstep Reach", desc: "No extra travel charges for all residential colonies within 10 km." },
+      { title: "Rapid 60-90 Min Dispatch", desc: "Technicians stationed locally across Benz Circle & Patamata." },
+      { title: "90 Days Service Warranty", desc: "Covers spare parts and labour for AC, Fridge, Washing Machine, etc." },
+      { title: "Zero Advance Booking Fee", desc: "Pay nominal inspection fee only after on-site doorstep check." }
+    ]
+  },
+  {
+    id: "guntur",
+    name: "Guntur",
+    tag: "Fast Response",
+    coverageRadius: "10 KM Radial Zone",
+    hub: "Arundelpet Central Hub",
+    dispatchTime: "60 - 90 Minutes",
+    state: "Andhra Pradesh",
+    pincode: "522002",
+    phone: "9515661677",
+    description: "Doorstep technician service covering all colonies within a 10 KM radial perimeter from Arundelpet & Brodipet.",
+    keyColonies: [
+      "Arundelpet (Central Hub)",
+      "Brodipet (Main Hub)",
+      "Pattabhipuram & Syamalanagar",
+      "Amaravathi Road & Koritepadu",
+      "Lakshmipuram & Chandramouli Nagar",
+      "Vidyanagar & Ring Road",
+      "Kothapet & Old Guntur",
+      "Gujanagundla & SVN Colony",
+      "Nallapadu & Perecherla Gate",
+      "Gorantla & Inner Ring Road"
+    ],
+    highlights: [
+      { title: "10 KM Coverage Radius", desc: "Fast service in all apartments, individual houses & villas within 10 km." },
+      { title: "Local Guntur Tech Squad", desc: "Certified refrigeration, AC and washing machine engineers." },
+      { title: "90 Days Spares Guarantee", desc: "100% original manufacturer replacement parts with warranty." },
+      { title: "Affordable Inspection", desc: "Transparent inspection charge starting from ₹249 - ₹299." }
+    ]
+  },
+  {
+    id: "nellore",
+    name: "Nellore",
+    tag: "Verified Technicians",
+    coverageRadius: "10 KM Radial Zone",
+    hub: "Trunk Road Dispatch Hub",
+    dispatchTime: "60 - 90 Minutes",
+    state: "Andhra Pradesh",
+    pincode: "524001",
+    phone: "9515661677",
+    description: "Immediate doorstep repair assistance across all neighbourhoods within a 10 KM radius of Trunk Road & Magunta Layout.",
+    keyColonies: [
+      "Trunk Road (Central Hub)",
+      "Magunta Layout & VRC Center",
+      "Balaji Nagar & Children's Park Rd",
+      "Vedayapalem & Ayyappa Gudi",
+      "Dargamitta & Collectorate Area",
+      "Pogathota & Stonehousepet",
+      "Santhapet & Nawabpet",
+      "Haranathapuram & Revenue Colony",
+      "Podalakur Road & Current Office Area",
+      "Kisan Nagar & Fathekhanpet"
+    ],
+    highlights: [
+      { title: "10 KM Citywide Radius", desc: "Prompt coverage across all municipal colonies within 10 km." },
+      { title: "60-90 Min Express Service", desc: "Mobile van technicians ready with multi-brand diagnostic tools." },
+      { title: "90 Days Written Warranty", desc: "Protection on compressor, motor, heating coil and circuit boards." },
+      { title: "Instant Call Dispatch", desc: "Direct customer support on 9515661677 with zero wait time." }
+    ]
+  }
 ];
 
 export const SERVICE_CATEGORIES = [

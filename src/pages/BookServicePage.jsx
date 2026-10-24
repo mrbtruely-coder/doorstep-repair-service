@@ -7,7 +7,7 @@ import {
   ArrowRight, User, Mail, AlertCircle, Sparkles
 } from 'lucide-react';
 
-export default function BookServicePage({ preselectedService }) {
+export default function BookServicePage({ preselectedService, preselectedCity }) {
   // 1. Comprehensive SEO Injection
   useSEO({
     title: 'Book Service Online | Same-Day Appliance Repair in Vijayawada, Guntur & Nellore',
@@ -64,12 +64,24 @@ export default function BookServicePage({ preselectedService }) {
     return 'AC SERVICE';
   });
 
+  const getInitialCity = () => {
+    if (preselectedCity) {
+      const c = preselectedCity.toLowerCase();
+      if (c.includes('guntur')) return 'Guntur';
+      if (c.includes('nellore')) return 'Nellore';
+      return 'Vijayawada';
+    }
+    return 'Vijayawada';
+  };
+
+  const initialCity = getInitialCity();
+
   const [formData, setFormData] = useState({
     fullName: '',
     phone: '',
     email: '',
-    city: 'Vijayawada',
-    locality: 'Benz Circle'
+    city: initialCity,
+    locality: initialCity === 'Guntur' ? 'Arundelpet' : (initialCity === 'Nellore' ? 'Trunk Road' : 'Benz Circle')
   });
 
   const localitiesByCity = {
