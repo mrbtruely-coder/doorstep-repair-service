@@ -130,7 +130,7 @@ export default function FAQPage({ setActivePage }) {
     <div style={{ backgroundColor: '#ffffff', minHeight: '100vh' }}>
       
       {/* 1. FAQ HERO SECTION */}
-      <section style={{ padding: '60px 0 40px', textAlign: 'center' }}>
+      <section className="faq-hero-section">
         <div className="container" style={{ maxWidth: '820px' }}>
           <div style={{
             display: 'inline-flex',
@@ -144,25 +144,17 @@ export default function FAQPage({ setActivePage }) {
             fontWeight: 800,
             textTransform: 'uppercase',
             letterSpacing: '0.08em',
-            marginBottom: '16px'
+            marginBottom: '14px'
           }}>
             FAQ
           </div>
 
-          <h1 style={{
-            fontSize: '44px',
-            fontWeight: 800,
-            color: '#0f172a',
-            marginBottom: '14px',
-            letterSpacing: '-0.02em'
-          }}>
+          <h1 className="faq-page-title">
             Frequently Answered Questions
           </h1>
 
-          <p style={{
-            fontSize: '15.5px',
-            color: '#64748b',
-            lineHeight: 1.6
+          <p className="faq-page-subtitle" style={{
+            color: '#64748b'
           }}>
             Got queries regarding warranties, bookings, or pricing? Find rapid answers right here.
           </p>
@@ -270,13 +262,7 @@ export default function FAQPage({ setActivePage }) {
             VERIFIED REVIEWS
           </div>
 
-          <h2 style={{
-            fontSize: '38px',
-            fontWeight: 800,
-            color: '#0f172a',
-            marginBottom: '12px',
-            letterSpacing: '-0.02em'
-          }}>
+          <h2 className="faq-section-title">
             What Our Nellore, Vijayawada & Guntur Clients Say
           </h2>
 
@@ -443,12 +429,7 @@ export default function FAQPage({ setActivePage }) {
             ⚡ RAPID RESPONSE HELPLINE
           </div>
 
-          <h2 style={{
-            fontSize: '36px',
-            fontWeight: 800,
-            color: '#0f172a',
-            marginBottom: '12px'
-          }}>
+          <h2 className="faq-section-title">
             Need Quick Appliance Repair?
           </h2>
 
