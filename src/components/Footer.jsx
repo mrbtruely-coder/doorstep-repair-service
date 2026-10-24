@@ -46,30 +46,24 @@ export default function Footer({ setActivePage }) {
           
           {/* Col 1: Logo, Description & Mobile App Badges */}
           <div>
-            {/* Logo matching screenshot */}
+            {/* Official Brand Logo on Crisp White Container for Contrast */}
             <div 
               onClick={() => navigateTo('home')}
-              style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer', marginBottom: '18px' }}
+              style={{ display: 'inline-flex', alignItems: 'center', cursor: 'pointer', marginBottom: '18px' }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
-                <div style={{ width: '22px', height: '22px', borderRadius: '4px', background: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <div style={{ width: '10px', height: '10px', borderRadius: '2px', background: '#051129' }}></div>
-                </div>
-                <div style={{ width: '22px', height: '22px', borderRadius: '50%', background: '#ff6200', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#ffffff' }}></div>
-                </div>
-                <div style={{ width: '22px', height: '22px', borderRadius: '50%', background: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#051129' }}></div>
-                </div>
-              </div>
-
-              <div>
-                <div style={{ fontSize: '15px', fontWeight: 800, color: '#ffffff', letterSpacing: '0.04em', lineHeight: 1 }}>
-                  DOORSTEP
-                </div>
-                <div style={{ fontSize: '10px', fontWeight: 800, color: '#ff6200', letterSpacing: '0.12em', marginTop: '2px' }}>
-                  SERVICE
-                </div>
+              <div style={{
+                background: '#ffffff',
+                padding: '6px 14px',
+                borderRadius: '10px',
+                display: 'inline-flex',
+                alignItems: 'center',
+                boxShadow: '0 4px 14px rgba(0, 0, 0, 0.25)'
+              }}>
+                <img 
+                  src="/logo.png" 
+                  alt="Doorstep Repair Services - Fast Fixes. Happier Homes." 
+                  style={{ height: '38px', width: 'auto', objectFit: 'contain' }}
+                />
               </div>
             </div>
 
@@ -138,7 +132,7 @@ export default function Footer({ setActivePage }) {
               }}>
                 OUR REPAIR SERVICES
               </h4>
-              <div style={{ width: '32px', height: '2.5px', background: '#ff6200', borderRadius: '2px' }}></div>
+              <div style={{ width: '32px', height: '2.5px', background: '#00c2e8', borderRadius: '2px' }}></div>
             </div>
 
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '11px', padding: 0 }}>
@@ -179,7 +173,7 @@ export default function Footer({ setActivePage }) {
               }}>
                 SERVICE LOCATIONS
               </h4>
-              <div style={{ width: '32px', height: '2.5px', background: '#ff6200', borderRadius: '2px' }}></div>
+              <div style={{ width: '32px', height: '2.5px', background: '#00c2e8', borderRadius: '2px' }}></div>
             </div>
 
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '11px', padding: 0 }}>
@@ -221,7 +215,7 @@ export default function Footer({ setActivePage }) {
               }}>
                 QUICK LINKS
               </h4>
-              <div style={{ width: '32px', height: '2.5px', background: '#ff6200', borderRadius: '2px' }}></div>
+              <div style={{ width: '32px', height: '2.5px', background: '#00c2e8', borderRadius: '2px' }}></div>
             </div>
 
             <div style={{
@@ -373,7 +367,7 @@ export default function Footer({ setActivePage }) {
             color: '#657e9e'
           }}>
             <div>
-              &copy; {new Date().getFullYear()} DOOR STEP SERVICE. All rights reserved.
+              &copy; {new Date().getFullYear()} DOORSTEP REPAIR SERVICES. All rights reserved.
             </div>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>

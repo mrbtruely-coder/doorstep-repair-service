@@ -292,7 +292,7 @@ export default function BookServicePage({ preselectedService }) {
                   Technician Dispatched!
                 </h3>
                 <p style={{ color: '#475569', fontSize: '15px', marginBottom: '20px' }}>
-                  Booking confirmed under reference: <strong style={{ color: '#f97316' }}>#{successResult.booking.bookingId}</strong>
+                  Booking confirmed under reference: <strong style={{ color: '#008ba6' }}>#{successResult.booking.bookingId}</strong>
                 </p>
 
                 <div style={{ background: '#f8fafc', padding: '18px', borderRadius: '12px', border: '1px solid #e2e8f0', textAlign: 'left', marginBottom: '20px', fontSize: '14px', lineHeight: '1.8' }}>
@@ -310,7 +310,7 @@ export default function BookServicePage({ preselectedService }) {
                 )}
 
                 <div style={{ display: 'flex', gap: '12px', justifyContent: 'center' }}>
-                  <a href={COMPANY_CALL_LINK} className="btn btn-primary" style={{ background: '#f97316' }}>
+                  <a href={COMPANY_CALL_LINK} className="btn btn-primary" style={{ background: 'linear-gradient(135deg, #00d2e6 0%, #0096b7 100%)' }}>
                     <Phone size={16} /> Call Dispatch Desk
                   </a>
                   <button onClick={() => setSuccessResult(null)} className="btn btn-secondary">
@@ -335,7 +335,7 @@ export default function BookServicePage({ preselectedService }) {
                     fontWeight: 800,
                     textTransform: 'uppercase',
                     letterSpacing: '0.06em',
-                    color: '#f97316',
+                    color: '#008ba6',
                     marginBottom: '12px'
                   }}>
                     1. TAP YOUR APPLIANCE
@@ -354,8 +354,8 @@ export default function BookServicePage({ preselectedService }) {
                           key={opt.id}
                           onClick={() => setSelectedAppliance(opt.name)}
                           style={{
-                            background: isSelected ? '#fff7ed' : '#ffffff',
-                            border: isSelected ? '2px solid #f97316' : '1.5px solid #e2e8f0',
+                            background: isSelected ? '#ecfeff' : '#ffffff',
+                            border: isSelected ? '2px solid #00c2e8' : '1.5px solid #e2e8f0',
                             borderRadius: '12px',
                             padding: '14px 8px',
                             display: 'flex',
@@ -364,12 +364,12 @@ export default function BookServicePage({ preselectedService }) {
                             justifyContent: 'center',
                             gap: '8px',
                             cursor: 'pointer',
-                            color: isSelected ? '#ea580c' : '#475569',
-                            boxShadow: isSelected ? '0 4px 12px rgba(249, 115, 22, 0.15)' : 'none',
+                            color: isSelected ? '#008ba6' : '#475569',
+                            boxShadow: isSelected ? '0 4px 12px rgba(0, 194, 232, 0.2)' : 'none',
                             transition: 'all 0.15s ease'
                           }}
                         >
-                          <div style={{ color: isSelected ? '#ea580c' : '#64748b' }}>
+                          <div style={{ color: isSelected ? '#00c2e8' : '#64748b' }}>
                             {opt.icon}
                           </div>
                           <span style={{ fontSize: '11px', fontWeight: 800, textAlign: 'center', lineHeight: 1.2 }}>
@@ -450,7 +450,7 @@ export default function BookServicePage({ preselectedService }) {
                     <label style={{ fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', color: '#0f172a' }}>
                       SERVICE LOCALITY IN {formData.city.toUpperCase()}
                     </label>
-                    <span style={{ fontSize: '11.5px', color: '#f97316', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <span style={{ fontSize: '11.5px', color: '#008ba6', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '4px' }}>
                       <Sparkles size={13} /> Auto Detect Location
                     </span>
                   </div>
@@ -482,13 +482,13 @@ export default function BookServicePage({ preselectedService }) {
                   </div>
                 </div>
 
-                {/* ORANGE BOOK SERVICE NOW BUTTON */}
+                {/* CYAN BOOK SERVICE NOW BUTTON */}
                 <button
                   type="submit"
                   disabled={loading}
                   style={{
                     width: '100%',
-                    background: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
+                    background: 'linear-gradient(135deg, #00d2e6 0%, #0096b7 100%)',
                     color: '#ffffff',
                     fontWeight: 700,
                     fontSize: '16px',
@@ -500,11 +500,17 @@ export default function BookServicePage({ preselectedService }) {
                     alignItems: 'center',
                     justifyContent: 'center',
                     gap: '8px',
-                    boxShadow: '0 6px 18px rgba(249, 115, 22, 0.35)',
+                    boxShadow: '0 6px 18px rgba(0, 194, 232, 0.35)',
                     transition: 'all 0.2s ease'
                   }}
-                  onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
-                  onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+                  onMouseOver={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-2px)';
+                    e.currentTarget.style.background = 'linear-gradient(135deg, #00c2e8 0%, #008ba6 100%)';
+                  }}
+                  onMouseOut={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.background = 'linear-gradient(135deg, #00d2e6 0%, #0096b7 100%)';
+                  }}
                 >
                   {loading ? 'Dispatching Request...' : 'Book Service Now'} <ArrowRight size={18} />
                 </button>
@@ -523,9 +529,9 @@ export default function BookServicePage({ preselectedService }) {
             display: 'inline-flex',
             alignItems: 'center',
             gap: '6px',
-            background: '#fff7ed',
-            color: '#c2410c',
-            border: '1px solid #fed7aa',
+            background: '#ecfeff',
+            color: '#008ba6',
+            border: '1px solid rgba(0, 194, 232, 0.25)',
             borderRadius: '9999px',
             padding: '5px 14px',
             fontSize: '11.5px',
@@ -640,7 +646,7 @@ export default function BookServicePage({ preselectedService }) {
                 boxShadow: '0 2px 8px rgba(0,0,0,0.04)'
               }}
             >
-              <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: '#fff7ed', color: '#ea580c', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: '#ecfeff', color: '#008ba6', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <MapPin size={18} />
               </div>
               <span style={{ fontSize: '11px', fontWeight: 800, color: '#0f172a', textTransform: 'uppercase' }}>LOCATION</span>

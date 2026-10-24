@@ -48,19 +48,19 @@ export default function AboutPage({ setActivePage }) {
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '20px', marginTop: '32px' }}>
             <div style={{ padding: '24px', background: '#f8fafc', borderRadius: '14px', border: '1px solid #e2e8f0' }}>
-              <div style={{ color: '#ff6200', marginBottom: '12px' }}><ShieldCheck size={28} /></div>
+              <div style={{ color: '#00c2e8', marginBottom: '12px' }}><ShieldCheck size={28} /></div>
               <h3 style={{ fontSize: '18px', fontWeight: 800, color: '#091a3c', marginBottom: '6px' }}>100% Genuine Parts</h3>
               <p style={{ fontSize: '13.5px', color: '#64748b', lineHeight: 1.55 }}>Original brand-matched coils, PCBs, motors, and compressors.</p>
             </div>
 
             <div style={{ padding: '24px', background: '#f8fafc', borderRadius: '14px', border: '1px solid #e2e8f0' }}>
-              <div style={{ color: '#ff6200', marginBottom: '12px' }}><Award size={28} /></div>
+              <div style={{ color: '#00c2e8', marginBottom: '12px' }}><Award size={28} /></div>
               <h3 style={{ fontSize: '18px', fontWeight: 800, color: '#091a3c', marginBottom: '6px' }}>90-Day Warranty</h3>
               <p style={{ fontSize: '13.5px', color: '#64748b', lineHeight: 1.55 }}>Free follow-up service if the repaired issue reoccurs within warranty period.</p>
             </div>
 
             <div style={{ padding: '24px', background: '#f8fafc', borderRadius: '14px', border: '1px solid #e2e8f0' }}>
-              <div style={{ color: '#ff6200', marginBottom: '12px' }}><Users size={28} /></div>
+              <div style={{ color: '#00c2e8', marginBottom: '12px' }}><Users size={28} /></div>
               <h3 style={{ fontSize: '18px', fontWeight: 800, color: '#091a3c', marginBottom: '6px' }}>Background-Verified</h3>
               <p style={{ fontSize: '13.5px', color: '#64748b', lineHeight: 1.55 }}>Every doorstep professional is identity-checked and police-verified for safety.</p>
             </div>
@@ -79,7 +79,7 @@ export default function AboutPage({ setActivePage }) {
             {CITIES.map((c) => (
               <div key={c.id} style={{ background: '#ffffff', padding: '16px', borderRadius: '10px', border: '1px solid #e2e8f0' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 800, color: '#091a3c', marginBottom: '4px' }}>
-                  <MapPin size={16} color="#ff6200" /> {c.name} Hub
+                  <MapPin size={16} color="#00c2e8" /> {c.name} Hub
                 </div>
                 <div style={{ fontSize: '13px', color: '#64748b' }}>{c.hub}</div>
               </div>

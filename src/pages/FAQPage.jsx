@@ -429,9 +429,9 @@ export default function FAQPage({ setActivePage }) {
             display: 'inline-flex',
             alignItems: 'center',
             gap: '6px',
-            background: '#fff7ed',
-            color: '#c2410c',
-            border: '1px solid #fed7aa',
+            background: '#ecfeff',
+            color: '#008ba6',
+            border: '1px solid rgba(0, 194, 232, 0.25)',
             borderRadius: '9999px',
             padding: '5px 14px',
             fontSize: '11px',
@@ -548,7 +548,7 @@ export default function FAQPage({ setActivePage }) {
             </a>
 
             <div style={{ width: '90px', padding: '14px 8px', background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '12px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px' }}>
-              <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: '#fff7ed', color: '#ea580c', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: '#ecfeff', color: '#008ba6', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <MapPin size={16} />
               </div>
               <span style={{ fontSize: '10px', fontWeight: 800, color: '#0f172a' }}>LOCATION</span>

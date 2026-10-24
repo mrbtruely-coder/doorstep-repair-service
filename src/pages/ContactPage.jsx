@@ -192,7 +192,7 @@ export default function ContactPage({ setActivePage }) {
                 <p style={{ fontSize: '13.5px', color: '#64748b', lineHeight: 1.5, marginBottom: '8px' }}>
                   {currentCity.dispatchAddress}
                 </p>
-                <div style={{ fontSize: '12px', color: '#ea580c', fontWeight: 700 }}>
+                <div style={{ fontSize: '12px', color: '#008ba6', fontWeight: 700 }}>
                   Coverage: {currentCity.coverage}
                 </div>
               </div>
@@ -364,9 +364,9 @@ export default function ContactPage({ setActivePage }) {
             display: 'inline-flex',
             alignItems: 'center',
             gap: '6px',
-            background: '#fff7ed',
-            color: '#c2410c',
-            border: '1px solid #fed7aa',
+            background: '#ecfeff',
+            color: '#008ba6',
+            border: '1px solid rgba(0, 194, 232, 0.25)',
             borderRadius: '9999px',
             padding: '5px 14px',
             fontSize: '11px',
@@ -406,7 +406,7 @@ export default function ContactPage({ setActivePage }) {
             <a
               href={COMPANY_CALL_LINK}
               style={{
-                background: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
+                background: 'linear-gradient(135deg, #00d2e6 0%, #0096b7 100%)',
                 color: '#ffffff',
                 fontWeight: 700,
                 fontSize: '14px',
@@ -416,7 +416,7 @@ export default function ContactPage({ setActivePage }) {
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '8px',
-                boxShadow: '0 4px 14px rgba(249, 115, 22, 0.35)'
+                boxShadow: '0 4px 14px rgba(0, 194, 232, 0.35)'
               }}
             >
               <Phone size={16} /> CALL SUPPORT NOW: {COMPANY_PHONE_DISPLAY}

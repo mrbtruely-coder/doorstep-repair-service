@@ -48,7 +48,7 @@ export default function HomePage({ setActivePage, setSelectedService }) {
 
   const standards = [
     {
-      icon: <Zap size={24} style={{ color: '#ff6200' }} />,
+      icon: <Zap size={24} style={{ color: '#00c2e8' }} />,
       title: "Speedy Arrival",
       desc: "Our verified local technicians reach your home in Vijayawada, Guntur, or Nellore within 60 to 90 minutes of booking confirmation."
     },
@@ -58,7 +58,7 @@ export default function HomePage({ setActivePage, setSelectedService }) {
       desc: "We perform full diagnostics with precision tools and replace faulty components using 100% genuine brand-certified spare parts."
     },
     {
-      icon: <DollarSign size={24} style={{ color: '#ff6200' }} />,
+      icon: <DollarSign size={24} style={{ color: '#00c2e8' }} />,
       title: "Affordable Pricing",
       desc: "Honest, upfront quote before starting any work. Nominal inspection charge starting at ₹249, fully adjusted into your final repair bill."
     },
@@ -68,7 +68,7 @@ export default function HomePage({ setActivePage, setSelectedService }) {
       desc: "Skill-tested and background-checked technicians with extensive expertise in all major Indian and international appliance brands."
     },
     {
-      icon: <Clock size={24} style={{ color: '#ff6200' }} />,
+      icon: <Clock size={24} style={{ color: '#00c2e8' }} />,
       title: "Same-Day Resolution",
       desc: "Over 92% of common microwave oven, geyser, refrigerator, TV, and washer issues are resolved right on the spot in a single visit."
     },
@@ -157,21 +157,21 @@ export default function HomePage({ setActivePage, setSelectedService }) {
 
             {/* Right Hero Content */}
             <div>
-              {/* Badge: Orange Accent */}
+              {/* Badge: Logo Cyan Accent */}
               <div style={{
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '8px',
-                background: '#fff7ed',
-                border: '1px solid rgba(255, 98, 0, 0.25)',
+                background: '#ecfeff',
+                border: '1px solid rgba(0, 194, 232, 0.25)',
                 borderRadius: '9999px',
                 padding: '6px 16px',
                 fontSize: '13px',
                 fontWeight: 700,
-                color: '#ff6200',
+                color: '#008ba6',
                 marginBottom: '16px'
               }}>
-                <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#ff6200', display: 'inline-block' }}></span>
+                <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#00c2e8', display: 'inline-block' }}></span>
                 <span>Verified Local Appliance Technicians</span>
               </div>
 
@@ -184,7 +184,7 @@ export default function HomePage({ setActivePage, setSelectedService }) {
                 marginBottom: '16px'
               }}>
                 Easy Doorstep Repair <br />
-                <span style={{ color: '#ff6200' }}>Oven, TV, AC, Fridge & Washer</span>
+                <span style={{ color: '#00c2e8' }}>Oven, TV, AC, Fridge & Washer</span>
               </h1>
 
               {/* Subtitle */}
@@ -194,7 +194,7 @@ export default function HomePage({ setActivePage, setSelectedService }) {
                 lineHeight: 1.6,
                 marginBottom: '28px'
               }}>
-                Hyderabad&apos;s certified local technicians at your doorstep in 90 minutes. Transparent diagnostics &amp; 90-day warranty.
+                Fast, professional technicians at your doorstep in 90 minutes. Transparent diagnostics &amp; 90-day warranty.
               </p>
 
               {/* 3 Metric Pills */}
@@ -213,7 +213,7 @@ export default function HomePage({ setActivePage, setSelectedService }) {
                   alignItems: 'center',
                   gap: '10px'
                 }}>
-                  <Clock size={20} style={{ color: '#ff6200' }} />
+                  <Clock size={20} style={{ color: '#00c2e8' }} />
                   <div>
                     <div style={{ fontWeight: 800, fontSize: '17px', color: '#091a3c' }}>90 Min</div>
                     <div style={{ fontSize: '11px', color: '#64748b' }}>Doorstep Arrival</div>
@@ -229,7 +229,7 @@ export default function HomePage({ setActivePage, setSelectedService }) {
                   alignItems: 'center',
                   gap: '10px'
                 }}>
-                  <ShieldCheck size={20} style={{ color: '#ff6200' }} />
+                  <ShieldCheck size={20} style={{ color: '#00c2e8' }} />
                   <div>
                     <div style={{ fontWeight: 800, fontSize: '17px', color: '#091a3c' }}>100%</div>
                     <div style={{ fontSize: '11px', color: '#64748b' }}>Genuine Parts</div>
@@ -245,7 +245,7 @@ export default function HomePage({ setActivePage, setSelectedService }) {
                   alignItems: 'center',
                   gap: '10px'
                 }}>
-                  <Award size={20} style={{ color: '#ff6200' }} />
+                  <Award size={20} style={{ color: '#00c2e8' }} />
                   <div>
                     <div style={{ fontWeight: 800, fontSize: '17px', color: '#091a3c' }}>90-Day</div>
                     <div style={{ fontSize: '11px', color: '#64748b' }}>Service Warranty</div>
@@ -289,22 +289,22 @@ export default function HomePage({ setActivePage, setSelectedService }) {
             textAlign: 'center'
           }} className="stats-grid-responsive">
             <div>
-              <div style={{ fontSize: '32px', fontWeight: 800, color: '#ff6200' }}>15k+</div>
+              <div style={{ fontSize: '32px', fontWeight: 800, color: '#00c2e8' }}>15k+</div>
               <div style={{ fontSize: '13px', fontWeight: 700, color: '#ffffff', textTransform: 'uppercase', letterSpacing: '0.04em', marginTop: '4px' }}>Repairs Completed</div>
             </div>
 
             <div>
-              <div style={{ fontSize: '32px', fontWeight: 800, color: '#ff6200' }}>98%</div>
+              <div style={{ fontSize: '32px', fontWeight: 800, color: '#00c2e8' }}>98%</div>
               <div style={{ fontSize: '13px', fontWeight: 700, color: '#ffffff', textTransform: 'uppercase', letterSpacing: '0.04em', marginTop: '4px' }}>Happy Customers</div>
             </div>
 
             <div>
-              <div style={{ fontSize: '32px', fontWeight: 800, color: '#ff6200' }}>24/7</div>
+              <div style={{ fontSize: '32px', fontWeight: 800, color: '#00c2e8' }}>24/7</div>
               <div style={{ fontSize: '13px', fontWeight: 700, color: '#ffffff', textTransform: 'uppercase', letterSpacing: '0.04em', marginTop: '4px' }}>Booking Support</div>
             </div>
 
             <div>
-              <div style={{ fontSize: '32px', fontWeight: 800, color: '#ff6200' }}>100%</div>
+              <div style={{ fontSize: '32px', fontWeight: 800, color: '#00c2e8' }}>100%</div>
               <div style={{ fontSize: '13px', fontWeight: 700, color: '#ffffff', textTransform: 'uppercase', letterSpacing: '0.04em', marginTop: '4px' }}>Genuine Spares</div>
             </div>
           </div>
@@ -343,12 +343,12 @@ export default function HomePage({ setActivePage, setSelectedService }) {
                   width: '48px',
                   height: '48px',
                   borderRadius: '12px',
-                  background: '#fff7ed',
+                  background: '#ecfeff',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   marginBottom: '16px',
-                  border: '1px solid rgba(255, 98, 0, 0.2)'
+                  border: '1px solid rgba(0, 194, 232, 0.25)'
                 }}>
                   {st.icon}
                 </div>
@@ -395,15 +395,15 @@ export default function HomePage({ setActivePage, setSelectedService }) {
                   width: '50px',
                   height: '50px',
                   borderRadius: '50%',
-                  background: '#fff7ed',
-                  color: '#ff6200',
+                  background: '#ecfeff',
+                  color: '#008ba6',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   fontWeight: 800,
                   fontSize: '18px',
                   margin: '0 auto 18px',
-                  border: '2px solid #ff6200'
+                  border: '2px solid #00c2e8'
                 }}>
                   {st.num}
                 </div>
@@ -459,16 +459,16 @@ export default function HomePage({ setActivePage, setSelectedService }) {
                   <h4 style={{ fontSize: '17px', fontWeight: 800, color: '#091a3c', margin: 0 }}>
                     {reviews[activeReviewIdx].name}
                   </h4>
-                  <div style={{ fontSize: '13px', color: '#ff6200', fontWeight: 700 }}>
+                  <div style={{ fontSize: '13px', color: '#008ba6', fontWeight: 700 }}>
                     {reviews[activeReviewIdx].city}
                   </div>
                 </div>
               </div>
 
-              {/* Star Rating: Brand Orange */}
-              <div style={{ display: 'flex', gap: '4px', color: '#ff6200' }}>
+              {/* Star Rating: Brand Cyan */}
+              <div style={{ display: 'flex', gap: '4px', color: '#00c2e8' }}>
                 {[...Array(reviews[activeReviewIdx].rating)].map((_, i) => (
-                  <Star key={i} size={18} fill="#ff6200" />
+                  <Star key={i} size={18} fill="#00c2e8" />
                 ))}
               </div>
             </div>
@@ -495,7 +495,7 @@ export default function HomePage({ setActivePage, setSelectedService }) {
               <span style={{ fontWeight: 700, color: '#091a3c' }}>
                 Service: {reviews[activeReviewIdx].appliance}
               </span>
-              <span style={{ color: '#ff6200', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <span style={{ color: '#008ba6', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '4px' }}>
                 <CheckCircle2 size={15} /> Verified Customer
               </span>
             </div>
@@ -530,7 +530,7 @@ export default function HomePage({ setActivePage, setSelectedService }) {
                     width: activeReviewIdx === i ? '24px' : '8px',
                     height: '8px',
                     borderRadius: '4px',
-                    background: activeReviewIdx === i ? '#ff6200' : '#cbd5e1',
+                    background: activeReviewIdx === i ? '#00c2e8' : '#cbd5e1',
                     border: 'none',
                     cursor: 'pointer',
                     transition: 'all 0.2s ease'
@@ -573,9 +573,9 @@ export default function HomePage({ setActivePage, setSelectedService }) {
             display: 'inline-flex',
             alignItems: 'center',
             gap: '6px',
-            background: '#fff7ed',
-            color: '#ff6200',
-            border: '1px solid rgba(255, 98, 0, 0.25)',
+            background: '#ecfeff',
+            color: '#008ba6',
+            border: '1px solid rgba(0, 194, 232, 0.25)',
             borderRadius: '9999px',
             padding: '5px 14px',
             fontSize: '11px',

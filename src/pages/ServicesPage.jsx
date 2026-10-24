@@ -153,7 +153,7 @@ export default function ServicesPage({ setActivePage, setSelectedService }) {
             fontWeight: 800,
             textTransform: 'uppercase',
             letterSpacing: '0.12em',
-            color: '#ff6200',
+            color: '#00c2e8',
             marginBottom: '16px'
           }}>
             VIJAYAWADA • GUNTUR • NELLORE DOORSTEP REPAIRS
@@ -233,7 +233,7 @@ export default function ServicesPage({ setActivePage, setSelectedService }) {
                     alignItems: 'center',
                     gap: '4px'
                   }}>
-                    <ShieldCheck size={13} style={{ color: '#ff6200' }} />
+                    <ShieldCheck size={13} style={{ color: '#00c2e8' }} />
                     {card.tag}
                   </div>
                 </div>
@@ -252,7 +252,7 @@ export default function ServicesPage({ setActivePage, setSelectedService }) {
                   <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '24px', flex: 1, padding: 0 }}>
                     {card.bullets.map((b, i) => (
                       <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontSize: '13px', color: '#334155' }}>
-                        <Check size={15} style={{ color: '#ff6200', flexShrink: 0, marginTop: '2px' }} />
+                        <Check size={15} style={{ color: '#00c2e8', flexShrink: 0, marginTop: '2px' }} />
                         <span>{b}</span>
                       </li>
                     ))}
@@ -278,7 +278,7 @@ export default function ServicesPage({ setActivePage, setSelectedService }) {
                     <button
                       onClick={() => handleBook(card.name)}
                       style={{
-                        background: '#ff6200',
+                        background: 'linear-gradient(135deg, #00d2e6 0%, #0096b7 100%)',
                         color: '#ffffff',
                         fontWeight: 700,
                         fontSize: '13.5px',
@@ -287,18 +287,18 @@ export default function ServicesPage({ setActivePage, setSelectedService }) {
                         display: 'inline-flex',
                         alignItems: 'center',
                         gap: '6px',
-                        boxShadow: '0 4px 12px rgba(255, 98, 0, 0.35)',
+                        boxShadow: '0 4px 12px rgba(0, 194, 232, 0.35)',
                         transition: 'all 0.2s ease',
                         border: 'none',
                         cursor: 'pointer'
                       }}
                       onMouseOver={(e) => {
                         e.currentTarget.style.transform = 'translateY(-2px)';
-                        e.currentTarget.style.background = '#e05600';
+                        e.currentTarget.style.background = 'linear-gradient(135deg, #00c2e8 0%, #008ba6 100%)';
                       }}
                       onMouseOut={(e) => {
                         e.currentTarget.style.transform = 'translateY(0)';
-                        e.currentTarget.style.background = '#ff6200';
+                        e.currentTarget.style.background = 'linear-gradient(135deg, #00d2e6 0%, #0096b7 100%)';
                       }}
                     >
                       Book Service <ArrowRight size={15} />

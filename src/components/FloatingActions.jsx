@@ -99,12 +99,12 @@ export default function FloatingActions() {
           width: '52px',
           height: '52px',
           borderRadius: '50%',
-          background: '#ff6200', // Vibrant Orange from screenshot
+          background: 'linear-gradient(135deg, #00d2e6 0%, #0096b7 100%)', // Logo Cyan Gradient
           color: '#ffffff',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          boxShadow: '0 6px 16px rgba(255, 98, 0, 0.4)',
+          boxShadow: '0 6px 16px rgba(0, 194, 232, 0.45)',
           textDecoration: 'none',
           transition: 'transform 0.2s ease, box-shadow 0.2s ease',
           position: 'relative'
@@ -128,7 +128,7 @@ export default function FloatingActions() {
           style={{
             position: 'absolute',
             right: '62px',
-            background: 'rgba(255, 98, 0, 0.95)',
+            background: 'rgba(0, 72, 87, 0.95)',
             color: 'white',
             padding: '5px 10px',
             borderRadius: '6px',
