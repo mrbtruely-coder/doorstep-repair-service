@@ -44,12 +44,20 @@ export default function BookServicePage({ preselectedService }) {
     { id: 'tv', name: 'LED / SMART TV', shortName: 'LED & Smart TV', icon: <Tv size={24} /> }
   ];
 
-  // Set initial selected appliance
+  // Set initial selected appliance with intelligent category & subcategory detection
   const [selectedAppliance, setSelectedAppliance] = useState(() => {
     if (preselectedService) {
+      const p = preselectedService.toLowerCase();
       const match = applianceOptions.find(o => 
-        preselectedService.toLowerCase().includes(o.id) || 
-        o.name.toLowerCase().includes(preselectedService.toLowerCase())
+        p.includes(o.id) || 
+        p.includes(o.shortName.toLowerCase()) ||
+        o.name.toLowerCase().includes(p) ||
+        (o.id === 'washer' && p.includes('wash')) ||
+        (o.id === 'refrigerator' && (p.includes('fridge') || p.includes('refrigerat'))) ||
+        (o.id === 'oven' && (p.includes('oven') || p.includes('microwave'))) ||
+        (o.id === 'geyser' && (p.includes('geyser') || p.includes('heater'))) ||
+        (o.id === 'tv' && (p.includes('tv') || p.includes('television') || p.includes('lcd') || p.includes('led'))) ||
+        (o.id === 'ac' && (p.includes('ac') || p.includes('air condition')))
       );
       if (match) return match.name;
     }
@@ -92,7 +100,7 @@ export default function BookServicePage({ preselectedService }) {
       email: formData.email,
       city: formData.city,
       locality: formData.locality,
-      serviceType: selectedAppliance,
+      serviceType: preselectedService ? `${selectedAppliance} - ${preselectedService}` : selectedAppliance,
       preferredDate: new Date().toISOString().split('T')[0],
       preferredTime: 'Within 90 Minutes (Express Dispatch)',
       address: `${formData.locality}, ${formData.city}`
@@ -323,9 +331,28 @@ export default function BookServicePage({ preselectedService }) {
                 <h2 style={{ fontSize: '26px', fontWeight: 800, color: '#0f172a', marginBottom: '4px' }}>
                   Request Service
                 </h2>
-                <p style={{ fontSize: '13.5px', color: '#64748b', marginBottom: '24px' }}>
+                <p style={{ fontSize: '13.5px', color: '#64748b', marginBottom: '20px' }}>
                   Tap your appliance, enter details, and book your technician.
                 </p>
+
+                {preselectedService && (
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '10px',
+                    padding: '12px 16px',
+                    background: '#ecfeff',
+                    border: '1.5px solid #a5f3fc',
+                    borderRadius: '12px',
+                    color: '#0e7490',
+                    fontSize: '13.5px',
+                    fontWeight: 600,
+                    marginBottom: '22px'
+                  }}>
+                    <Sparkles size={18} color="#0891b2" />
+                    <span>Selected Service: <strong style={{ color: '#0369a1' }}>{preselectedService}</strong></span>
+                  </div>
+                )}
 
                 {/* 1. TAP YOUR APPLIANCE (6 Grid Buttons) */}
                 <div style={{ marginBottom: '24px' }}>

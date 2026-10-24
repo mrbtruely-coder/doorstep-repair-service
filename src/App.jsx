@@ -29,6 +29,7 @@ export default function App() {
 
   const [activePage, setActivePage] = useState(getPageFromPathOrHash);
   const [selectedService, setSelectedService] = useState('AC SERVICE');
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
   useEffect(() => {
     const handlePopState = () => {
@@ -42,8 +43,11 @@ export default function App() {
     };
   }, []);
 
-  const navigateTo = (pageId) => {
+  const navigateTo = (pageId, categoryId = null) => {
     setActivePage(pageId);
+    if (categoryId !== null) {
+      setSelectedCategory(categoryId);
+    }
     window.history.pushState(null, '', pageId === 'home' ? '/' : `/${pageId}`);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -55,6 +59,7 @@ export default function App() {
           <HomePage
             setActivePage={navigateTo}
             setSelectedService={setSelectedService}
+            setSelectedCategory={setSelectedCategory}
           />
         );
       case 'services':
@@ -62,6 +67,8 @@ export default function App() {
           <ServicesPage
             setActivePage={navigateTo}
             setSelectedService={setSelectedService}
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
           />
         );
       case 'book':

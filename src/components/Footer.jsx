@@ -3,11 +3,11 @@ import { SERVICES, CITIES } from '../constants/data';
 import { Apple, Play, Heart } from 'lucide-react';
 
 export default function Footer({ setActivePage }) {
-  const navigateTo = (pageId) => {
+  const navigateTo = (pageId, categoryId = null) => {
     if (setActivePage) {
-      setActivePage(pageId);
+      setActivePage(pageId, categoryId);
     } else {
-      window.location.href = `/${pageId}`;
+      window.location.href = categoryId ? `/${pageId}?category=${categoryId}` : `/${pageId}`;
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -139,7 +139,7 @@ export default function Footer({ setActivePage }) {
               {SERVICES.map((s) => (
                 <li key={s.id}>
                   <button
-                    onClick={() => navigateTo('services')}
+                    onClick={() => navigateTo('services', s.id)}
                     style={{
                       background: 'transparent',
                       border: 'none',
