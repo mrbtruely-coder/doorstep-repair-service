@@ -31,7 +31,12 @@ export default function ServicesPage({
   });
 
   // Internal or external category state
-  const [internalCategory, setInternalCategory] = useState(null);
+  const [internalCategory, setInternalCategory] = useState(externalCategory || null);
+
+  useEffect(() => {
+    setInternalCategory(externalCategory || null);
+  }, [externalCategory]);
+
   const currentCategoryId = externalCategory !== undefined ? externalCategory : internalCategory;
 
   const handleSelectCategory = (categoryId) => {

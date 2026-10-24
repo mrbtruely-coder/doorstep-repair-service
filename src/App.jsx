@@ -29,9 +29,18 @@ export default function App() {
     return 'home';
   };
 
+  const getCategoryFromPath = () => {
+    const p = window.location.pathname.toLowerCase();
+    const parts = p.split('/').filter(Boolean);
+    if (parts[0] === 'services' && parts[1]) {
+      return parts[1];
+    }
+    return null;
+  };
+
   const [activePage, setActivePage] = useState(getPageFromPathOrHash);
   const [selectedService, setSelectedService] = useState('AC SERVICE');
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(getCategoryFromPath);
   const [selectedSubLocation, setSelectedSubLocation] = useState(null);
   const [selectedCity, setSelectedCity] = useState(() => {
     const p = (window.location.pathname + window.location.hash).toLowerCase();
@@ -43,6 +52,7 @@ export default function App() {
   useEffect(() => {
     const handlePopState = () => {
       setActivePage(getPageFromPathOrHash());
+      setSelectedCategory(getCategoryFromPath());
       const p = (window.location.pathname + window.location.hash).toLowerCase();
       if (p.includes('guntur')) setSelectedCity('guntur');
       else if (p.includes('nellore')) setSelectedCity('nellore');
@@ -63,7 +73,7 @@ export default function App() {
     }
     let url = '/';
     if (pageId === 'services') {
-      if (param !== null) setSelectedCategory(param);
+      setSelectedCategory(param);
       url = param ? `/services/${param}` : '/services';
     } else if (pageId === 'location') {
       const city = (param !== null ? param : selectedCity || 'vijayawada').toLowerCase();
@@ -86,7 +96,7 @@ export default function App() {
           <HomePage
             setActivePage={navigateTo}
             setSelectedService={setSelectedService}
-            setSelectedCategory={setSelectedCategory}
+            setSelectedCategory={(catId) => navigateTo('services', catId)}
           />
         );
       case 'services':
@@ -95,7 +105,7 @@ export default function App() {
             setActivePage={navigateTo}
             setSelectedService={setSelectedService}
             selectedCategory={selectedCategory}
-            setSelectedCategory={setSelectedCategory}
+            setSelectedCategory={(catId) => navigateTo('services', catId)}
             selectedSubLocation={selectedSubLocation}
             setSelectedSubLocation={setSelectedSubLocation}
             selectedCity={selectedCity}

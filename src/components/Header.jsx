@@ -275,7 +275,7 @@ export default function Header({ activePage, setActivePage }) {
 
                   {/* Dropdown Card Footer */}
                   <div 
-                    onClick={() => handleNavClick('services')}
+                    onClick={() => handleNavClick('services', null)}
                     style={{
                       padding: '13px 20px',
                       borderTop: '1px solid #f1f5f9',
@@ -620,7 +620,7 @@ export default function Header({ activePage, setActivePage }) {
                     </div>
                   ))}
                   <div
-                    onClick={() => handleNavClick('services')}
+                    onClick={() => handleNavClick('services', null)}
                     style={{
                       padding: '8px 10px',
                       color: '#008ba6',
