@@ -3,7 +3,8 @@ import { useSEO } from '../hooks/useSEO';
 import { SERVICES, CITIES, COMPANY_PHONE_DISPLAY, COMPANY_WHATSAPP_LINK, COMPANY_CALL_LINK } from '../constants/data';
 import { 
   Clock, ShieldCheck, Star, ArrowRight, Phone, MessageCircle, 
-  Wrench, Zap, DollarSign, Award, ChevronDown, ChevronUp, ChevronLeft, ChevronRight, CheckCircle2 
+  Wrench, Zap, IndianRupee, Award, ChevronDown, ChevronUp, ChevronLeft, ChevronRight, CheckCircle2,
+  Apple, Play, Smartphone, QrCode, Tag
 } from 'lucide-react';
 
 export default function HomePage({ setActivePage, setSelectedService }) {
@@ -58,7 +59,7 @@ export default function HomePage({ setActivePage, setSelectedService }) {
       desc: "We perform full diagnostics with precision tools and replace faulty components using 100% genuine brand-certified spare parts."
     },
     {
-      icon: <DollarSign size={24} style={{ color: '#00c2e8' }} />,
+      icon: <IndianRupee size={24} style={{ color: '#00c2e8' }} />,
       title: "Affordable Pricing",
       desc: "Honest, upfront quote before starting any work. Nominal inspection charge starting at ₹249, fully adjusted into your final repair bill."
     },
@@ -422,7 +423,336 @@ export default function HomePage({ setActivePage, setSelectedService }) {
         </div>
       </section>
 
-      {/* 5. WHAT OUR CLIENTS SAY */}
+      {/* 5. DOWNLOAD OUR MOBILE APP (iOS & Play Store) - HIGHLIGHTED SHOWCASE */}
+      <section className="section-padding" style={{ background: '#f8fafc', position: 'relative', overflow: 'hidden' }}>
+        <div className="container">
+          <div style={{
+            background: 'linear-gradient(135deg, #07152b 0%, #0d274d 50%, #004857 100%)',
+            borderRadius: '26px',
+            padding: '52px 48px',
+            border: '1.5px solid rgba(0, 194, 232, 0.35)',
+            boxShadow: '0 24px 60px -15px rgba(0, 194, 232, 0.22), 0 12px 36px -10px rgba(7, 21, 43, 0.45)',
+            position: 'relative',
+            overflow: 'hidden'
+          }} className="app-download-banner">
+            
+            {/* Background Glow Accents */}
+            <div style={{
+              position: 'absolute',
+              top: '-80px',
+              right: '-80px',
+              width: '280px',
+              height: '280px',
+              borderRadius: '50%',
+              background: 'radial-gradient(circle, rgba(0, 194, 232, 0.25) 0%, transparent 70%)',
+              pointerEvents: 'none'
+            }} />
+            <div style={{
+              position: 'absolute',
+              bottom: '-60px',
+              left: '20%',
+              width: '220px',
+              height: '220px',
+              borderRadius: '50%',
+              background: 'radial-gradient(circle, rgba(0, 72, 87, 0.4) 0%, transparent 70%)',
+              pointerEvents: 'none'
+            }} />
+
+            <div className="app-download-grid">
+              
+              {/* Left Column: Copy & Store Download Badges */}
+              <div style={{ position: 'relative', zIndex: 2 }}>
+                
+                {/* Highlight Badge */}
+                <div style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  background: 'rgba(0, 194, 232, 0.15)',
+                  border: '1px solid rgba(0, 194, 232, 0.4)',
+                  borderRadius: '9999px',
+                  padding: '6px 16px',
+                  fontSize: '12px',
+                  fontWeight: 800,
+                  letterSpacing: '0.06em',
+                  textTransform: 'uppercase',
+                  color: '#00e1ff',
+                  marginBottom: '18px'
+                }}>
+                  <Smartphone size={15} color="#00e1ff" />
+                  <span>Doorstep Repair Mobile App</span>
+                </div>
+
+                {/* Title */}
+                <h2 style={{
+                  fontSize: '38px',
+                  fontWeight: 800,
+                  color: '#ffffff',
+                  lineHeight: 1.2,
+                  marginBottom: '16px'
+                }}>
+                  Download Our App on <br />
+                  <span style={{ color: '#00c2e8' }}>iOS App Store</span> & <span style={{ color: '#22c55e' }}>Google Play</span>
+                </h2>
+
+                {/* Description */}
+                <p style={{
+                  fontSize: '15.5px',
+                  color: '#cbd5e1',
+                  lineHeight: 1.65,
+                  marginBottom: '26px',
+                  maxWidth: '520px'
+                }}>
+                  Book appliance technicians in 60 seconds, track their doorstep arrival in real time on the live map, receive instant digital quotes, and access your 90-day warranty certificates anytime.
+                </p>
+
+                {/* 4 App Benefits Grid */}
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(2, 1fr)',
+                  gap: '12px',
+                  marginBottom: '32px',
+                  maxWidth: '540px'
+                }} className="app-perks-grid">
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#f1f5f9', fontSize: '13.5px', fontWeight: 600 }}>
+                    <div style={{ width: '22px', height: '22px', borderRadius: '50%', background: 'rgba(0, 194, 232, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      <CheckCircle2 size={14} color="#00e1ff" />
+                    </div>
+                    <span>Live GPS Technician Tracker</span>
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#f1f5f9', fontSize: '13.5px', fontWeight: 600 }}>
+                    <div style={{ width: '22px', height: '22px', borderRadius: '50%', background: 'rgba(0, 194, 232, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      <CheckCircle2 size={14} color="#00e1ff" />
+                    </div>
+                    <span>Instant Digital Bill & Warranty</span>
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#f1f5f9', fontSize: '13.5px', fontWeight: 600 }}>
+                    <div style={{ width: '22px', height: '22px', borderRadius: '50%', background: 'rgba(0, 194, 232, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      <CheckCircle2 size={14} color="#00e1ff" />
+                    </div>
+                    <span>Priority 60-Min Doorstep Arrival</span>
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#f1f5f9', fontSize: '13.5px', fontWeight: 600 }}>
+                    <div style={{ width: '22px', height: '22px', borderRadius: '50%', background: 'rgba(34, 197, 94, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      <Tag size={13} color="#22c55e" />
+                    </div>
+                    <span style={{ color: '#86efac' }}>Flat ₹100 OFF on 1st App Order</span>
+                  </div>
+                </div>
+
+                {/* Highlighted Store Buttons */}
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '16px',
+                  flexWrap: 'wrap',
+                  marginBottom: '20px'
+                }}>
+                  {/* Apple App Store Button */}
+                  <a
+                    href="#download-ios"
+                    onClick={(e) => e.preventDefault()}
+                    style={{
+                      background: '#040b17',
+                      border: '1.5px solid rgba(255, 255, 255, 0.2)',
+                      borderRadius: '14px',
+                      padding: '12px 22px',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '12px',
+                      color: '#ffffff',
+                      textDecoration: 'none',
+                      transition: 'all 0.2s ease',
+                      boxShadow: '0 8px 20px rgba(0, 0, 0, 0.3)'
+                    }}
+                    onMouseOver={(e) => {
+                      e.currentTarget.style.borderColor = '#00c2e8';
+                      e.currentTarget.style.transform = 'translateY(-2px)';
+                      e.currentTarget.style.boxShadow = '0 12px 25px rgba(0, 194, 232, 0.3)';
+                    }}
+                    onMouseOut={(e) => {
+                      e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.3)';
+                    }}
+                  >
+                    <Apple size={28} color="#ffffff" />
+                    <div style={{ textAlign: 'left' }}>
+                      <div style={{ fontSize: '10px', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Download on the</div>
+                      <div style={{ fontSize: '16px', fontWeight: 800, color: '#ffffff', lineHeight: 1.15 }}>App Store</div>
+                    </div>
+                  </a>
+
+                  {/* Google Play Store Button */}
+                  <a
+                    href="#download-playstore"
+                    onClick={(e) => e.preventDefault()}
+                    style={{
+                      background: '#040b17',
+                      border: '1.5px solid rgba(255, 255, 255, 0.2)',
+                      borderRadius: '14px',
+                      padding: '12px 22px',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '12px',
+                      color: '#ffffff',
+                      textDecoration: 'none',
+                      transition: 'all 0.2s ease',
+                      boxShadow: '0 8px 20px rgba(0, 0, 0, 0.3)'
+                    }}
+                    onMouseOver={(e) => {
+                      e.currentTarget.style.borderColor = '#22c55e';
+                      e.currentTarget.style.transform = 'translateY(-2px)';
+                      e.currentTarget.style.boxShadow = '0 12px 25px rgba(34, 197, 94, 0.3)';
+                    }}
+                    onMouseOut={(e) => {
+                      e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.3)';
+                    }}
+                  >
+                    <Play size={26} color="#22c55e" fill="#22c55e" />
+                    <div style={{ textAlign: 'left' }}>
+                      <div style={{ fontSize: '10px', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.04em' }}>GET IT ON</div>
+                      <div style={{ fontSize: '16px', fontWeight: 800, color: '#ffffff', lineHeight: 1.15 }}>Google Play</div>
+                    </div>
+                  </a>
+                </div>
+
+                {/* Rating Note */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flexWrap: 'wrap' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} size={13} fill="#fbbf24" color="#fbbf24" />
+                    ))}
+                    <span style={{ fontSize: '12.5px', fontWeight: 700, color: '#ffffff', marginLeft: '4px' }}>4.9/5</span>
+                  </div>
+                  <span style={{ fontSize: '12px', color: '#94a3b8' }}>•</span>
+                  <span style={{ fontSize: '12.5px', color: '#cbd5e1' }}>15,000+ Verified Homeowners in AP</span>
+                </div>
+
+              </div>
+
+              {/* Right Column: Interactive App Preview Showcase Card */}
+              <div style={{ position: 'relative', display: 'flex', justifyContent: 'center' }}>
+                <div style={{
+                  width: '100%',
+                  maxWidth: '360px',
+                  background: '#ffffff',
+                  borderRadius: '24px',
+                  padding: '24px',
+                  boxShadow: '0 20px 45px rgba(0, 0, 0, 0.4)',
+                  border: '3px solid rgba(0, 194, 232, 0.5)',
+                  position: 'relative'
+                }}>
+                  {/* Phone Header / Status Bar */}
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    paddingBottom: '14px',
+                    borderBottom: '1px solid #f1f5f9',
+                    marginBottom: '16px'
+                  }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#22c55e', boxShadow: '0 0 8px #22c55e' }} />
+                      <span style={{ fontSize: '12px', fontWeight: 800, color: '#0f172a' }}>Live Service Status</span>
+                    </div>
+                    <span style={{ fontSize: '11px', fontWeight: 700, color: '#008ba6', background: '#ecfeff', padding: '3px 8px', borderRadius: '6px' }}>
+                      IN PROGRESS
+                    </span>
+                  </div>
+
+                  {/* Technician Live Card */}
+                  <div style={{
+                    background: '#f8fafc',
+                    borderRadius: '16px',
+                    padding: '16px',
+                    border: '1px solid #e2e8f0',
+                    marginBottom: '14px'
+                  }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '10px' }}>
+                      <div style={{
+                        width: '44px',
+                        height: '44px',
+                        borderRadius: '12px',
+                        background: '#e0f2fe',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: '#0284c7'
+                      }}>
+                        <Wrench size={22} />
+                      </div>
+                      <div>
+                        <div style={{ fontSize: '14px', fontWeight: 800, color: '#091a3c' }}>Technician Assigned</div>
+                        <div style={{ fontSize: '12px', color: '#64748b' }}>Ramesh K. • 4.9 ★ (420+ Jobs)</div>
+                      </div>
+                    </div>
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      background: '#ffffff',
+                      padding: '10px 12px',
+                      borderRadius: '10px',
+                      border: '1px solid #e2e8f0',
+                      fontSize: '12px'
+                    }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#008ba6', fontWeight: 700 }}>
+                        <Clock size={14} /> Arriving in 14 Mins
+                      </div>
+                      <span style={{ color: '#64748b' }}>Vijayawada Hub</span>
+                    </div>
+                  </div>
+
+                  {/* Appliance Info Card */}
+                  <div style={{
+                    padding: '12px 14px',
+                    background: '#ecfeff',
+                    borderRadius: '12px',
+                    border: '1px solid #cffafe',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    marginBottom: '14px'
+                  }}>
+                    <div>
+                      <div style={{ fontSize: '11px', color: '#0891b2', fontWeight: 700, textTransform: 'uppercase' }}>Booked Service</div>
+                      <div style={{ fontSize: '13px', fontWeight: 800, color: '#0e7490' }}>Refrigerator Repair</div>
+                    </div>
+                    <span style={{ fontSize: '13px', fontWeight: 800, color: '#0e7490' }}>₹249 Fee</span>
+                  </div>
+
+                  {/* QR Scan Strip */}
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '12px',
+                    padding: '10px 12px',
+                    background: '#07152b',
+                    borderRadius: '12px',
+                    color: '#ffffff'
+                  }}>
+                    <QrCode size={28} color="#00e1ff" />
+                    <div>
+                      <div style={{ fontSize: '11.5px', fontWeight: 800, color: '#ffffff' }}>Scan with Phone Camera</div>
+                      <div style={{ fontSize: '10.5px', color: '#94a3b8' }}>Auto-detects iOS & Android</div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 6. WHAT OUR CLIENTS SAY */}
       <section className="section-padding" style={{ background: '#ffffff' }}>
         <div className="container" style={{ maxWidth: '860px' }}>
           <div className="section-header">

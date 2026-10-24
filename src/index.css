@@ -330,6 +330,28 @@ button {
   }
 }
 
+/* App Download Section Responsive */
+.app-download-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 40px;
+  align-items: center;
+}
+
+@media (max-width: 900px) {
+  .app-download-banner {
+    padding: 32px 22px !important;
+    border-radius: 20px !important;
+  }
+  .app-download-grid {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+  .app-perks-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
 /* Header Dropdowns & Responsive Nav */
 @keyframes dropdownSlideDown {
   from {
