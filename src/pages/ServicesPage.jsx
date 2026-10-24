@@ -71,10 +71,9 @@ export default function ServicesPage({
     <div style={{ backgroundColor: '#ffffff', minHeight: '100vh' }}>
       
       {/* 1. HERO BANNER: Dark Navy Gradient with Cyan Accents */}
-      <section style={{
+      <section className="services-hero-section" style={{
         background: 'linear-gradient(180deg, #07152b 0%, #091a3c 100%)',
         color: '#ffffff',
-        padding: '60px 0 66px',
         textAlign: 'center',
         position: 'relative'
       }}>
@@ -134,27 +133,14 @@ export default function ServicesPage({
             VIJAYAWADA • GUNTUR • NELLORE DOORSTEP REPAIRS
           </div>
 
-          <h1 style={{
-            fontSize: '40px',
-            fontWeight: 800,
-            lineHeight: 1.18,
-            color: '#ffffff',
-            marginBottom: '16px',
-            letterSpacing: '-0.02em'
-          }}>
+          <h1 className="services-hero-title">
             {activeCategory 
               ? `${activeCategory.title}`
               : 'Our Appliance Repair Categories'
             }
           </h1>
 
-          <p style={{
-            fontSize: '15.5px',
-            color: '#94a3b8',
-            lineHeight: 1.6,
-            maxWidth: '720px',
-            margin: '0 auto'
-          }}>
+          <p className="services-hero-subtitle">
             {activeCategory 
               ? activeCategory.shortDesc
               : 'Choose any appliance category below to see detailed subcategories, transparent pricing, and instant doorstep technician booking.'
@@ -162,13 +148,12 @@ export default function ServicesPage({
           </p>
 
           {/* Quick Filter Pill Selector */}
-          <div style={{
+          <div className="services-filter-pills" style={{
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
             gap: '8px',
-            flexWrap: 'wrap',
-            marginTop: '32px'
+            flexWrap: 'wrap'
           }}>
             <button
               onClick={handleClearCategory}
@@ -231,6 +216,7 @@ export default function ServicesPage({
             <div style={{ marginBottom: '32px' }}>
               <button
                 onClick={handleClearCategory}
+                className="services-back-btn"
                 style={{
                   display: 'inline-flex',
                   alignItems: 'center',
@@ -260,17 +246,7 @@ export default function ServicesPage({
               </button>
 
               {/* Spotlight Banner Card */}
-              <div style={{
-                background: '#ffffff',
-                border: '1px solid #e2e8f0',
-                borderRadius: '20px',
-                padding: '32px',
-                display: 'grid',
-                gridTemplateColumns: '1.4fr 1fr',
-                gap: '32px',
-                alignItems: 'center',
-                boxShadow: '0 4px 16px rgba(9, 26, 60, 0.05)'
-              }} className="category-spotlight-responsive">
+              <div className="category-spotlight-card">
                 <div>
                   <div style={{
                     display: 'inline-flex',
@@ -290,7 +266,7 @@ export default function ServicesPage({
                     <ShieldCheck size={13} style={{ color: '#00c2e8' }} /> {activeCategory.tag}
                   </div>
 
-                  <h2 style={{ fontSize: '30px', fontWeight: 800, color: '#091a3c', marginBottom: '12px' }}>
+                  <h2 className="category-spotlight-title" style={{ fontWeight: 800, color: '#091a3c', marginBottom: '12px' }}>
                     {activeCategory.name} Subcategories
                   </h2>
 
@@ -311,14 +287,7 @@ export default function ServicesPage({
                   </div>
                 </div>
 
-                <div style={{
-                  height: '200px',
-                  borderRadius: '16px',
-                  overflow: 'hidden',
-                  position: 'relative',
-                  border: '2px solid rgba(0, 194, 232, 0.2)',
-                  boxShadow: '0 8px 20px rgba(0, 194, 232, 0.15)'
-                }}>
+                <div className="category-spotlight-image">
                   <img
                     src={activeCategory.image}
                     alt={activeCategory.name}
@@ -341,11 +310,12 @@ export default function ServicesPage({
               Available Subcategory Services ({activeCategory.subcategories.length})
             </h3>
 
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: activeCategory.subcategories.length >= 3 ? 'repeat(3, 1fr)' : 'repeat(2, 1fr)',
-              gap: '24px'
-            }} className="subcategories-grid-responsive">
+            <div 
+              className="subcategories-grid-responsive"
+              style={{
+                gridTemplateColumns: activeCategory.subcategories.length >= 3 ? 'repeat(3, 1fr)' : 'repeat(2, 1fr)'
+              }}
+            >
               {activeCategory.subcategories.map((sub) => (
                 <div
                   key={sub.id}
