@@ -18,7 +18,7 @@ export default function App() {
     const path = window.location.pathname.replace(/^\//, '').toLowerCase();
     const hash = window.location.hash.replace(/^#\/?/, '').toLowerCase();
     const target = path || hash;
-    if (target.includes('location')) return 'location';
+    if (target.includes('service-center') || target.includes('location')) return 'location';
     if (target.includes('book')) return 'book';
     if (target.includes('service')) return 'services';
     if (target.includes('about')) return 'about';
@@ -57,17 +57,20 @@ export default function App() {
 
   const navigateTo = (pageId, param = null) => {
     setActivePage(pageId);
-    let urlSuffix = '';
+    let url = '/';
     if (pageId === 'services') {
       if (param !== null) setSelectedCategory(param);
-      if (param) urlSuffix = `/${param}`;
+      url = param ? `/services/${param}` : '/services';
     } else if (pageId === 'location') {
-      if (param !== null) setSelectedCity(param.toLowerCase());
-      urlSuffix = `/${param ? param.toLowerCase() : selectedCity}`;
+      const city = (param !== null ? param : selectedCity || 'vijayawada').toLowerCase();
+      setSelectedCity(city);
+      url = `/service-center/${city}`;
     } else if (pageId === 'book') {
       if (param !== null) setSelectedService(param);
+      url = '/book';
+    } else if (pageId !== 'home') {
+      url = `/${pageId}`;
     }
-    const url = pageId === 'home' ? '/' : `/${pageId}${urlSuffix}`;
     window.history.pushState(null, '', url);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };

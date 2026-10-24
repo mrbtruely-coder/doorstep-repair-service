@@ -28,7 +28,7 @@ export default function LocationPage({
     title: `Doorstep Appliance Repair in ${cityData.name} | 10 KM Radius Express Service`,
     description: `Same-day doorstep appliance repair in ${cityData.name} across a 10 KM radial radius. Certified technicians for AC, Refrigerator, Washing Machine, Microwave Oven, Geyser & TV. Free visit within 10 km. Call 9515661677.`,
     keywords: `${cityData.name} appliance repair, ac service ${cityData.name}, fridge repair ${cityData.name}, washing machine repair ${cityData.name}, 10km radius repair ${cityData.name}`,
-    canonicalUrl: `http://localhost:3001/location/${cityData.id}`,
+    canonicalUrl: `http://localhost:3001/service-center/${cityData.id}`,
     ogType: 'website',
     ogImage: '/hero-technician.jpg'
   });
@@ -77,7 +77,7 @@ export default function LocationPage({
                   key={c.id}
                   onClick={() => {
                     if (setSelectedCity) setSelectedCity(c.id);
-                    window.history.pushState(null, '', `/location/${c.id}`);
+                    window.history.pushState(null, '', `/service-center/${c.id}`);
                   }}
                   style={{
                     background: isSelected ? 'linear-gradient(135deg, #00d2e6 0%, #0096b7 100%)' : '#ffffff',
