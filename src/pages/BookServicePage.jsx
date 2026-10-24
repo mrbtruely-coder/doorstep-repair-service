@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useSEO } from '../hooks/useSEO';
-import { CITIES, COMPANY_PHONE_DISPLAY, COMPANY_WHATSAPP_LINK, COMPANY_CALL_LINK } from '../constants/data';
+import { CITIES, COMPANY_PHONE_DISPLAY, COMPANY_WHATSAPP_LINK, COMPANY_CALL_LINK, SERVICE_CATEGORIES } from '../constants/data';
 import { 
   Wind, Snowflake, RotateCcw, Flame, Droplets, Tv, 
   CheckCircle2, ShieldCheck, Phone, MessageCircle, MapPin, 
-  ArrowRight, User, Mail, AlertCircle, Sparkles
+  ArrowRight, User, Mail, AlertCircle, Sparkles, Check
 } from 'lucide-react';
 
 export default function BookServicePage({ preselectedService, preselectedCity, preselectedLocality }) {
@@ -36,13 +36,20 @@ export default function BookServicePage({ preselectedService, preselectedCity, p
   });
 
   const applianceOptions = [
-    { id: 'ac', name: 'AC SERVICE', shortName: 'Air Conditioner', icon: <Wind size={24} /> },
-    { id: 'refrigerator', name: 'REFRIGERATOR', shortName: 'Refrigerator', icon: <Snowflake size={24} /> },
-    { id: 'washer', name: 'WASHING MACHINE', shortName: 'Washing Machine', icon: <RotateCcw size={24} /> },
-    { id: 'oven', name: 'OVEN / MICROWAVE', shortName: 'Oven & Microwave', icon: <Flame size={24} /> },
-    { id: 'geyser', name: 'GEYSER / HEATER', shortName: 'Geyser & Water Heater', icon: <Droplets size={24} /> },
-    { id: 'tv', name: 'LED / SMART TV', shortName: 'LED & Smart TV', icon: <Tv size={24} /> }
+    { id: 'ac', categoryId: 'ac', name: 'AC SERVICE', shortName: 'Air Conditioner', icon: <Wind size={24} /> },
+    { id: 'refrigerator', categoryId: 'refrigerator', name: 'REFRIGERATOR', shortName: 'Refrigerator', icon: <Snowflake size={24} /> },
+    { id: 'washer', categoryId: 'washing-machine', name: 'WASHING MACHINE', shortName: 'Washing Machine', icon: <RotateCcw size={24} /> },
+    { id: 'oven', categoryId: 'oven', name: 'OVEN / MICROWAVE', shortName: 'Oven & Microwave', icon: <Flame size={24} /> },
+    { id: 'geyser', categoryId: 'geyser', name: 'GEYSER / HEATER', shortName: 'Geyser & Water Heater', icon: <Droplets size={24} /> },
+    { id: 'tv', categoryId: 'tv', name: 'LED / SMART TV', shortName: 'LED & Smart TV', icon: <Tv size={24} /> }
   ];
+
+  // Helper to get subcategories for an appliance name
+  const getSubcategoriesForAppliance = (applianceName) => {
+    const opt = applianceOptions.find(o => o.name === applianceName);
+    const cat = SERVICE_CATEGORIES.find(c => c.id === opt?.categoryId || c.id === opt?.id);
+    return cat?.subcategories || [];
+  };
 
   // Set initial selected appliance with intelligent category & subcategory detection
   const [selectedAppliance, setSelectedAppliance] = useState(() => {
@@ -63,6 +70,33 @@ export default function BookServicePage({ preselectedService, preselectedCity, p
     }
     return 'AC SERVICE';
   });
+
+  // Set initial selected subcategory
+  const [selectedSubcategory, setSelectedSubcategory] = useState(() => {
+    if (preselectedService) {
+      const p = preselectedService.toLowerCase();
+      for (const cat of SERVICE_CATEGORIES) {
+        const found = cat.subcategories.find(s => 
+          s.name.toLowerCase() === p || 
+          p.includes(s.name.toLowerCase()) || 
+          s.name.toLowerCase().includes(p)
+        );
+        if (found) return found.name;
+      }
+    }
+    const initialSubs = getSubcategoriesForAppliance('AC SERVICE');
+    return initialSubs.length > 0 ? initialSubs[0].name : '';
+  });
+
+  const handleApplianceSelect = (opt) => {
+    setSelectedAppliance(opt.name);
+    const subs = getSubcategoriesForAppliance(opt.name);
+    if (subs.length > 0) {
+      setSelectedSubcategory(subs[0].name);
+    } else {
+      setSelectedSubcategory('');
+    }
+  };
 
   const getInitialCity = () => {
     if (preselectedCity) {
@@ -106,13 +140,17 @@ export default function BookServicePage({ preselectedService, preselectedCity, p
     e.preventDefault();
     setLoading(true);
 
+    const fullServiceDesc = selectedSubcategory 
+      ? `${selectedAppliance} - ${selectedSubcategory}`
+      : selectedAppliance;
+
     const bookingPayload = {
       fullName: formData.fullName,
       phone: formData.phone,
       email: formData.email,
       city: formData.city,
       locality: formData.locality,
-      serviceType: preselectedService ? `${selectedAppliance} - ${preselectedService}` : selectedAppliance,
+      serviceType: fullServiceDesc,
       preferredDate: new Date().toISOString().split('T')[0],
       preferredTime: 'Within 90 Minutes (Express Dispatch)',
       address: `${formData.locality}, ${formData.city}`
@@ -153,6 +191,8 @@ export default function BookServicePage({ preselectedService, preselectedCity, p
     });
   };
 
+  const availableSubcategories = getSubcategoriesForAppliance(selectedAppliance);
+
   return (
     <div style={{ backgroundColor: '#ffffff', minHeight: '100vh', padding: '56px 0 80px' }}>
       <div className="container" style={{ maxWidth: '1180px' }}>
@@ -167,7 +207,7 @@ export default function BookServicePage({ preselectedService, preselectedCity, p
         }} className="book-layout-responsive">
           
           {/* LEFT COLUMN: Informational text & trust cards */}
-          <div>
+          <div className="book-info-col">
             <div style={{
               display: 'inline-flex',
               alignItems: 'center',
@@ -286,7 +326,7 @@ export default function BookServicePage({ preselectedService, preselectedCity, p
           </div>
 
           {/* RIGHT COLUMN: Interactive Booking Form Card */}
-          <div style={{
+          <div className="book-form-col" style={{
             background: '#ffffff',
             border: '1.5px solid #e2e8f0',
             borderRadius: '24px',
@@ -316,11 +356,11 @@ export default function BookServicePage({ preselectedService, preselectedCity, p
                 </p>
 
                 <div style={{ background: '#f8fafc', padding: '18px', borderRadius: '12px', border: '1px solid #e2e8f0', textAlign: 'left', marginBottom: '20px', fontSize: '14px', lineHeight: '1.8' }}>
-                  <div><strong>Appliance:</strong> {successResult.booking.serviceType}</div>
+                  <div><strong>Appliance & Service:</strong> {successResult.booking.serviceType}</div>
                   <div><strong>Customer:</strong> {successResult.booking.fullName}</div>
                   <div><strong>Contact:</strong> {successResult.booking.phone}</div>
                   <div><strong>Location:</strong> {successResult.booking.locality}, {successResult.booking.city}</div>
-                  <div><strong>Estimated Arrival:</strong> Within 90 Minutes</div>
+                  <div><strong>Estimated Arrival:</strong> Within 90 Minutes (60-90 Min Dispatch)</div>
                 </div>
 
                 {successResult.emailSent && (
@@ -344,7 +384,7 @@ export default function BookServicePage({ preselectedService, preselectedCity, p
                   Request Service
                 </h2>
                 <p style={{ fontSize: '13.5px', color: '#64748b', marginBottom: '20px' }}>
-                  Tap your appliance, enter details, and book your technician.
+                  Tap your appliance, select service type, enter details, and book your technician.
                 </p>
 
                 {preselectedService && (
@@ -391,7 +431,7 @@ export default function BookServicePage({ preselectedService, preselectedCity, p
                         <button
                           type="button"
                           key={opt.id}
-                          onClick={() => setSelectedAppliance(opt.name)}
+                          onClick={() => handleApplianceSelect(opt)}
                           style={{
                             background: isSelected ? '#ecfeff' : '#ffffff',
                             border: isSelected ? '2px solid #00c2e8' : '1.5px solid #e2e8f0',
@@ -418,6 +458,105 @@ export default function BookServicePage({ preselectedService, preselectedCity, p
                       );
                     })}
                   </div>
+                </div>
+
+                {/* 2. CHOOSE SPECIFIC SERVICE / REPAIR TYPE */}
+                {availableSubcategories.length > 0 && (
+                  <div style={{ marginBottom: '24px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
+                      <label style={{
+                        display: 'block',
+                        fontSize: '11px',
+                        fontWeight: 800,
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.06em',
+                        color: '#008ba6'
+                      }}>
+                        2. SELECT REPAIR / SERVICE TYPE
+                      </label>
+                      <span style={{ fontSize: '11px', color: '#64748b', fontWeight: 600 }}>
+                        {availableSubcategories.length} Options Available
+                      </span>
+                    </div>
+
+                    <div style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '8px'
+                    }}>
+                      {availableSubcategories.map((sub) => {
+                        const isSubSelected = selectedSubcategory === sub.name;
+                        return (
+                          <div
+                            key={sub.id}
+                            onClick={() => setSelectedSubcategory(sub.name)}
+                            style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'space-between',
+                              padding: '11px 16px',
+                              borderRadius: '12px',
+                              border: isSubSelected ? '2px solid #00c2e8' : '1.5px solid #e2e8f0',
+                              background: isSubSelected ? '#ecfeff' : '#ffffff',
+                              cursor: 'pointer',
+                              transition: 'all 0.15s ease',
+                              boxShadow: isSubSelected ? '0 2px 8px rgba(0, 194, 232, 0.15)' : 'none'
+                            }}
+                          >
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                              <div style={{
+                                width: '18px',
+                                height: '18px',
+                                borderRadius: '50%',
+                                border: isSubSelected ? '5px solid #00c2e8' : '2px solid #cbd5e1',
+                                background: '#ffffff',
+                                flexShrink: 0
+                              }} />
+                              <div>
+                                <div style={{
+                                  fontSize: '13.5px',
+                                  fontWeight: isSubSelected ? 800 : 600,
+                                  color: isSubSelected ? '#008ba6' : '#0f172a'
+                                }}>
+                                  {sub.name}
+                                </div>
+                                <div style={{ fontSize: '11px', color: '#64748b', marginTop: '1px' }}>
+                                  {sub.badge || 'Certified Doorstep Fix'}
+                                </div>
+                              </div>
+                            </div>
+
+                            <div style={{
+                              fontSize: '11.5px',
+                              fontWeight: 700,
+                              color: isSubSelected ? '#008ba6' : '#475569',
+                              background: isSubSelected ? '#cffafe' : '#f1f5f9',
+                              padding: '4px 10px',
+                              borderRadius: '6px',
+                              whiteSpace: 'nowrap'
+                            }}>
+                              {sub.price}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                {/* 3. ENTER CONTACT & LOCATION DETAILS */}
+                <div style={{ marginBottom: '12px' }}>
+                  <label style={{
+                    display: 'block',
+                    fontSize: '11px',
+                    fontWeight: 800,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.06em',
+                    color: '#008ba6',
+                    marginBottom: '4px'
+                  }}>
+                    3. ENTER CONTACT & LOCATION DETAILS
+                  </label>
                 </div>
 
                 {/* FULL NAME & MOBILE NUMBER */}
@@ -551,7 +690,7 @@ export default function BookServicePage({ preselectedService, preselectedCity, p
                     e.currentTarget.style.background = 'linear-gradient(135deg, #00d2e6 0%, #0096b7 100%)';
                   }}
                 >
-                  {loading ? 'Dispatching Request...' : 'Book Service Now'} <ArrowRight size={18} />
+                  {loading ? 'Dispatching Request...' : `Book ${selectedSubcategory ? selectedSubcategory : selectedAppliance} Now`} <ArrowRight size={18} />
                 </button>
               </form>
             )}

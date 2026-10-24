@@ -269,7 +269,15 @@ button {
     grid-template-columns: 1fr 1fr !important;
   }
   .book-layout-responsive {
-    grid-template-columns: 1fr !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 36px !important;
+  }
+  .book-layout-responsive .book-form-col {
+    order: 1 !important;
+  }
+  .book-layout-responsive .book-info-col {
+    order: 2 !important;
   }
   .contact-grid-responsive {
     grid-template-columns: 1fr !important;
