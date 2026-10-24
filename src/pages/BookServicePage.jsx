@@ -100,7 +100,9 @@ export default function BookServicePage({ preselectedService, preselectedCity, p
     phone: '',
     email: '',
     city: initialCity,
-    locality: preselectedLocality || (initialCity === 'Guntur' ? 'Arundelpet' : (initialCity === 'Nellore' ? 'Trunk Road' : 'Benz Circle'))
+    locality: preselectedLocality || (initialCity === 'Guntur' ? 'Arundelpet' : (initialCity === 'Nellore' ? 'Trunk Road' : 'Benz Circle')),
+    address: '',
+    notes: ''
   });
 
   const localitiesByCity = {
@@ -138,7 +140,10 @@ export default function BookServicePage({ preselectedService, preselectedCity, p
       serviceType: fullServiceDesc,
       preferredDate: new Date().toISOString().split('T')[0],
       preferredTime: 'Within 90 Minutes (Express Dispatch)',
-      address: `${formData.locality}, ${formData.city}`
+      address: formData.address 
+        ? `${formData.address}, ${formData.locality}, ${formData.city}`
+        : `${formData.locality}, ${formData.city}`,
+      notes: formData.notes || ''
     };
 
     try {
@@ -643,6 +648,39 @@ export default function BookServicePage({ preselectedService, preselectedCity, p
                       ))}
                     </select>
                   </div>
+                </div>
+
+                {/* STREET / DOOR NO / LANDMARK */}
+                <div style={{ marginBottom: '18px' }}>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', color: '#0f172a', marginBottom: '6px' }}>
+                    DOOR NO / STREET / LANDMARK (OPTIONAL)
+                  </label>
+                  <div style={{ position: 'relative' }}>
+                    <input
+                      type="text"
+                      placeholder="e.g. Flat 302, Green Meadows Apt, Near SBI Bank"
+                      value={formData.address}
+                      onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                      className="form-input"
+                      style={{ paddingLeft: '38px', borderRadius: '10px' }}
+                    />
+                    <MapPin size={16} style={{ position: 'absolute', left: '12px', top: '15px', color: '#94a3b8' }} />
+                  </div>
+                </div>
+
+                {/* PROBLEM DESCRIPTION / NOTES */}
+                <div style={{ marginBottom: '24px' }}>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', color: '#0f172a', marginBottom: '6px' }}>
+                    DESCRIBE APPLIANCE ISSUE / NOTE FOR TECHNICIAN (OPTIONAL)
+                  </label>
+                  <textarea
+                    rows={2}
+                    placeholder="e.g. AC cooling slowly, making clicking noise, etc."
+                    value={formData.notes}
+                    onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+                    className="form-input"
+                    style={{ borderRadius: '10px', resize: 'vertical' }}
+                  />
                 </div>
 
                 {/* CYAN BOOK SERVICE NOW BUTTON */}
