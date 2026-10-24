@@ -142,7 +142,7 @@ export default function BookServicePage({ preselectedService, preselectedCity, p
     };
 
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/book-service';
+      const apiUrl = import.meta.env.VITE_API_URL || 'https://doorstep-repair-service-backend.onrender.com/api/book-service';
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
