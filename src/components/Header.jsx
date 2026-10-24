@@ -167,7 +167,7 @@ export default function Header({ activePage, setActivePage }) {
                   if (openDropdown !== 'categories' && !isCategoriesActive) e.currentTarget.style.color = '#091a3c';
                 }}
               >
-                <span>Categories</span>
+                <span>Services</span>
                 {openDropdown === 'categories' ? (
                   <ChevronUp size={16} color="#008ba6" strokeWidth={2.5} />
                 ) : (
@@ -200,7 +200,7 @@ export default function Header({ activePage, setActivePage }) {
                     textTransform: 'uppercase',
                     color: '#07152b'
                   }}>
-                    CORE APPLIANCE CATEGORIES
+                    OUR APPLIANCE SERVICES
                   </div>
 
                   {/* List of 6 Categories */}
@@ -296,7 +296,7 @@ export default function Header({ activePage, setActivePage }) {
                     }}
                   >
                     <span style={{ fontSize: '13px', fontWeight: 700, color: '#008ba6' }}>
-                      Explore All Categories & Services
+                      Explore All Services
                     </span>
                     <ArrowRight size={15} color="#008ba6" />
                   </div>
@@ -594,7 +594,7 @@ export default function Header({ activePage, setActivePage }) {
                   fontSize: '15px'
                 }}
               >
-                <span>Categories</span>
+                <span>Services</span>
                 {mobileCategoriesOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
               </button>
 
@@ -632,7 +632,7 @@ export default function Header({ activePage, setActivePage }) {
                       gap: '6px'
                     }}
                   >
-                    Explore All Categories →
+                    Explore All Services →
                   </div>
                 </div>
               )}
