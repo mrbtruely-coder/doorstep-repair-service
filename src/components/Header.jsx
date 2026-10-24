@@ -338,7 +338,7 @@ export default function Header({ activePage, setActivePage }) {
                 )}
               </button>
 
-              {/* LOCATIONS FLOATING DROPDOWN CARD (Matching Reference Image) */}
+              {/* LOCATIONS FLOATING DROPDOWN CARD */}
               {openDropdown === 'locations' && (
                 <div 
                   className="header-dropdown-card"
@@ -346,7 +346,7 @@ export default function Header({ activePage, setActivePage }) {
                     position: 'absolute',
                     top: 'calc(100% + 10px)',
                     left: 0,
-                    width: '380px',
+                    width: '270px',
                     background: '#ffffff',
                     borderRadius: '18px',
                     border: '1px solid #e2e8f0',
@@ -366,7 +366,7 @@ export default function Header({ activePage, setActivePage }) {
                     SERVICE HUBS & CITIES
                   </div>
 
-                  {/* List of 3 Service Cities */}
+                  {/* List of Service Cities - Clean City Name Only */}
                   <div style={{ padding: '4px 8px' }}>
                     {CITIES.map((city) => (
                       <div
@@ -375,8 +375,8 @@ export default function Header({ activePage, setActivePage }) {
                         style={{
                           display: 'flex',
                           alignItems: 'center',
-                          gap: '14px',
-                          padding: '12px 14px',
+                          gap: '12px',
+                          padding: '10px 14px',
                           borderRadius: '12px',
                           cursor: 'pointer',
                           transition: 'all 0.15s ease'
@@ -394,9 +394,9 @@ export default function Header({ activePage, setActivePage }) {
                       >
                         {/* Rounded squircle pin container */}
                         <div style={{
-                          width: '42px',
-                          height: '42px',
-                          borderRadius: '11px',
+                          width: '36px',
+                          height: '36px',
+                          borderRadius: '10px',
                           background: '#f0fbfd',
                           border: '1px solid #cffafe',
                           display: 'flex',
@@ -404,34 +404,21 @@ export default function Header({ activePage, setActivePage }) {
                           justifyContent: 'center',
                           flexShrink: 0
                         }}>
-                          <MapPin size={20} color="#0096b7" />
+                          <MapPin size={18} color="#0096b7" />
                         </div>
 
-                        {/* City Details */}
-                        <div style={{ overflow: 'hidden' }}>
-                          <div 
-                            className="city-title"
-                            style={{
-                              fontSize: '14.5px',
-                              fontWeight: 700,
-                              color: '#0f172a',
-                              transition: 'color 0.15s ease'
-                            }}
-                          >
-                            {city.name}
-                          </div>
-                          <div style={{
-                            fontSize: '12px',
-                            color: '#64748b',
-                            lineHeight: 1.35,
-                            marginTop: '2px',
-                            whiteSpace: 'nowrap',
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis'
-                          }}>
-                            Andhra Pradesh • 10 KM Radius ({city.hub})
-                          </div>
-                        </div>
+                        {/* City Name Only */}
+                        <span 
+                          className="city-title"
+                          style={{
+                            fontSize: '14.5px',
+                            fontWeight: 700,
+                            color: '#0f172a',
+                            transition: 'color 0.15s ease'
+                          }}
+                        >
+                          {city.name}
+                        </span>
                       </div>
                     ))}
                   </div>
@@ -459,7 +446,7 @@ export default function Header({ activePage, setActivePage }) {
                     }}
                   >
                     <span style={{ fontSize: '13px', fontWeight: 700, color: '#008ba6' }}>
-                      All City Hubs & Coverage Areas
+                      All City Hubs & Coverage
                     </span>
                     <ArrowRight size={15} color="#008ba6" />
                   </div>
@@ -691,7 +678,7 @@ export default function Header({ activePage, setActivePage }) {
                       }}
                     >
                       <MapPin size={16} color="#008ba6" />
-                      <span>{city.name} (10 KM Radius)</span>
+                      <span>{city.name}</span>
                     </div>
                   ))}
                 </div>
