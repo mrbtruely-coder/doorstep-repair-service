@@ -135,19 +135,22 @@ export default function HomePage({ setActivePage, setSelectedService }) {
             
             {/* Left Hero Image */}
             <div style={{ position: 'relative' }}>
-              <div style={{
-                borderRadius: '24px',
-                overflow: 'hidden',
-                boxShadow: '0 20px 40px -15px rgba(9, 26, 60, 0.12)',
-                border: '1px solid #e2e8f0',
-                background: '#f8fafc'
-              }}>
+              <div 
+                className="hero-image-wrapper"
+                style={{
+                  borderRadius: '24px',
+                  overflow: 'hidden',
+                  boxShadow: '0 20px 40px -15px rgba(9, 26, 60, 0.12)',
+                  border: '1px solid #e2e8f0',
+                  background: '#f8fafc'
+                }}
+              >
                 <img
                   src="/hero-technician.jpg"
                   alt="Certified Appliance Repair Technician at Doorstep"
                   style={{
                     width: '100%',
-                    height: 'auto',
+                    height: '100%',
                     display: 'block',
                     objectFit: 'cover'
                   }}

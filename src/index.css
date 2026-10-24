@@ -255,6 +255,18 @@ button {
 @media (max-width: 900px) {
   .hero-grid-responsive {
     grid-template-columns: 1fr !important;
+    gap: 28px !important;
+  }
+  .hero-image-wrapper {
+    max-height: 260px !important;
+    border-radius: 20px !important;
+    overflow: hidden !important;
+  }
+  .hero-image-wrapper img {
+    height: 260px !important;
+    width: 100% !important;
+    object-fit: cover !important;
+    object-position: center 20% !important;
   }
   .standards-grid-responsive {
     grid-template-columns: 1fr 1fr !important;
@@ -288,6 +300,16 @@ button {
 }
 
 @media (max-width: 580px) {
+  .hero-image-wrapper {
+    max-height: 200px !important;
+    border-radius: 16px !important;
+  }
+  .hero-image-wrapper img {
+    height: 200px !important;
+    width: 100% !important;
+    object-fit: cover !important;
+    object-position: center 18% !important;
+  }
   .standards-grid-responsive {
     grid-template-columns: 1fr !important;
   }
