@@ -4,9 +4,9 @@ import { Lock, ShieldCheck } from 'lucide-react';
 
 export default function PolicyPage() {
   useSEO({
-    title: 'Privacy Policy & Customer Data Protection | Doorstep Repair Service',
-    description: 'Read the official Privacy Policy of Doorstep Repair Service. Learn how we safeguard your personal data, telephone numbers, and repair records in Vijayawada, Guntur & Nellore. Zero spam, complete confidentiality.',
-    keywords: 'privacy policy, customer data protection, appliance repair privacy, doorstep repair safety vijayawada, service records security andhra pradesh',
+    title: 'Privacy Policy | Doorstep Appliance Repair Service',
+    description: 'Our privacy policy explains how we collect and protect your booking details when you request doorstep appliance repair services in Vijayawada, Guntur, and Nellore.',
+    keywords: 'privacy policy, customer data protection, doorstep repair privacy, customer confidentiality andhra pradesh',
     canonicalUrl: 'http://localhost:3001/policy',
     ogType: 'website',
     ogImage: '/hero-technician.jpg',

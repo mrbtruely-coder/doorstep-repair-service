@@ -1,28 +1,11 @@
 import React from 'react';
 import { useSEO } from '../hooks/useSEO';
+import { getSEOMetadata } from '../utils/seoData';
 import { ShieldCheck, Award, Users, CheckCircle, MapPin } from 'lucide-react';
 import { CITIES } from '../constants/data';
 
 export default function AboutPage({ setActivePage }) {
-  useSEO({
-    title: 'About Us | Certified Doorstep Appliance Repair Service Andhra Pradesh',
-    description: 'Learn about Doorstep Repair Service. Over 8+ years delivering trusted home appliance repair in Vijayawada, Guntur & Nellore with certified technicians, genuine OEM spare parts, 90-day warranty, and transparent billing. Call 9515661677.',
-    keywords: 'about doorstep repair, certified appliance technicians vijayawada, home appliance repair company guntur, trusted technician nellore, doorstep service warranty',
-    canonicalUrl: 'http://localhost:3001/about',
-    ogType: 'website',
-    ogImage: '/hero-technician.jpg',
-    structuredData: {
-      '@context': 'https://schema.org',
-      '@type': 'AboutPage',
-      'mainEntity': {
-        '@type': 'LocalBusiness',
-        'name': 'Doorstep Repair Service',
-        'description': 'Certified doorstep appliance repair and maintenance company operating in Vijayawada, Guntur, and Nellore.',
-        'telephone': '+919515661677',
-        'areaServed': ['Vijayawada', 'Guntur', 'Nellore']
-      }
-    }
-  });
+  useSEO(getSEOMetadata({ page: 'about' }));
 
   return (
     <div className="section-padding" style={{ backgroundColor: '#ffffff' }}>

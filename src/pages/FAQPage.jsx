@@ -9,9 +9,9 @@ import {
 export default function FAQPage({ setActivePage }) {
   // 1. Industry-Level Location & Services Rich SEO Metadata
   useSEO({
-    title: 'Frequently Answered Questions | Appliance Repair in Vijayawada, Guntur & Nellore',
-    description: 'Find answers to common questions regarding doorstep appliance repair in Vijayawada, Guntur, and Nellore. Initial diagnostics from ₹249, 60-90 min same-day arrival, 90-day warranty on AC, Refrigerator, Washing Machine, Microwave & TV. Call 9515661677.',
-    keywords: 'appliance repair faq, doorstep service charges vijayawada, ac repair cost guntur, fridge warranty nellore, washing machine technician arrival, microwave oven repair charges, certified technicians andhra pradesh',
+    title: 'Frequently Asked Questions (FAQ) | Doorstep Repair Service',
+    description: 'Find answers to common questions about appliance repair pricing, 90-minute arrival, 90-day warranty, genuine spare parts, and doorstep service coverage in Vijayawada, Guntur, and Nellore.',
+    keywords: 'appliance repair faq, doorstep service questions, repair warranty, repair pricing vijayawada guntur nellore, ac service faq, fridge repair cost',
     canonicalUrl: 'http://localhost:3001/faq',
     ogType: 'website',
     ogImage: '/hero-technician.jpg',

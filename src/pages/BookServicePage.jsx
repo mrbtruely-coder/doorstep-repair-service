@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSEO } from '../hooks/useSEO';
+import { getSEOMetadata } from '../utils/seoData';
 import { CITIES, COMPANY_PHONE_DISPLAY, COMPANY_WHATSAPP_LINK, COMPANY_CALL_LINK, SERVICE_CATEGORIES } from '../constants/data';
 import { 
   Wind, Snowflake, RotateCcw, Flame, Droplets, Tv, 
@@ -8,32 +9,16 @@ import {
 } from 'lucide-react';
 
 export default function BookServicePage({ preselectedService, preselectedCity, preselectedLocality }) {
-  // 1. Comprehensive SEO Injection
-  useSEO({
-    title: 'Book Service Online | Same-Day Appliance Repair in Vijayawada, Guntur & Nellore',
-    description: 'Easy 2-Step Doorstep Repair Dispatch. Book certified technicians for AC, Refrigerator, Washing Machine, Microwave Oven, Geyser & Smart TV in Vijayawada, Guntur, and Nellore. Zero booking fee, 90 min arrival. Call 9515661677.',
-    keywords: 'book doorstep service, appliance repair booking online, ac technician vijayawada, fridge repair guntur, washing machine booking nellore, oven service dispatch, geyser technician doorstep',
-    canonicalUrl: 'http://localhost:3001/book-service',
-    ogType: 'website',
-    ogImage: '/hero-technician.jpg',
-    structuredData: {
-      '@context': 'https://schema.org',
-      '@type': 'Service',
-      'serviceType': 'Doorstep Home Appliance Repair Booking',
-      'provider': {
-        '@type': 'LocalBusiness',
-        'name': 'Doorstep Repair Service',
-        'telephone': '+919515661677',
-        'areaServed': ['Vijayawada', 'Guntur', 'Nellore']
-      },
-      'offers': {
-        '@type': 'Offer',
-        'price': '0',
-        'priceCurrency': 'INR',
-        'description': 'Free online booking registration. Pay diagnostic charge only after doorstep inspection.'
-      }
-    }
+  // 1. Dynamic SEO Injection using simple English and tailored keywords
+  const seoData = getSEOMetadata({
+    page: 'book',
+    city: preselectedCity,
+    area: preselectedLocality,
+    category: preselectedService,
+    origin: typeof window !== 'undefined' ? window.location.origin : 'http://localhost:5175'
   });
+
+  useSEO(seoData);
 
   const applianceOptions = [
     { id: 'ac', categoryId: 'ac', name: 'AC SERVICE', shortName: 'Air Conditioner', icon: <Wind size={24} /> },
@@ -363,9 +348,9 @@ export default function BookServicePage({ preselectedService, preselectedCity, p
                   <div><strong>Estimated Arrival:</strong> Within 90 Minutes (60-90 Min Dispatch)</div>
                 </div>
 
-                {successResult.emailSent && (
-                  <div style={{ background: '#f0fdf4', border: '1px solid #bbf7d0', padding: '12px', borderRadius: '8px', color: '#166534', fontSize: '13px', marginBottom: '24px' }}>
-                    ⚡ <strong>Automated Email Notice:</strong> {successResult.emailNotice}
+                {(successResult.customerEmailSent || successResult.teamEmailSent || successResult.emailSent || successResult.emailNotice) && (
+                  <div style={{ background: '#f0fdf4', border: '1px solid #bbf7d0', padding: '14px', borderRadius: '8px', color: '#166534', fontSize: '13.5px', marginBottom: '24px', lineHeight: '1.5' }}>
+                    ⚡ <strong>Automated Email Notice:</strong> {successResult.emailNotice || 'Booking confirmed & Doorstep Hub dispatched.'}
                   </div>
                 )}
 

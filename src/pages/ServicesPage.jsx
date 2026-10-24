@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSEO } from '../hooks/useSEO';
+import { getSEOMetadata } from '../utils/seoData';
 import { 
   SERVICE_CATEGORIES, 
   COMPANY_PHONE_DISPLAY, 
@@ -20,16 +21,6 @@ export default function ServicesPage({
   setSelectedSubLocation,
   selectedCity
 }) {
-  // Rich SEO Metadata
-  useSEO({
-    title: 'Appliance Repair Categories & Subcategories | Doorstep Repair Services',
-    description: 'Browse complete categories and subcategories for Oven, Geyser, TV, AC, Washing Machine & Refrigerator repair in Vijayawada, Guntur, and Nellore. 90-day warranty, transparent pricing.',
-    keywords: 'convectional oven repair, microwave repair, electric geyser, instant geyser, lcd tv, smart tv repair, tv mounting, split ac, cassette ac, front load washer, top load washing machine, double door fridge repair',
-    canonicalUrl: 'http://localhost:3001/services',
-    ogType: 'website',
-    ogImage: '/service_ac.jpg'
-  });
-
   // Internal or external category state
   const [internalCategory, setInternalCategory] = useState(externalCategory || null);
 
@@ -38,6 +29,17 @@ export default function ServicesPage({
   }, [externalCategory]);
 
   const currentCategoryId = externalCategory !== undefined ? externalCategory : internalCategory;
+
+  // Rich SEO Metadata dynamically tailored to selected service category, city and area
+  const seoData = getSEOMetadata({
+    page: 'services',
+    category: currentCategoryId,
+    city: selectedCity,
+    area: selectedSubLocation,
+    origin: typeof window !== 'undefined' ? window.location.origin : 'http://localhost:5175'
+  });
+
+  useSEO(seoData);
 
   const handleSelectCategory = (categoryId) => {
     if (setExternalCategory) {

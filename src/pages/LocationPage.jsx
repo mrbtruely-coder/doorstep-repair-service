@@ -1,5 +1,5 @@
-import React from 'react';
 import { useSEO } from '../hooks/useSEO';
+import { getSEOMetadata } from '../utils/seoData';
 import { 
   CITIES, 
   SERVICE_CATEGORIES, 
@@ -26,19 +26,15 @@ export default function LocationPage({
   const currentCityId = isAllCities ? 'all' : (selectedCity || 'vijayawada').toLowerCase();
   const cityData = CITIES.find(c => c.id.toLowerCase() === currentCityId) || CITIES[0];
 
-  // 1. Dynamic SEO
-  useSEO({
-    title: isAllCities 
-      ? 'All City Service Hubs & 10 KM Coverage | Vijayawada, Guntur & Nellore'
-      : `Doorstep Appliance Repair in ${cityData.name} | 10 KM Radius Express Service`,
-    description: isAllCities
-      ? 'Same-day doorstep appliance repair in Vijayawada, Guntur, and Nellore across 10 KM radial service hubs. Certified local technicians. Call 9515661677.'
-      : `Same-day doorstep appliance repair in ${cityData.name} across a 10 KM radial radius. Certified technicians for AC, Refrigerator, Washing Machine, Microwave Oven, Geyser & TV. Free visit within 10 km. Call 9515661677.`,
-    keywords: `${cityData.name} appliance repair, ac service ${cityData.name}, fridge repair ${cityData.name}, washing machine repair ${cityData.name}, 10km radius repair ${cityData.name}`,
-    canonicalUrl: isAllCities ? 'http://localhost:3001/service-center' : `http://localhost:3001/service-center/${cityData.id}`,
-    ogType: 'website',
-    ogImage: '/hero-technician.jpg'
+  // 1. Dynamic SEO for Cities and Sub-areas with user-friendly English & specific keywords
+  const seoData = getSEOMetadata({
+    page: 'location',
+    city: isAllCities ? null : cityData.id,
+    area: selectedSubLocation,
+    origin: typeof window !== 'undefined' ? window.location.origin : 'http://localhost:5175'
   });
+
+  useSEO(seoData);
 
   const handleBookCategory = (catName) => {
     if (setSelectedService) {

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSEO } from '../hooks/useSEO';
+import { getSEOMetadata } from '../utils/seoData';
 import { SERVICES, CITIES, COMPANY_PHONE_DISPLAY, COMPANY_WHATSAPP_LINK, COMPANY_CALL_LINK } from '../constants/data';
 import { 
   Clock, ShieldCheck, Star, ArrowRight, Phone, MessageCircle, 
@@ -8,11 +9,7 @@ import {
 } from 'lucide-react';
 
 export default function HomePage({ setActivePage, setSelectedService }) {
-  useSEO({
-    title: 'Doorstep Repair Service | Same-Day Appliance Repair in Vijayawada, Guntur & Nellore',
-    description: 'Easy doorstep repair for Oven, Geyser, TV, AC, Fridge & Washer in Vijayawada, Guntur & Nellore. Professional local technicians at your doorstep in 90 mins with 90-day warranty. Call 9515661677.',
-    keywords: 'doorstep repair, appliance repair vijayawada, ac repair guntur, fridge repair nellore, washing machine technician'
-  });
+  useSEO(getSEOMetadata({ page: 'home' }));
 
   const [activeFaq, setActiveFaq] = useState(0);
   const [activeReviewIdx, setActiveReviewIdx] = useState(0);

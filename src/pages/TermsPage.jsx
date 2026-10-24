@@ -4,9 +4,9 @@ import { ShieldCheck, FileText } from 'lucide-react';
 
 export default function TermsPage() {
   useSEO({
-    title: 'Terms of Service & Appliance Warranty Policy | Doorstep Repair Service',
-    description: 'Read the official Terms of Service and Warranty Policy for Doorstep Repair Service. Learn about transparent diagnostic charges, 90-day warranty coverage, OEM parts guarantee, and technician safety in Vijayawada, Guntur & Nellore.',
-    keywords: 'terms of service, appliance warranty policy, doorstep repair charges terms, 90 day warranty terms vijayawada, service conditions guntur, technician safety policy nellore',
+    title: 'Terms of Service | Doorstep Appliance Repair Service',
+    description: 'Read the terms of service, transparent pricing policy, and 90-day warranty conditions for Doorstep Repair Service in Vijayawada, Guntur, and Nellore.',
+    keywords: 'terms of service, appliance repair warranty terms, doorstep service policies, warranty conditions vijayawada guntur nellore',
     canonicalUrl: 'http://localhost:3001/terms',
     ogType: 'website',
     ogImage: '/hero-technician.jpg',

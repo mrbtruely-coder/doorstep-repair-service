@@ -47,10 +47,16 @@ export default function App() {
     return 'all';
   };
 
+  const getSubLocationFromURL = () => {
+    if (typeof window === 'undefined') return null;
+    const params = new URLSearchParams(window.location.search);
+    return params.get('area') || params.get('locality') || params.get('subLocation') || null;
+  };
+
   const [activePage, setActivePage] = useState(getPageFromPathOrHash);
   const [selectedService, setSelectedService] = useState('AC SERVICE');
   const [selectedCategory, setSelectedCategory] = useState(getCategoryFromPath);
-  const [selectedSubLocation, setSelectedSubLocation] = useState(null);
+  const [selectedSubLocation, setSelectedSubLocation] = useState(getSubLocationFromURL);
   const [selectedCity, setSelectedCity] = useState(getCityFromPath);
 
   useEffect(() => {
@@ -58,6 +64,7 @@ export default function App() {
       setActivePage(getPageFromPathOrHash());
       setSelectedCategory(getCategoryFromPath());
       setSelectedCity(getCityFromPath());
+      setSelectedSubLocation(getSubLocationFromURL());
     };
     window.addEventListener('popstate', handlePopState);
     window.addEventListener('hashchange', handlePopState);
@@ -76,13 +83,22 @@ export default function App() {
     if (pageId === 'services') {
       setSelectedCategory(param);
       url = param ? `/services/${param}` : '/services';
+      if (subLocation) {
+        url += `?area=${encodeURIComponent(subLocation)}`;
+      }
     } else if (pageId === 'location') {
       const city = (param !== null ? param : 'all').toLowerCase();
       setSelectedCity(city);
       url = city === 'all' ? '/service-center' : `/service-center/${city}`;
+      if (subLocation) {
+        url += `?area=${encodeURIComponent(subLocation)}`;
+      }
     } else if (pageId === 'book') {
       if (param !== null) setSelectedService(param);
       url = '/book';
+      if (subLocation) {
+        url += `?area=${encodeURIComponent(subLocation)}`;
+      }
     } else if (pageId !== 'home') {
       url = `/${pageId}`;
     }

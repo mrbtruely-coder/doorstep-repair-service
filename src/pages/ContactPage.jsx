@@ -31,9 +31,9 @@ export default function ContactPage({ setActivePage }) {
 
   // 1. Industry-Level Location & Services Rich SEO Metadata
   useSEO({
-    title: 'Contact Us & Service Locations | Doorstep Appliance Repair in Vijayawada, Guntur & Nellore',
-    description: 'Contact Doorstep Repair Service. Dispatch hubs across Vijayawada (Benz Circle), Guntur (Arundelpet) & Nellore (Magunta Layout). Fast same-day technician dispatch for AC, Fridge, Washer, Oven & TV. Call or WhatsApp 9515661677.',
-    keywords: 'contact doorstep repair, appliance repair vijayawada phone number, guntur dispatch hub, nellore service location, 9515661677 contact number, emergency appliance technician andhra pradesh',
+    title: 'Contact Us | Doorstep Appliance Repair Helpline & Support',
+    description: 'Get in touch with Doorstep Repair Service. Direct helpline: +91 9515661677, WhatsApp chat support, and service dispatch hubs in Vijayawada, Guntur, and Nellore.',
+    keywords: 'contact doorstep repair, appliance repair phone number, ac repair customer care, doorstep repair helpline 9515661677, vijayawada repair center, guntur repair center, nellore repair center',
     canonicalUrl: 'http://localhost:3001/contact',
     ogType: 'website',
     ogImage: '/hero-technician.jpg',
