@@ -7,7 +7,7 @@ import {
   ArrowRight, User, Mail, AlertCircle, Sparkles
 } from 'lucide-react';
 
-export default function BookServicePage({ preselectedService, preselectedCity }) {
+export default function BookServicePage({ preselectedService, preselectedCity, preselectedLocality }) {
   // 1. Comprehensive SEO Injection
   useSEO({
     title: 'Book Service Online | Same-Day Appliance Repair in Vijayawada, Guntur & Nellore',
@@ -81,7 +81,7 @@ export default function BookServicePage({ preselectedService, preselectedCity })
     phone: '',
     email: '',
     city: initialCity,
-    locality: initialCity === 'Guntur' ? 'Arundelpet' : (initialCity === 'Nellore' ? 'Trunk Road' : 'Benz Circle')
+    locality: preselectedLocality || (initialCity === 'Guntur' ? 'Arundelpet' : (initialCity === 'Nellore' ? 'Trunk Road' : 'Benz Circle'))
   });
 
   const localitiesByCity = {

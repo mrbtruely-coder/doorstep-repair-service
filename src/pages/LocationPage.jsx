@@ -17,7 +17,9 @@ export default function LocationPage({
   selectedCity = 'vijayawada', 
   setSelectedCity, 
   setActivePage, 
-  setSelectedService 
+  setSelectedService,
+  selectedSubLocation,
+  setSelectedSubLocation
 }) {
   // Normalize current city
   const currentCityId = (selectedCity || 'vijayawada').toLowerCase();
@@ -42,6 +44,13 @@ export default function LocationPage({
 
   const handleViewSubcategories = (catId) => {
     setActivePage('services', catId);
+  };
+
+  const handleColonyClick = (colony) => {
+    if (setSelectedSubLocation) {
+      setSelectedSubLocation(colony);
+    }
+    setActivePage('services', null, colony);
   };
 
   return (
@@ -298,6 +307,7 @@ export default function LocationPage({
             {cityData.keyColonies.map((colony, idx) => (
               <div 
                 key={idx}
+                onClick={() => handleColonyClick(colony)}
                 style={{
                   background: '#ffffff',
                   border: '1.5px solid #e2e8f0',
@@ -305,26 +315,62 @@ export default function LocationPage({
                   padding: '12px 16px',
                   display: 'flex',
                   alignItems: 'center',
+                  justifyContent: 'space-between',
                   gap: '10px',
                   fontSize: '14px',
                   fontWeight: 600,
                   color: '#1e293b',
-                  boxShadow: '0 2px 6px rgba(0,0,0,0.03)'
+                  cursor: 'pointer',
+                  boxShadow: '0 2px 6px rgba(0,0,0,0.03)',
+                  transition: 'all 0.18s ease'
+                }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.borderColor = '#00c2e8';
+                  e.currentTarget.style.backgroundColor = '#ecfeff';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = '0 6px 18px rgba(0, 194, 232, 0.18)';
+                  const arrow = e.currentTarget.querySelector('.colony-cta');
+                  if (arrow) arrow.style.color = '#008ba6';
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.borderColor = '#e2e8f0';
+                  e.currentTarget.style.backgroundColor = '#ffffff';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 2px 6px rgba(0,0,0,0.03)';
+                  const arrow = e.currentTarget.querySelector('.colony-cta');
+                  if (arrow) arrow.style.color = '#94a3b8';
                 }}
               >
-                <div style={{
-                  width: '28px',
-                  height: '28px',
-                  borderRadius: '8px',
-                  background: '#ecfeff',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexShrink: 0
-                }}>
-                  <MapPin size={16} color="#0891b2" />
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <div style={{
+                    width: '30px',
+                    height: '30px',
+                    borderRadius: '8px',
+                    background: '#ecfeff',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0
+                  }}>
+                    <MapPin size={16} color="#0891b2" />
+                  </div>
+                  <span>{colony}</span>
                 </div>
-                <span>{colony}</span>
+                <div 
+                  className="colony-cta"
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '4px',
+                    fontSize: '11.5px',
+                    fontWeight: 700,
+                    color: '#94a3b8',
+                    transition: 'color 0.15s ease'
+                  }}
+                >
+                  <span>Services</span>
+                  <ArrowRight size={13} />
+                </div>
               </div>
             ))}
           </div>

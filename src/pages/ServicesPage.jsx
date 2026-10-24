@@ -8,14 +8,17 @@ import {
 } from '../constants/data';
 import { 
   Check, ArrowRight, ArrowLeft, ShieldCheck, Phone, MessageCircle, 
-  Sparkles, Clock, Wrench, ChevronRight, Award, Zap
+  Sparkles, Clock, Wrench, ChevronRight, Award, Zap, MapPin
 } from 'lucide-react';
 
 export default function ServicesPage({ 
   setActivePage, 
   setSelectedService, 
   selectedCategory: externalCategory, 
-  setSelectedCategory: setExternalCategory 
+  setSelectedCategory: setExternalCategory,
+  selectedSubLocation,
+  setSelectedSubLocation,
+  selectedCity
 }) {
   // Rich SEO Metadata
   useSEO({
@@ -465,6 +468,74 @@ export default function ServicesPage({
         <section style={{ padding: '64px 0 80px', background: '#f8fafc' }}>
           <div className="container">
             
+            {/* Sub-location Spotlight Alert Banner */}
+            {selectedSubLocation && (
+              <div style={{
+                background: '#ecfeff',
+                border: '1.5px solid #a5f3fc',
+                borderRadius: '16px',
+                padding: '16px 22px',
+                marginBottom: '32px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                flexWrap: 'wrap',
+                gap: '14px',
+                boxShadow: '0 4px 14px rgba(0, 194, 232, 0.12)'
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+                  <div style={{
+                    width: '42px',
+                    height: '42px',
+                    borderRadius: '12px',
+                    background: '#00c2e8',
+                    color: '#ffffff',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0
+                  }}>
+                    <MapPin size={22} />
+                  </div>
+                  <div>
+                    <div style={{ fontSize: '16px', fontWeight: 800, color: '#091a3c' }}>
+                      Doorstep Repair Services Available in: <strong style={{ color: '#008ba6' }}>{selectedSubLocation}</strong>
+                    </div>
+                    <div style={{ fontSize: '13px', color: '#0e7490', marginTop: '2px' }}>
+                      ⚡ 10 KM Radial Zone: Certified technician vans stationed locally. Express 60–90 min arrival in {selectedSubLocation}!
+                    </div>
+                  </div>
+                </div>
+
+                <button
+                  onClick={() => {
+                    if (setSelectedSubLocation) setSelectedSubLocation(null);
+                  }}
+                  style={{
+                    background: '#ffffff',
+                    border: '1px solid #cbd5e1',
+                    borderRadius: '8px',
+                    padding: '7px 14px',
+                    fontSize: '12.5px',
+                    fontWeight: 700,
+                    color: '#475569',
+                    cursor: 'pointer',
+                    transition: 'all 0.15s ease'
+                  }}
+                  onMouseOver={(e) => {
+                    e.currentTarget.style.borderColor = '#00c2e8';
+                    e.currentTarget.style.color = '#008ba6';
+                  }}
+                  onMouseOut={(e) => {
+                    e.currentTarget.style.borderColor = '#cbd5e1';
+                    e.currentTarget.style.color = '#475569';
+                  }}
+                >
+                  Clear Location Filter ✕
+                </button>
+              </div>
+            )}
+
             <div className="section-header" style={{ marginBottom: '36px' }}>
               <div className="section-badge">Choose Appliance Category</div>
               <h2 className="section-title">Select an Appliance to View Subcategories</h2>

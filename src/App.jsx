@@ -32,6 +32,7 @@ export default function App() {
   const [activePage, setActivePage] = useState(getPageFromPathOrHash);
   const [selectedService, setSelectedService] = useState('AC SERVICE');
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedSubLocation, setSelectedSubLocation] = useState(null);
   const [selectedCity, setSelectedCity] = useState(() => {
     const p = (window.location.pathname + window.location.hash).toLowerCase();
     if (p.includes('guntur')) return 'guntur';
@@ -55,8 +56,11 @@ export default function App() {
     };
   }, []);
 
-  const navigateTo = (pageId, param = null) => {
+  const navigateTo = (pageId, param = null, subLocation = null) => {
     setActivePage(pageId);
+    if (subLocation !== null) {
+      setSelectedSubLocation(subLocation);
+    }
     let url = '/';
     if (pageId === 'services') {
       if (param !== null) setSelectedCategory(param);
@@ -92,6 +96,9 @@ export default function App() {
             setSelectedService={setSelectedService}
             selectedCategory={selectedCategory}
             setSelectedCategory={setSelectedCategory}
+            selectedSubLocation={selectedSubLocation}
+            setSelectedSubLocation={setSelectedSubLocation}
+            selectedCity={selectedCity}
           />
         );
       case 'location':
@@ -101,6 +108,8 @@ export default function App() {
             setSelectedCity={setSelectedCity}
             setActivePage={navigateTo}
             setSelectedService={setSelectedService}
+            selectedSubLocation={selectedSubLocation}
+            setSelectedSubLocation={setSelectedSubLocation}
           />
         );
       case 'book':
@@ -108,6 +117,7 @@ export default function App() {
           <BookServicePage
             preselectedService={selectedService}
             preselectedCity={selectedCity}
+            preselectedLocality={selectedSubLocation}
           />
         );
       case 'about':
