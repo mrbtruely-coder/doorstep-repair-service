@@ -1,6 +1,6 @@
 import React from 'react';
-import { SERVICES, CITIES } from '../constants/data';
-import { Apple, Play, Heart } from 'lucide-react';
+import { SERVICES, CITIES, PLAY_STORE_URL, APP_STORE_URL } from '../constants/data';
+import { Apple, Play, Heart, ShieldCheck } from 'lucide-react';
 
 export default function Footer({ setActivePage }) {
   const navigateTo = (pageId, categoryId = null) => {
@@ -81,41 +81,77 @@ export default function Footer({ setActivePage }) {
               EXPERIENCE ON MOBILE APP
             </div>
 
-            {/* App Store & Google Play Badges matching screenshot */}
+            {/* App Store & Google Play Badges dynamically linked */}
             <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-              <div style={{
-                background: '#091a3c',
-                border: '1px solid #1e355b',
-                borderRadius: '8px',
-                padding: '6px 12px',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                cursor: 'pointer'
-              }}>
+              <a
+                href={APP_STORE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  background: '#091a3c',
+                  border: '1px solid #1e355b',
+                  borderRadius: '8px',
+                  padding: '6px 12px',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  cursor: 'pointer',
+                  textDecoration: 'none',
+                  color: '#ffffff',
+                  transition: 'all 0.2s ease'
+                }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.borderColor = '#00c2e8';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(0, 194, 232, 0.25)';
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.borderColor = '#1e355b';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = 'none';
+                }}
+              >
                 <Apple size={18} color="#ffffff" />
                 <div style={{ textAlign: 'left' }}>
                   <div style={{ fontSize: '8px', color: '#8da2c0', textTransform: 'uppercase' }}>DOWNLOAD ON THE</div>
                   <div style={{ fontSize: '11px', fontWeight: 700, color: '#ffffff' }}>App Store</div>
                 </div>
-              </div>
+              </a>
 
-              <div style={{
-                background: '#091a3c',
-                border: '1px solid #1e355b',
-                borderRadius: '8px',
-                padding: '6px 12px',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                cursor: 'pointer'
-              }}>
-                <Play size={16} color="#ffffff" fill="#ffffff" />
+              <a
+                href={PLAY_STORE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  background: '#091a3c',
+                  border: '1px solid #1e355b',
+                  borderRadius: '8px',
+                  padding: '6px 12px',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  cursor: 'pointer',
+                  textDecoration: 'none',
+                  color: '#ffffff',
+                  transition: 'all 0.2s ease'
+                }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.borderColor = '#22c55e';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(34, 197, 94, 0.25)';
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.borderColor = '#1e355b';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = 'none';
+                }}
+              >
+                <Play size={16} color="#22c55e" fill="#22c55e" />
                 <div style={{ textAlign: 'left' }}>
                   <div style={{ fontSize: '8px', color: '#8da2c0', textTransform: 'uppercase' }}>GET IT ON</div>
                   <div style={{ fontSize: '11px', fontWeight: 700, color: '#ffffff' }}>Google Play</div>
                 </div>
-              </div>
+              </a>
             </div>
           </div>
 
@@ -370,10 +406,33 @@ export default function Footer({ setActivePage }) {
               &copy; {new Date().getFullYear()} DOORSTEP REPAIR SERVICES. All rights reserved.
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-              <span>Made with</span>
-              <Heart size={13} fill="#ef4444" color="#ef4444" />
-              <span>for Vijayawada, Guntur & Nellore residents.</span>
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-start',
+              gap: '6px'
+            }}>
+              <div style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                fontSize: '12px',
+                fontWeight: 600,
+                color: '#38bdf8',
+                background: 'rgba(56, 189, 248, 0.08)',
+                padding: '3px 10px',
+                borderRadius: '12px',
+                border: '1px solid rgba(56, 189, 248, 0.2)'
+              }}>
+                <ShieldCheck size={14} color="#38bdf8" />
+                <span>Verified &amp; Trusted by Doorstep Hub</span>
+              </div>
+
+              <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                <span>Made with</span>
+                <Heart size={13} fill="#ef4444" color="#ef4444" />
+                <span>for Vijayawada, Guntur & Nellore residents.</span>
+              </div>
             </div>
           </div>
         </div>

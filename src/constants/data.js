@@ -2,6 +2,8 @@ export const COMPANY_PHONE = "9515661677";
 export const COMPANY_PHONE_DISPLAY = "+91 9515661677";
 export const COMPANY_WHATSAPP_LINK = "https://wa.me/919515661677?text=Hello%20Doorstep%20Repair%20Service,%20I%20would%20like%20to%20book%20a%20technician%20for%20my%20appliance.";
 export const COMPANY_CALL_LINK = "tel:9515661677";
+export const PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=com.doorstephub.customer&pcampaignid=web_share";
+export const APP_STORE_URL = "https://apps.apple.com/in/app/doorstep-hub-all-your-needs/id6475340236";
 
 export const CITIES = [
   {

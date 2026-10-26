@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSEO } from '../hooks/useSEO';
 import { getSEOMetadata } from '../utils/seoData';
-import { SERVICES, CITIES, COMPANY_PHONE_DISPLAY, COMPANY_WHATSAPP_LINK, COMPANY_CALL_LINK } from '../constants/data';
+import { SERVICES, CITIES, COMPANY_PHONE_DISPLAY, COMPANY_WHATSAPP_LINK, COMPANY_CALL_LINK, PLAY_STORE_URL, APP_STORE_URL } from '../constants/data';
 import { 
   Clock, ShieldCheck, Star, ArrowRight, Phone, MessageCircle, 
   Wrench, Zap, IndianRupee, Award, ChevronDown, ChevronUp, ChevronLeft, ChevronRight, CheckCircle2,
@@ -550,8 +550,9 @@ export default function HomePage({ setActivePage, setSelectedService }) {
                 }}>
                   {/* Apple App Store Button */}
                   <a
-                    href="#download-ios"
-                    onClick={(e) => e.preventDefault()}
+                    href={APP_STORE_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     style={{
                       background: '#040b17',
                       border: '1.5px solid rgba(255, 255, 255, 0.2)',
@@ -585,8 +586,9 @@ export default function HomePage({ setActivePage, setSelectedService }) {
 
                   {/* Google Play Store Button */}
                   <a
-                    href="#download-playstore"
-                    onClick={(e) => e.preventDefault()}
+                    href={PLAY_STORE_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     style={{
                       background: '#040b17',
                       border: '1.5px solid rgba(255, 255, 255, 0.2)',
