@@ -1,5 +1,6 @@
+import React, { useState } from 'react';
 import { useSEO } from '../hooks/useSEO';
-import { getSEOMetadata } from '../utils/seoData';
+import { getSEOMetadata, cleanAreaName } from '../utils/seoData';
 import { 
   CITIES, 
   SERVICE_CATEGORIES, 
@@ -10,8 +11,10 @@ import {
 } from '../constants/data';
 import { 
   MapPin, Phone, MessageCircle, Clock, ShieldCheck, CheckCircle2, 
-  ArrowRight, Sparkles, Navigation, AlertCircle, Wrench, ChevronRight 
+  ArrowRight, Sparkles, Navigation, AlertCircle, Wrench, ChevronRight,
+  Crosshair, Loader2, RefreshCw
 } from 'lucide-react';
+import { detectUserLocation } from '../utils/geoLocator';
 
 export default function LocationPage({ 
   selectedCity = 'vijayawada', 
@@ -21,6 +24,30 @@ export default function LocationPage({
   selectedSubLocation,
   setSelectedSubLocation
 }) {
+  const [showOtherInput, setShowOtherInput] = useState(false);
+  const [customAreaText, setCustomAreaText] = useState('');
+  const [isDetecting, setIsDetecting] = useState(false);
+  const [detectError, setDetectError] = useState(null);
+  const [autoDetectedInfo, setAutoDetectedInfo] = useState(null);
+
+  const handleAutoDetect = async () => {
+    setIsDetecting(true);
+    setDetectError(null);
+    try {
+      const geo = await detectUserLocation();
+      setCustomAreaText(geo.displayLocation || geo.colony);
+      if (geo.city && setSelectedCity) {
+        setSelectedCity(geo.city.toLowerCase());
+      }
+      setAutoDetectedInfo(geo);
+    } catch (err) {
+      setDetectError(err.message || 'Could not detect location. Please type manually.');
+    } finally {
+      setIsDetecting(false);
+    }
+  };
+
+
   // Normalize current city
   const isAllCities = (selectedCity || '').toLowerCase() === 'all';
   const currentCityId = isAllCities ? 'all' : (selectedCity || 'vijayawada').toLowerCase();
@@ -40,18 +67,24 @@ export default function LocationPage({
     if (setSelectedService) {
       setSelectedService(catName);
     }
-    setActivePage('book', catName);
+    setActivePage('book', catName, selectedSubLocation);
   };
 
   const handleViewSubcategories = (catId) => {
-    setActivePage('services', catId);
+    setActivePage('services', catId, selectedSubLocation);
   };
 
-  const handleColonyClick = (colony) => {
-    if (setSelectedSubLocation) {
-      setSelectedSubLocation(colony);
-    }
+  const handleColonyClick = (colony, targetCityId = null) => {
+    const cityId = targetCityId || cityData.id;
+    if (setSelectedCity) setSelectedCity(cityId);
+    if (setSelectedSubLocation) setSelectedSubLocation(colony);
     setActivePage('services', null, colony);
+  };
+
+  const handleCustomAreaSubmit = (e) => {
+    if (e) e.preventDefault();
+    if (!customAreaText.trim()) return;
+    handleColonyClick(customAreaText.trim());
   };
 
   return (
@@ -62,7 +95,7 @@ export default function LocationPage({
         <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
           
           {/* Breadcrumb */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: '#64748b' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: '#64748b', flexWrap: 'wrap' }}>
             <button 
               onClick={() => setActivePage('home')} 
               style={{ background: 'transparent', border: 'none', color: '#64748b', cursor: 'pointer', padding: 0 }}
@@ -70,11 +103,44 @@ export default function LocationPage({
               Home
             </button>
             <ChevronRight size={14} />
-            <span>Locations</span>
-            <ChevronRight size={14} />
-            <strong style={{ color: '#008ba6' }}>
-              {isAllCities ? 'All City Hubs & Coverage (3 Cities)' : `${cityData.name} (10 KM Radius)`}
-            </strong>
+            <button 
+              onClick={() => {
+                if (setSelectedCity) setSelectedCity('all');
+                if (setSelectedSubLocation) setSelectedSubLocation(null);
+                setActivePage('location', 'all', null);
+              }}
+              style={{ background: 'transparent', border: 'none', color: '#64748b', cursor: 'pointer', padding: 0 }}
+            >
+              Locations
+            </button>
+            {!isAllCities && (
+              <>
+                <ChevronRight size={14} />
+                {selectedSubLocation ? (
+                  <>
+                    <button 
+                      onClick={() => {
+                        if (setSelectedSubLocation) setSelectedSubLocation(null);
+                        setActivePage('location', cityData.id, null);
+                      }}
+                      style={{ background: 'transparent', border: 'none', color: '#008ba6', fontWeight: 600, cursor: 'pointer', padding: 0 }}
+                    >
+                      {cityData.name}
+                    </button>
+                    <ChevronRight size={14} />
+                    <strong style={{ color: '#091a3c' }}>{selectedSubLocation}</strong>
+                  </>
+                ) : (
+                  <strong style={{ color: '#008ba6' }}>{cityData.name} (10 KM Radius)</strong>
+                )}
+              </>
+            )}
+            {isAllCities && (
+              <>
+                <ChevronRight size={14} />
+                <strong style={{ color: '#008ba6' }}>All City Hubs & Coverage (3 Cities)</strong>
+              </>
+            )}
           </div>
 
           {/* Quick City Switcher Tabs */}
@@ -85,7 +151,8 @@ export default function LocationPage({
             <button
               onClick={() => {
                 if (setSelectedCity) setSelectedCity('all');
-                window.history.pushState(null, '', '/service-center');
+                if (setSelectedSubLocation) setSelectedSubLocation(null);
+                setActivePage('location', 'all', null);
               }}
               style={{
                 background: isAllCities ? 'linear-gradient(135deg, #00d2e6 0%, #0096b7 100%)' : '#ffffff',
@@ -100,7 +167,7 @@ export default function LocationPage({
                 transition: 'all 0.15s ease'
               }}
             >
-              📍 All Hubs (3 Cities)
+              📍 All Hubs
             </button>
             {CITIES.map((c) => {
               const isSelected = !isAllCities && c.id === cityData.id;
@@ -109,7 +176,8 @@ export default function LocationPage({
                   key={c.id}
                   onClick={() => {
                     if (setSelectedCity) setSelectedCity(c.id);
-                    window.history.pushState(null, '', `/service-center/${c.id}`);
+                    if (setSelectedSubLocation) setSelectedSubLocation(null);
+                    setActivePage('location', c.id, null);
                   }}
                   style={{
                     background: isSelected ? 'linear-gradient(135deg, #00d2e6 0%, #0096b7 100%)' : '#ffffff',
@@ -345,7 +413,7 @@ export default function LocationPage({
                           {c.keyColonies.slice(0, 6).map((colony, idx) => (
                             <span
                               key={idx}
-                              onClick={() => handleColonyClick(colony)}
+                              onClick={() => handleColonyClick(colony, c.id)}
                               style={{
                                 background: '#f1f5f9',
                                 color: '#334155',
@@ -377,8 +445,8 @@ export default function LocationPage({
                       <button
                         onClick={() => {
                           if (setSelectedCity) setSelectedCity(c.id);
-                          window.history.pushState(null, '', `/service-center/${c.id}`);
-                          window.scrollTo({ top: 0, behavior: 'smooth' });
+                          if (setSelectedSubLocation) setSelectedSubLocation(null);
+                          setActivePage('location', c.id, null);
                         }}
                         style={{
                           width: '100%',
@@ -591,7 +659,10 @@ export default function LocationPage({
               letterSpacing: '-0.02em',
               marginBottom: '18px'
             }}>
-              Doorstep Appliance Repair in <span style={{ color: '#008ba6' }}>{cityData.name}</span>
+              Doorstep Appliance Repair in{' '}
+              <span style={{ color: '#008ba6' }}>
+                {selectedSubLocation ? `${selectedSubLocation}, ${cityData.name}` : cityData.name}
+              </span>
             </h1>
 
             {/* Subhead with 10 KM radius mention */}
@@ -603,7 +674,7 @@ export default function LocationPage({
               margin: '0 auto 28px'
             }}>
               Certified multi-brand technicians dispatched directly to your home within <strong>60 to 90 minutes</strong>. 
-              Enjoy <strong>₹0 Booking Fee</strong> and comprehensive repair coverage across all residential colonies within a <strong>10 KM radius</strong> of {cityData.hub}.
+              Enjoy <strong>₹0 Booking Fee</strong> and comprehensive repair coverage across {selectedSubLocation ? <strong>{selectedSubLocation} and all colonies</strong> : 'all residential colonies'} within a <strong>10 KM radius</strong> of {cityData.hub}.
             </p>
 
             {/* Central 10 KM Radius Guarantee Card */}
@@ -739,6 +810,67 @@ export default function LocationPage({
             </p>
           </div>
 
+          {/* Active Sub-Area Spotlight Banner */}
+          {selectedSubLocation && (
+            <div style={{
+              maxWidth: '1100px',
+              margin: '0 auto 24px',
+              background: 'linear-gradient(135deg, #ecfeff 0%, #e0f2fe 100%)',
+              border: '1.5px solid #00c2e8',
+              borderRadius: '16px',
+              padding: '16px 22px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              flexWrap: 'wrap',
+              gap: '14px',
+              boxShadow: '0 6px 18px rgba(0, 194, 232, 0.15)'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+                <div style={{
+                  width: '40px',
+                  height: '40px',
+                  borderRadius: '12px',
+                  background: '#00c2e8',
+                  color: '#ffffff',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0
+                }}>
+                  <MapPin size={22} />
+                </div>
+                <div>
+                  <div style={{ fontSize: '16px', fontWeight: 800, color: '#091a3c' }}>
+                    Active Service Zone: <span style={{ color: '#008ba6' }}>{selectedSubLocation}</span>
+                  </div>
+                  <div style={{ fontSize: '13px', color: '#0e7490', marginTop: '2px' }}>
+                    ⚡ Stationed local technicians guarantee 60–90 min doorstep arrival in {selectedSubLocation}, {cityData.name}.
+                  </div>
+                </div>
+              </div>
+              <button
+                onClick={() => {
+                  if (setSelectedSubLocation) setSelectedSubLocation(null);
+                  setActivePage('location', cityData.id, null);
+                }}
+                style={{
+                  background: '#ffffff',
+                  border: '1px solid #cbd5e1',
+                  borderRadius: '8px',
+                  padding: '8px 16px',
+                  fontSize: '12.5px',
+                  fontWeight: 700,
+                  color: '#475569',
+                  cursor: 'pointer',
+                  transition: 'all 0.15s ease'
+                }}
+              >
+                ✕ View All {cityData.name} Areas
+              </button>
+            </div>
+          )}
+
           {/* Colonies Badges Grid */}
           <div style={{
             display: 'grid',
@@ -747,76 +879,349 @@ export default function LocationPage({
             maxWidth: '1100px',
             margin: '0 auto 24px'
           }}>
-            {cityData.keyColonies.map((colony, idx) => (
-              <div 
-                key={idx}
-                onClick={() => handleColonyClick(colony)}
-                style={{
-                  background: '#ffffff',
-                  border: '1.5px solid #e2e8f0',
-                  borderRadius: '12px',
-                  padding: '12px 16px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  gap: '10px',
-                  fontSize: '14px',
-                  fontWeight: 600,
-                  color: '#1e293b',
-                  cursor: 'pointer',
-                  boxShadow: '0 2px 6px rgba(0,0,0,0.03)',
-                  transition: 'all 0.18s ease'
-                }}
-                onMouseOver={(e) => {
-                  e.currentTarget.style.borderColor = '#00c2e8';
-                  e.currentTarget.style.backgroundColor = '#ecfeff';
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                  e.currentTarget.style.boxShadow = '0 6px 18px rgba(0, 194, 232, 0.18)';
-                  const arrow = e.currentTarget.querySelector('.colony-cta');
-                  if (arrow) arrow.style.color = '#008ba6';
-                }}
-                onMouseOut={(e) => {
-                  e.currentTarget.style.borderColor = '#e2e8f0';
-                  e.currentTarget.style.backgroundColor = '#ffffff';
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 2px 6px rgba(0,0,0,0.03)';
-                  const arrow = e.currentTarget.querySelector('.colony-cta');
-                  if (arrow) arrow.style.color = '#94a3b8';
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <div style={{
-                    width: '30px',
-                    height: '30px',
-                    borderRadius: '8px',
-                    background: '#ecfeff',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    flexShrink: 0
-                  }}>
-                    <MapPin size={16} color="#0891b2" />
-                  </div>
-                  <span>{colony}</span>
-                </div>
+            {cityData.keyColonies.map((colony, idx) => {
+              const isColonyActive = selectedSubLocation === colony;
+              return (
                 <div 
-                  className="colony-cta"
+                  key={idx}
+                  onClick={() => handleColonyClick(colony)}
                   style={{
+                    background: isColonyActive ? '#ecfeff' : '#ffffff',
+                    border: isColonyActive ? '2px solid #00c2e8' : '1.5px solid #e2e8f0',
+                    borderRadius: '12px',
+                    padding: '12px 16px',
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '4px',
-                    fontSize: '11.5px',
-                    fontWeight: 700,
-                    color: '#94a3b8',
-                    transition: 'color 0.15s ease'
+                    justifyContent: 'space-between',
+                    gap: '10px',
+                    fontSize: '14px',
+                    fontWeight: isColonyActive ? 700 : 600,
+                    color: isColonyActive ? '#008ba6' : '#1e293b',
+                    cursor: 'pointer',
+                    boxShadow: isColonyActive ? '0 6px 18px rgba(0, 194, 232, 0.2)' : '0 2px 6px rgba(0,0,0,0.03)',
+                    transition: 'all 0.18s ease'
+                  }}
+                  onMouseOver={(e) => {
+                    if (!isColonyActive) {
+                      e.currentTarget.style.borderColor = '#00c2e8';
+                      e.currentTarget.style.backgroundColor = '#ecfeff';
+                      e.currentTarget.style.transform = 'translateY(-2px)';
+                      e.currentTarget.style.boxShadow = '0 6px 18px rgba(0, 194, 232, 0.18)';
+                      const arrow = e.currentTarget.querySelector('.colony-cta');
+                      if (arrow) arrow.style.color = '#008ba6';
+                    }
+                  }}
+                  onMouseOut={(e) => {
+                    if (!isColonyActive) {
+                      e.currentTarget.style.borderColor = '#e2e8f0';
+                      e.currentTarget.style.backgroundColor = '#ffffff';
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = '0 2px 6px rgba(0,0,0,0.03)';
+                      const arrow = e.currentTarget.querySelector('.colony-cta');
+                      if (arrow) arrow.style.color = '#94a3b8';
+                    }
                   }}
                 >
-                  <span>Services</span>
-                  <ArrowRight size={13} />
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <div style={{
+                      width: '30px',
+                      height: '30px',
+                      borderRadius: '8px',
+                      background: isColonyActive ? '#00c2e8' : '#ecfeff',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      flexShrink: 0
+                    }}>
+                      <MapPin size={16} color={isColonyActive ? '#ffffff' : '#0891b2'} />
+                    </div>
+                    <span>{colony}</span>
+                  </div>
+                  <div 
+                    className="colony-cta"
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '4px',
+                      fontSize: '11.5px',
+                      fontWeight: 700,
+                      color: isColonyActive ? '#008ba6' : '#94a3b8',
+                      transition: 'color 0.15s ease'
+                    }}
+                  >
+                    {isColonyActive ? (
+                      <span style={{
+                        background: '#00c2e8',
+                        color: '#ffffff',
+                        padding: '2px 8px',
+                        borderRadius: '6px',
+                        fontSize: '11px',
+                        fontWeight: 800
+                      }}>
+                        Active Area
+                      </span>
+                    ) : (
+                      <>
+                        <span>Select</span>
+                        <ArrowRight size={13} />
+                      </>
+                    )}
+                  </div>
                 </div>
+              );
+            })}
+
+            {/* + Other Sub-Area / Colony Card */}
+            <div 
+              onClick={() => setShowOtherInput(prev => !prev)}
+              style={{
+                background: showOtherInput ? '#ecfeff' : '#ffffff',
+                border: showOtherInput ? '2px solid #00c2e8' : '2px dashed #00c2e8',
+                borderRadius: '12px',
+                padding: '12px 16px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: '10px',
+                fontSize: '14px',
+                fontWeight: 700,
+                color: '#008ba6',
+                cursor: 'pointer',
+                boxShadow: showOtherInput ? '0 6px 18px rgba(0, 194, 232, 0.2)' : '0 2px 6px rgba(0,0,0,0.03)',
+                transition: 'all 0.18s ease'
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.borderColor = '#008ba6';
+                e.currentTarget.style.backgroundColor = '#ecfeff';
+                e.currentTarget.style.transform = 'translateY(-2px)';
+              }}
+              onMouseOut={(e) => {
+                if (!showOtherInput) {
+                  e.currentTarget.style.borderColor = '#00c2e8';
+                  e.currentTarget.style.backgroundColor = '#ffffff';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                }
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <div style={{
+                  width: '30px',
+                  height: '30px',
+                  borderRadius: '8px',
+                  background: '#00c2e8',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: '#ffffff',
+                  flexShrink: 0
+                }}>
+                  <Sparkles size={16} />
+                </div>
+                <span>+ Other Sub-Area / Colony</span>
               </div>
-            ))}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '11.5px', color: '#008ba6', fontWeight: 700 }}>
+                <span>{showOtherInput ? 'Close ✕' : 'Enter Area'}</span>
+                <ArrowRight size={13} />
+              </div>
+            </div>
           </div>
+
+          {/* Custom Sub-Area Input Box when Other is selected */}
+          {showOtherInput && (
+            <form 
+              onSubmit={handleCustomAreaSubmit}
+              style={{
+                maxWidth: '780px',
+                margin: '0 auto 28px',
+                background: 'linear-gradient(135deg, #f0fbfd 0%, #ecfeff 100%)',
+                border: '2px solid #a5f3fc',
+                borderRadius: '16px',
+                padding: '22px 28px',
+                boxShadow: '0 8px 24px rgba(0, 194, 232, 0.15)'
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px', marginBottom: '6px', flexWrap: 'wrap' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <Sparkles size={18} color="#008ba6" />
+                  <h4 style={{ fontSize: '16px', fontWeight: 800, color: '#091a3c', margin: 0 }}>
+                    Enter or Auto-Detect your locality in {cityData.name}:
+                  </h4>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleAutoDetect}
+                  disabled={isDetecting}
+                  style={{
+                    background: 'transparent',
+                    border: 'none',
+                    fontSize: '12px',
+                    color: '#008ba6',
+                    fontWeight: 700,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '5px',
+                    cursor: 'pointer',
+                    padding: '3px 8px',
+                    borderRadius: '6px'
+                  }}
+                  onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#e0f2fe'}
+                  onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                >
+                  {isDetecting ? <Loader2 size={13} className="animate-spin" /> : <Crosshair size={13} />}
+                  <span>{isDetecting ? 'Detecting GPS...' : 'Auto Detect Location'}</span>
+                </button>
+              </div>
+
+              <p style={{ fontSize: '13px', color: '#0891b2', marginBottom: '14px' }}>
+                ⚡ Express Doorstep Dispatch: Certified technicians reach all residential colonies and apartments in {cityData.name} within 60–90 minutes.
+              </p>
+
+              <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+                {/* Unified Input with embedded Auto Detect Button */}
+                <div style={{ position: 'relative', flex: 1, minWidth: '260px', display: 'flex', alignItems: 'center' }}>
+                  <input
+                    type="text"
+                    required
+                    autoFocus
+                    placeholder={`Type colony name or tap Auto Detect GPS...`}
+                    value={customAreaText}
+                    onChange={(e) => {
+                      setCustomAreaText(e.target.value);
+                      if (detectError) setDetectError(null);
+                    }}
+                    className="form-input"
+                    style={{
+                      paddingLeft: '38px',
+                      paddingRight: '135px',
+                      borderRadius: '10px',
+                      border: autoDetectedInfo ? '1.5px solid #10b981' : '1.5px solid #00c2e8',
+                      background: autoDetectedInfo ? '#f0fdf4' : '#ffffff',
+                      fontSize: '14px',
+                      width: '100%',
+                      height: '46px',
+                      fontWeight: 600,
+                      color: '#0f172a'
+                    }}
+                  />
+                  <MapPin 
+                    size={18} 
+                    style={{ 
+                      position: 'absolute', 
+                      left: '12px', 
+                      color: autoDetectedInfo ? '#10b981' : '#00c2e8' 
+                    }} 
+                  />
+
+                  {/* Embedded Auto Detect Button inside the input */}
+                  <button
+                    type="button"
+                    onClick={handleAutoDetect}
+                    disabled={isDetecting}
+                    style={{
+                      position: 'absolute',
+                      right: '6px',
+                      top: '6px',
+                      bottom: '6px',
+                      background: isDetecting 
+                        ? '#0284c7' 
+                        : autoDetectedInfo 
+                          ? 'linear-gradient(135deg, #10b981 0%, #059669 100%)' 
+                          : 'linear-gradient(135deg, #00d2e6 0%, #0096b7 100%)',
+                      color: '#ffffff',
+                      border: 'none',
+                      borderRadius: '7px',
+                      padding: '0 12px',
+                      fontSize: '11.5px',
+                      fontWeight: 800,
+                      cursor: isDetecting ? 'wait' : 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '5px',
+                      boxShadow: '0 2px 6px rgba(0, 194, 232, 0.25)',
+                      transition: 'all 0.18s ease',
+                      whiteSpace: 'nowrap'
+                    }}
+                    title="Auto-detect current location via GPS"
+                  >
+                    {isDetecting ? (
+                      <Loader2 size={13} className="animate-spin" />
+                    ) : (
+                      <Crosshair size={13} />
+                    )}
+                    <span>
+                      {isDetecting ? 'Detecting...' : autoDetectedInfo ? 'Re-Detect' : 'Auto Detect'}
+                    </span>
+                  </button>
+                </div>
+
+                <button
+                  type="submit"
+                  style={{
+                    background: 'linear-gradient(135deg, #00d2e6 0%, #0096b7 100%)',
+                    color: '#ffffff',
+                    fontWeight: 800,
+                    fontSize: '14px',
+                    padding: '0 24px',
+                    borderRadius: '10px',
+                    border: 'none',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    height: '46px',
+                    boxShadow: '0 4px 12px rgba(0, 194, 232, 0.35)',
+                    whiteSpace: 'nowrap'
+                  }}
+                >
+                  View Services in this Area <ArrowRight size={16} />
+                </button>
+              </div>
+
+              {/* Error Status */}
+              {detectError && (
+                <div style={{
+                  marginTop: '8px',
+                  fontSize: '12px',
+                  color: '#dc2626',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '5px'
+                }}>
+                  <AlertCircle size={14} />
+                  <span>{detectError}</span>
+                </div>
+              )}
+
+              {/* Detected Status */}
+              {autoDetectedInfo && !detectError && (
+                <div style={{
+                  marginTop: '10px',
+                  padding: '10px 14px',
+                  borderRadius: '10px',
+                  fontSize: '12px',
+                  background: autoDetectedInfo.isOutsideHub ? '#fffbeb' : '#ecfdf5',
+                  border: autoDetectedInfo.isOutsideHub ? '1px solid #fde68a' : '1px solid #a7f3d0',
+                  color: autoDetectedInfo.isOutsideHub ? '#92400e' : '#065f46'
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px', flexWrap: 'wrap' }}>
+                    <span style={{ display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 700 }}>
+                      <CheckCircle2 size={15} color={autoDetectedInfo.isOutsideHub ? '#d97706' : '#059669'} />
+                      GPS Detected: {autoDetectedInfo.displayLocation}
+                      {autoDetectedInfo.accuracyMeters ? ` (Accuracy: ±${autoDetectedInfo.accuracyMeters}m)` : ''}
+                    </span>
+                    <span style={{ color: '#64748b', fontSize: '11px' }}>
+                      Editable in input anytime
+                    </span>
+                  </div>
+                  {autoDetectedInfo.isOutsideHub && (
+                    <div style={{ marginTop: '5px', fontSize: '11.5px', color: '#b45309', lineHeight: 1.45 }}>
+                      📍 <strong>Service Notice:</strong> Your GPS detected your computer in <strong>{autoDetectedInfo.rawCity}</strong>. Our active doorstep service hubs are <strong>Vijayawada, Guntur, and Nellore</strong>. If your appliance is in {cityData.name}, please type your {cityData.name} colony or landmark in the box above!
+                    </div>
+                  )}
+                </div>
+              )}
+            </form>
+          )}
 
           {/* 10 KM Radius Assurance Notice */}
           <div style={{
@@ -939,7 +1344,7 @@ export default function LocationPage({
                 {/* Card Content */}
                 <div style={{ padding: '24px', flex: 1, display: 'flex', flexDirection: 'column' }}>
                   <h3 style={{ fontSize: '20px', fontWeight: 800, color: '#091a3c', marginBottom: '8px' }}>
-                    {cat.name} in {cityData.name}
+                    {cat.name} in {selectedSubLocation ? cleanAreaName(selectedSubLocation) : cityData.name}
                   </h3>
                   <p style={{ fontSize: '13.5px', color: '#64748b', lineHeight: 1.5, marginBottom: '16px' }}>
                     {cat.shortDesc}
@@ -983,7 +1388,7 @@ export default function LocationPage({
                     alignItems: 'center',
                     justifyContent: 'space-between'
                   }}>
-                    <span>Diagnostic Fee in {cityData.name}:</span>
+                    <span>Diagnostic Fee in {selectedSubLocation ? cleanAreaName(selectedSubLocation) : cityData.name}:</span>
                     <strong style={{ color: '#008ba6', fontSize: '13.5px' }}>From ₹249–₹299</strong>
                   </div>
 
@@ -1004,7 +1409,7 @@ export default function LocationPage({
                         transition: 'all 0.15s ease'
                       }}
                     >
-                      Book in {cityData.name}
+                      Book in {selectedSubLocation ? cleanAreaName(selectedSubLocation) : cityData.name}
                     </button>
 
                     <button

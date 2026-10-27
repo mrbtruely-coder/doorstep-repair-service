@@ -12,6 +12,13 @@ import {
   CITIES 
 } from '../constants/data';
 
+// Service Hubs & Cities: Vijayawada, Guntur & Nellore
+const HEADER_LOCATIONS = [
+  { id: 'vijayawada', name: 'Vijayawada', desc: 'Benz Circle & Patamata Hub' },
+  { id: 'guntur', name: 'Guntur', desc: 'Arundelpet & Brodipet Hub' },
+  { id: 'nellore', name: 'Nellore', desc: 'Trunk Road & Magunta Layout Hub' }
+];
+
 export default function Header({ activePage, setActivePage }) {
   const [openDropdown, setOpenDropdown] = useState(null); // 'categories' | 'locations' | null
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -366,9 +373,9 @@ export default function Header({ activePage, setActivePage }) {
                     SERVICE HUBS & CITIES
                   </div>
 
-                  {/* List of Service Cities - Clean City Name Only */}
+                  {/* List of Service Cities - Vijayawada, Guntur & Nellore */}
                   <div style={{ padding: '4px 8px' }}>
-                    {CITIES.map((city) => (
+                    {HEADER_LOCATIONS.map((city) => (
                       <div
                         key={city.id}
                         onClick={() => handleNavClick('location', city.id)}
@@ -662,7 +669,7 @@ export default function Header({ activePage, setActivePage }) {
 
               {mobileLocationsOpen && (
                 <div style={{ padding: '6px 14px 10px 24px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                  {CITIES.map((city) => (
+                  {HEADER_LOCATIONS.map((city) => (
                     <div
                       key={city.id}
                       onClick={() => handleNavClick('location', city.id)}

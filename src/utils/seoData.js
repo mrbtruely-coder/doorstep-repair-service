@@ -11,6 +11,9 @@
  *    - Service + City / Area: Tailored mix of Service + City + Area keywords.
  */
 
+import { areaToSlug } from './slugUtils';
+import { SERVICE_CATEGORIES } from '../constants/data';
+
 // Core appliance services offered
 export const CORE_SERVICES = [
   { id: 'ac', name: 'AC Service & Repair', short: 'AC' },
@@ -70,7 +73,7 @@ export function getSEOMetadata({
       title: `Appliance Repair in ${cleanArea}, ${cityName} | Fast Doorstep Service`,
       description: `Need quick appliance repair in ${cleanArea}, ${cityName}? Our certified local technicians fix AC, washing machine, fridge, TV, oven, and geyser at your doorstep within 90 minutes. Call 9515661677.`,
       keywords,
-      canonicalUrl: `${origin}/service-center/${cLow}?area=${encodeURIComponent(cleanArea)}`,
+      canonicalUrl: `${origin}/service-center/${cLow}/${areaToSlug(cleanArea)}`,
       ogType: 'website',
       ogImage: '/hero-technician.jpg',
       structuredData: {
@@ -227,11 +230,18 @@ export function getSEOMetadata({
       keywordsList.push(`${cleanArea.toLowerCase()} ${serviceData.name.toLowerCase()} repair ${normCity}`);
     }
 
+    let canonical = `${origin}/services/${catLow}`;
+    if (cleanArea && isCityValid) {
+      canonical = subcategory 
+        ? `${origin}/service-center/${normCity}/${areaToSlug(cleanArea)}/${catLow}/${subcategory}`
+        : `${origin}/service-center/${normCity}/${areaToSlug(cleanArea)}/${catLow}`;
+    }
+
     return {
       title: serviceData.title,
       description: serviceData.description,
       keywords: keywordsList.join(', '),
-      canonicalUrl: `${origin}/services/${catLow}`,
+      canonicalUrl: canonical,
       ogType: 'article',
       ogImage: serviceData.image,
       structuredData: {
@@ -273,11 +283,30 @@ export function getSEOMetadata({
 
   // 6. BOOK SERVICE PAGE (/book)
   if (page === 'book') {
+    let canonicalUrl = `${origin}/book`;
+    let dynamicTitle = 'Book Service Online | Same-Day Appliance Repair at Doorstep';
+    let dynamicDesc = 'Book certified technicians in 2 simple steps for AC, fridge, washing machine, oven, geyser, or TV. Fast 90-min arrival in Vijayawada, Guntur, and Nellore. Zero booking fee.';
+
+    if (city && city !== 'all' && area && category && subcategory) {
+      const areaSlug = areaToSlug(area);
+      canonicalUrl = `${origin}/service-center/${city.toLowerCase()}/${areaSlug}/${category}/${subcategory}/book`;
+      const catObj = SERVICE_CATEGORIES.find(c => c.id === category);
+      const subObj = catObj?.subcategories?.find(s => s.id === subcategory);
+      const subName = subObj ? subObj.name : subcategory;
+      dynamicTitle = `Book ${subName} in ${area}, ${city.toUpperCase()} | Doorstep Hub`;
+      dynamicDesc = `Book fast doorstep ${subName} in ${area}, ${city}. Verified technician dispatch within 60-90 minutes, OEM spares & 90-day warranty.`;
+    } else if (city && city !== 'all' && area) {
+      const areaSlug = areaToSlug(area);
+      canonicalUrl = `${origin}/service-center/${city.toLowerCase()}/${areaSlug}/book`;
+      dynamicTitle = `Book Appliance Repair in ${area}, ${city.toUpperCase()} | Doorstep Hub`;
+      dynamicDesc = `Book fast doorstep appliance repair in ${area}, ${city}. Verified local technicians dispatched in 60-90 minutes.`;
+    }
+
     return {
-      title: 'Book Service Online | Same-Day Appliance Repair at Doorstep',
-      description: 'Book certified technicians in 2 simple steps for AC, fridge, washing machine, oven, geyser, or TV. Fast 90-min arrival in Vijayawada, Guntur, and Nellore. Zero booking fee.',
-      keywords: 'book doorstep service, appliance repair booking online, ac technician vijayawada, fridge repair guntur, washing machine booking nellore, oven service dispatch, geyser technician doorstep',
-      canonicalUrl: `${origin}/book`,
+      title: dynamicTitle,
+      description: dynamicDesc,
+      keywords: 'book doorstep service, appliance repair booking online, ac technician, oven service dispatch, geyser technician doorstep',
+      canonicalUrl,
       ogType: 'website',
       ogImage: '/hero-technician.jpg'
     };

@@ -586,5 +586,124 @@ button {
   }
 }
 
+/* ========================================================
+   BOOKING FLOW MICRO-ANIMATIONS (CATEGORIES & SUBCATEGORIES)
+   ======================================================== */
+@keyframes categoryPopSelect {
+  0% {
+    transform: scale(0.95);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes subcategorySlideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes subcategoryItemFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes radioDotPop {
+  0% {
+    transform: scale(0);
+  }
+  70% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Category Card Animation States */
+.category-btn-idle {
+  opacity: 1 !important;
+  border-color: #cbd5e1 !important;
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.category-btn-idle:hover {
+  transform: translateY(-3px) scale(1.02);
+  border-color: #00c2e8 !important;
+  background-color: #f0fdff !important;
+  box-shadow: 0 6px 18px rgba(0, 194, 232, 0.22) !important;
+}
+
+.category-btn-selected {
+  animation: categoryPopSelect 0.32s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  border: 2px solid #00c2e8 !important;
+  background: #ecfeff !important;
+  box-shadow: 0 6px 20px rgba(0, 194, 232, 0.25) !important;
+}
+
+.category-btn-unselected {
+  opacity: 1 !important;
+  border-color: #cbd5e1 !important;
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.category-btn-unselected:hover {
+  transform: translateY(-3px) scale(1.02);
+  border-color: #00c2e8 !important;
+  background-color: #f0fdff !important;
+  box-shadow: 0 6px 18px rgba(0, 194, 232, 0.2) !important;
+}
+
+/* Subcategories Container */
+.subcategories-container-animated {
+  animation: subcategorySlideDown 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Individual Subcategory Card Animation States */
+.subcategory-card-item {
+  animation: subcategoryItemFadeIn 0.32s cubic-bezier(0.16, 1, 0.3, 1) both;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.subcategory-card-selected {
+  border: 2px solid #00c2e8 !important;
+  background: #ecfeff !important;
+  box-shadow: 0 4px 16px rgba(0, 194, 232, 0.2) !important;
+  transform: translateX(4px);
+}
+
+.subcategory-card-unselected {
+  border: 1.5px solid #e2e8f0;
+  background: #ffffff;
+}
+.subcategory-card-unselected:hover {
+  transform: translateX(3px);
+  border-color: #00c2e8 !important;
+  background: #f8fafc;
+  box-shadow: 0 3px 10px rgba(0, 194, 232, 0.1);
+}
+
+.subcategory-radio-dot {
+  animation: radioDotPop 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+
 
 

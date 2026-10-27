@@ -11,29 +11,52 @@ import {
   Check, ArrowRight, ArrowLeft, ShieldCheck, Phone, MessageCircle, 
   Sparkles, Clock, Wrench, ChevronRight, Award, Zap, MapPin
 } from 'lucide-react';
+import { areaToSlug } from '../utils/slugUtils';
 
 export default function ServicesPage({ 
   setActivePage, 
   setSelectedService, 
   selectedCategory: externalCategory, 
   setSelectedCategory: setExternalCategory,
+  selectedSubcategory: externalSubcategory,
+  setSelectedSubcategory: setExternalSubcategory,
   selectedSubLocation,
   setSelectedSubLocation,
   selectedCity
 }) {
-  // Internal or external category state
+  // Internal or external category & subcategory state
   const [internalCategory, setInternalCategory] = useState(externalCategory || null);
+  const [internalSubcategory, setInternalSubcategory] = useState(externalSubcategory || null);
 
   useEffect(() => {
     setInternalCategory(externalCategory || null);
   }, [externalCategory]);
 
-  const currentCategoryId = externalCategory !== undefined ? externalCategory : internalCategory;
+  useEffect(() => {
+    setInternalSubcategory(externalSubcategory || null);
+  }, [externalSubcategory]);
 
-  // Rich SEO Metadata dynamically tailored to selected service category, city and area
+  const currentCategoryId = externalCategory !== undefined ? externalCategory : internalCategory;
+  const currentSubcategoryId = externalSubcategory !== undefined ? externalSubcategory : internalSubcategory;
+
+  const activeCategory = currentCategoryId 
+    ? SERVICE_CATEGORIES.find(c => c.id === currentCategoryId) 
+    : null;
+
+  const activeSubcategory = (activeCategory && currentSubcategoryId)
+    ? activeCategory.subcategories.find(s => 
+        s.id.toLowerCase() === String(currentSubcategoryId).toLowerCase() ||
+        areaToSlug(s.name) === String(currentSubcategoryId).toLowerCase() ||
+        s.name.toLowerCase() === String(currentSubcategoryId).toLowerCase() ||
+        s.name.toLowerCase().replace(/[^a-z0-9]+/g, '-') === String(currentSubcategoryId).toLowerCase()
+      )
+    : (activeCategory && activeCategory.subcategories.length > 0 ? activeCategory.subcategories[0] : null);
+
+  // Rich SEO Metadata dynamically tailored to selected service category, subcategory, city and area
   const seoData = getSEOMetadata({
     page: 'services',
     category: currentCategoryId,
+    subcategory: currentSubcategoryId,
     city: selectedCity,
     area: selectedSubLocation,
     origin: typeof window !== 'undefined' ? window.location.origin : 'http://localhost:5175'
@@ -41,38 +64,54 @@ export default function ServicesPage({
 
   useSEO(seoData);
 
-  const handleSelectCategory = (categoryId) => {
+  const handleSelectCategory = (categoryId, subId = null) => {
     if (setExternalCategory) {
-      setExternalCategory(categoryId);
+      setExternalCategory(categoryId, subId);
     } else {
       setInternalCategory(categoryId);
+      setInternalSubcategory(subId);
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleSelectSubcategory = (sub) => {
+    const slug = typeof sub === 'string' ? sub : (areaToSlug(sub.name) || sub.id);
+    if (setExternalSubcategory) {
+      setExternalSubcategory(slug);
+    } else {
+      setInternalSubcategory(slug);
+    }
   };
 
   const handleClearCategory = () => {
     if (setExternalCategory) {
-      setExternalCategory(null);
+      setExternalCategory(null, null);
     } else {
       setInternalCategory(null);
+      setInternalSubcategory(null);
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleBook = (serviceName) => {
+  const handleBook = (serviceName, sub = null) => {
+    let finalSubId = null;
+    if (sub) {
+      finalSubId = typeof sub === 'string' ? sub : (areaToSlug(sub.name) || sub.id);
+    } else {
+      finalSubId = currentSubcategoryId ? (areaToSlug(currentSubcategoryId) || currentSubcategoryId) : null;
+    }
+    const finalCatId = currentCategoryId;
     if (setSelectedService) setSelectedService(serviceName);
+    if (setExternalSubcategory && finalSubId) {
+      setExternalSubcategory(finalSubId);
+    }
     if (setActivePage) {
-      setActivePage('book');
+      setActivePage('book', serviceName, selectedSubLocation, finalSubId, finalCatId);
     } else {
       window.location.href = '/book';
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-
-  // Find currently active category object if selected
-  const activeCategory = currentCategoryId 
-    ? SERVICE_CATEGORIES.find(c => c.id === currentCategoryId) 
-    : null;
 
   return (
     <div style={{ backgroundColor: '#ffffff', minHeight: '100vh' }}>
@@ -97,7 +136,8 @@ export default function ServicesPage({
             background: 'rgba(255, 255, 255, 0.05)',
             padding: '6px 14px',
             borderRadius: '9999px',
-            border: '1px solid rgba(255, 255, 255, 0.1)'
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+            flexWrap: 'wrap'
           }}>
             <button 
               onClick={() => setActivePage ? setActivePage('home') : (window.location.href = '/')}
@@ -106,24 +146,67 @@ export default function ServicesPage({
               Home
             </button>
             <ChevronRight size={13} />
-            <button 
-              onClick={handleClearCategory}
-              style={{ 
-                background: 'transparent', 
-                border: 'none', 
-                color: activeCategory ? '#00c2e8' : '#ffffff', 
-                fontWeight: activeCategory ? 600 : 700,
-                cursor: 'pointer', 
-                padding: 0 
-              }}
-            >
-              Services
-            </button>
+            {selectedSubLocation ? (
+              <>
+                <button 
+                  onClick={() => setActivePage ? setActivePage('location', selectedCity && selectedCity !== 'all' ? selectedCity : 'all', null) : null}
+                  style={{ background: 'transparent', border: 'none', color: '#00c2e8', cursor: 'pointer', padding: 0, fontWeight: 600 }}
+                >
+                  {selectedCity && selectedCity !== 'all' ? selectedCity.charAt(0).toUpperCase() + selectedCity.slice(1) : 'Locations'}
+                </button>
+                <ChevronRight size={13} />
+                <button 
+                  onClick={handleClearCategory}
+                  style={{ 
+                    background: 'transparent', 
+                    border: 'none', 
+                    color: activeCategory ? '#00c2e8' : '#ffffff', 
+                    fontWeight: activeCategory ? 600 : 700,
+                    cursor: 'pointer', 
+                    padding: 0 
+                  }}
+                >
+                  {selectedSubLocation}
+                </button>
+              </>
+            ) : (
+              <button 
+                onClick={handleClearCategory}
+                style={{ 
+                  background: 'transparent', 
+                  border: 'none', 
+                  color: activeCategory ? '#00c2e8' : '#ffffff', 
+                  fontWeight: activeCategory ? 600 : 700,
+                  cursor: 'pointer', 
+                  padding: 0 
+                }}
+              >
+                Services
+              </button>
+            )}
             {activeCategory && (
               <>
                 <ChevronRight size={13} />
-                <span style={{ color: '#00c2e8', fontWeight: 700 }}>
+                <button
+                  onClick={() => handleSelectCategory(activeCategory.id, null)}
+                  style={{
+                    background: 'transparent',
+                    border: 'none',
+                    color: activeSubcategory ? '#00c2e8' : '#ffffff',
+                    fontWeight: activeSubcategory ? 600 : 700,
+                    cursor: 'pointer',
+                    padding: 0
+                  }}
+                >
                   {activeCategory.name}
+                </button>
+              </>
+            )}
+            {activeCategory && activeSubcategory && (
+              <>
+                <ChevronRight size={13} />
+                <span style={{ color: '#ffffff', fontWeight: 700 }}>
+                  {activeSubcategory.name}
                 </span>
               </>
             )}
@@ -137,20 +220,29 @@ export default function ServicesPage({
             color: '#00c2e8',
             marginBottom: '14px'
           }}>
-            VIJAYAWADA • GUNTUR • NELLORE DOORSTEP REPAIRS
+            {selectedSubLocation 
+              ? `${selectedSubLocation.toUpperCase()} • 10 KM RADIAL DISPATCH` 
+              : 'VIJAYAWADA • GUNTUR • NELLORE DOORSTEP REPAIRS'
+            }
           </div>
 
           <h1 className="services-hero-title">
             {activeCategory 
-              ? `${activeCategory.title}`
-              : 'Our Appliance Repair Categories'
+              ? (selectedSubLocation 
+                  ? `${activeCategory.name} in ${selectedSubLocation}`
+                  : activeCategory.title)
+              : (selectedSubLocation 
+                  ? `Doorstep Appliance Services in ${selectedSubLocation}`
+                  : 'Our Appliance Repair Categories')
             }
           </h1>
 
           <p className="services-hero-subtitle">
             {activeCategory 
               ? activeCategory.shortDesc
-              : 'Choose any appliance category below to see detailed subcategories, transparent pricing, and instant doorstep technician booking.'
+              : (selectedSubLocation 
+                  ? `Verified multi-brand technician squads stationed in ${selectedSubLocation} for rapid 60–90 min doorstep repair across all major brands with ₹0 booking fee and 90 days warranty.`
+                  : 'Choose any appliance category below to see detailed subcategories, transparent pricing, and instant doorstep technician booking.')
             }
           </p>
 
@@ -323,47 +415,70 @@ export default function ServicesPage({
                 gridTemplateColumns: activeCategory.subcategories.length >= 3 ? 'repeat(3, 1fr)' : 'repeat(2, 1fr)'
               }}
             >
-              {activeCategory.subcategories.map((sub) => (
-                <div
-                  key={sub.id}
-                  style={{
-                    background: '#ffffff',
-                    borderRadius: '18px',
-                    border: '1.5px solid #e2e8f0',
-                    padding: '28px 24px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                    boxShadow: '0 4px 14px rgba(9, 26, 60, 0.04)',
-                    transition: 'transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease'
-                  }}
-                  onMouseOver={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-3px)';
-                    e.currentTarget.style.borderColor = '#00c2e8';
-                    e.currentTarget.style.boxShadow = '0 8px 24px rgba(0, 194, 232, 0.18)';
-                  }}
-                  onMouseOut={(e) => {
-                    e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.borderColor = '#e2e8f0';
-                    e.currentTarget.style.boxShadow = '0 4px 14px rgba(9, 26, 60, 0.04)';
-                  }}
-                >
-                  <div>
-                    {/* Badge */}
-                    <div style={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '4px',
-                      background: '#ecfeff',
-                      color: '#008ba6',
-                      fontSize: '11px',
-                      fontWeight: 800,
-                      padding: '4px 10px',
-                      borderRadius: '6px',
-                      marginBottom: '12px'
-                    }}>
-                      <Sparkles size={12} style={{ color: '#00c2e8' }} /> {sub.badge}
-                    </div>
+              {activeCategory.subcategories.map((sub) => {
+                const isSubActive = activeSubcategory?.id === sub.id || 
+                  areaToSlug(sub.name) === String(currentSubcategoryId).toLowerCase() ||
+                  sub.id.toLowerCase() === String(currentSubcategoryId).toLowerCase();
+                return (
+                  <div
+                    key={sub.id}
+                    onClick={() => handleSelectSubcategory(areaToSlug(sub.name) || sub.id)}
+                    style={{
+                      background: isSubActive ? '#f0fbfd' : '#ffffff',
+                      borderRadius: '18px',
+                      border: isSubActive ? '2px solid #00c2e8' : '1.5px solid #e2e8f0',
+                      padding: '28px 24px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'space-between',
+                      boxShadow: isSubActive ? '0 8px 24px rgba(0, 194, 232, 0.2)' : '0 4px 14px rgba(9, 26, 60, 0.04)',
+                      cursor: 'pointer',
+                      transition: 'transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease'
+                    }}
+                    onMouseOver={(e) => {
+                      if (!isSubActive) {
+                        e.currentTarget.style.transform = 'translateY(-3px)';
+                        e.currentTarget.style.borderColor = '#00c2e8';
+                        e.currentTarget.style.boxShadow = '0 8px 24px rgba(0, 194, 232, 0.18)';
+                      }
+                    }}
+                    onMouseOut={(e) => {
+                      if (!isSubActive) {
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.borderColor = '#e2e8f0';
+                        e.currentTarget.style.boxShadow = '0 4px 14px rgba(9, 26, 60, 0.04)';
+                      }
+                    }}
+                  >
+                    <div>
+                      {/* Badge and Active indicator */}
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+                        <div style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '4px',
+                          background: '#ecfeff',
+                          color: '#008ba6',
+                          fontSize: '11px',
+                          fontWeight: 800,
+                          padding: '4px 10px',
+                          borderRadius: '6px'
+                        }}>
+                          <Sparkles size={12} style={{ color: '#00c2e8' }} /> {sub.badge}
+                        </div>
+                        {isSubActive && (
+                          <span style={{
+                            background: '#00c2e8',
+                            color: '#ffffff',
+                            fontSize: '11px',
+                            fontWeight: 800,
+                            padding: '3px 8px',
+                            borderRadius: '6px'
+                          }}>
+                            ✓ Selected Service
+                          </span>
+                        )}
+                      </div>
 
                     <h4 style={{ fontSize: '19px', fontWeight: 800, color: '#091a3c', marginBottom: '10px' }}>
                       {sub.name}
@@ -402,7 +517,10 @@ export default function ServicesPage({
                     </div>
 
                     <button
-                      onClick={() => handleBook(sub.name)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleBook(sub.name, areaToSlug(sub.name) || sub.id);
+                      }}
                       style={{
                         width: '100%',
                         background: 'linear-gradient(135deg, #00d2e6 0%, #0096b7 100%)',
@@ -433,8 +551,9 @@ export default function ServicesPage({
                     </button>
                   </div>
                 </div>
-              ))}
-            </div>
+              );
+            })}
+          </div>
 
           </div>
         </section>
@@ -487,12 +606,15 @@ export default function ServicesPage({
                 <button
                   onClick={() => {
                     if (setSelectedSubLocation) setSelectedSubLocation(null);
+                    if (setActivePage) {
+                      setActivePage('location', selectedCity && selectedCity !== 'all' ? selectedCity : 'all', null);
+                    }
                   }}
                   style={{
                     background: '#ffffff',
                     border: '1px solid #cbd5e1',
                     borderRadius: '8px',
-                    padding: '7px 14px',
+                    padding: '8px 16px',
                     fontSize: '12.5px',
                     fontWeight: 700,
                     color: '#475569',
@@ -508,7 +630,7 @@ export default function ServicesPage({
                     e.currentTarget.style.color = '#475569';
                   }}
                 >
-                  Clear Location Filter ✕
+                  Change Area / View Hub ✕
                 </button>
               </div>
             )}
