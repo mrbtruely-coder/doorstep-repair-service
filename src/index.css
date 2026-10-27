@@ -637,38 +637,26 @@ button {
 
 /* Category Card Animation States */
 .category-btn-idle {
-  opacity: 1 !important;
-  border-color: #cbd5e1 !important;
-  background-color: #ffffff !important;
-  color: #0f172a !important;
+  opacity: 1;
   transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .category-btn-idle:hover {
   transform: translateY(-3px) scale(1.02);
-  border-color: #00c2e8 !important;
-  background-color: #f0fdff !important;
-  box-shadow: 0 6px 18px rgba(0, 194, 232, 0.22) !important;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08) !important;
 }
 
 .category-btn-selected {
   animation: categoryPopSelect 0.32s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-  border: 2px solid #00c2e8 !important;
-  background: #ecfeff !important;
-  box-shadow: 0 6px 20px rgba(0, 194, 232, 0.25) !important;
 }
 
 .category-btn-unselected {
-  opacity: 1 !important;
-  border-color: #cbd5e1 !important;
-  background-color: #ffffff !important;
-  color: #0f172a !important;
+  opacity: 0.92;
   transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .category-btn-unselected:hover {
+  opacity: 1;
   transform: translateY(-3px) scale(1.02);
-  border-color: #00c2e8 !important;
-  background-color: #f0fdff !important;
-  box-shadow: 0 6px 18px rgba(0, 194, 232, 0.2) !important;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08) !important;
 }
 
 /* Subcategories Container */

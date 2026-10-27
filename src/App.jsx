@@ -132,7 +132,7 @@ export default function App() {
   };
 
   const [activePage, setActivePage] = useState(getPageFromPathOrHash);
-  const [selectedService, setSelectedService] = useState('AC SERVICE');
+  const [selectedService, setSelectedService] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(getCategoryFromPath);
   const [selectedSubcategory, setSelectedSubcategory] = useState(getSubcategoryFromPath);
   const [selectedSubLocation, setSelectedSubLocation] = useState(getSubLocationFromURL);
@@ -221,10 +221,16 @@ export default function App() {
         url = `/service-center/${city}`;
       }
     } else if (pageId === 'book') {
-      if (param !== null) setSelectedService(param);
+      if (param !== null) {
+        setSelectedService(param);
+      } else if (category === null && subCategory === null) {
+        setSelectedService(null);
+        setSelectedCategory(null);
+        setSelectedSubcategory(null);
+      }
       const effectiveSubLoc = subLocation !== null ? subLocation : selectedSubLocation;
-      const targetCategory = category !== null ? category : selectedCategory;
-      const targetSubcategory = subCategory !== null ? subCategory : selectedSubcategory;
+      const targetCategory = category !== null ? category : (param ? selectedCategory : null);
+      const targetSubcategory = subCategory !== null ? subCategory : (param ? selectedSubcategory : null);
       const currentCity = (selectedCity && selectedCity !== 'all') ? selectedCity : 'vijayawada';
 
       // Resolve category and subcategory slugs

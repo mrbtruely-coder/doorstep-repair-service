@@ -3,7 +3,8 @@ import { useSEO } from '../hooks/useSEO';
 import { getSEOMetadata } from '../utils/seoData';
 import { CITIES, COMPANY_PHONE_DISPLAY, COMPANY_WHATSAPP_LINK, COMPANY_CALL_LINK, SERVICE_CATEGORIES } from '../constants/data';
 import { 
-  Wind, Snowflake, RotateCcw, Flame, Droplets, Tv, 
+  Wind, Snowflake, RotateCcw, Flame, Droplets, Tv,
+  AirVent, Fan, Disc, Waves, Microwave, Zap, Droplet, MonitorPlay, Tv2,
   CheckCircle2, ShieldCheck, Phone, MessageCircle, MapPin, 
   ArrowRight, User, Mail, AlertCircle, Sparkles, Check,
   Navigation, Crosshair, Loader2, RefreshCw, Search, ChevronDown, X,
@@ -320,22 +321,124 @@ export default function BookServicePage({
   useSEO(seoData);
 
   const applianceOptions = [
-    { id: 'ac', categoryId: 'ac', name: 'AC SERVICE', shortName: 'Air Conditioner', icon: <Wind size={24} />, price: 'Starts from ₹299' },
-    { id: 'refrigerator', categoryId: 'refrigerator', name: 'REFRIGERATOR', shortName: 'Refrigerator', icon: <Snowflake size={24} />, price: 'Starts from ₹299' },
-    { id: 'washer', categoryId: 'washing-machine', name: 'WASHING MACHINE', shortName: 'Washing Machine', icon: <RotateCcw size={24} />, price: 'Starts from ₹299' },
-    { id: 'oven', categoryId: 'oven', name: 'OVEN / MICROWAVE', shortName: 'Oven & Microwave', icon: <Flame size={24} />, price: 'Starts from ₹299' },
-    { id: 'geyser', categoryId: 'geyser', name: 'GEYSER / HEATER', shortName: 'Geyser & Water Heater', icon: <Droplets size={24} />, price: 'Starts from ₹299' },
-    { id: 'tv', categoryId: 'tv', name: 'LED / SMART TV', shortName: 'LED & Smart TV', icon: <Tv size={24} />, price: 'Starts from ₹299' }
+    { 
+      id: 'ac', 
+      categoryId: 'ac', 
+      name: 'AC SERVICE', 
+      shortName: 'Air Conditioner', 
+      icon: <AirVent size={24} strokeWidth={2.2} />, 
+      price: 'Starts from ₹299',
+      color: '#0284c7',       // Sky Blue
+      bgLight: '#f0f9ff',
+      borderLight: '#bae6fd',
+      bgSelected: '#e0f2fe',
+      borderSelected: '#0284c7',
+      glow: 'rgba(2, 132, 199, 0.25)'
+    },
+    { 
+      id: 'refrigerator', 
+      categoryId: 'refrigerator', 
+      name: 'REFRIGERATOR', 
+      shortName: 'Refrigerator', 
+      icon: (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="5" y="2" width="14" height="20" rx="2.5" />
+          <line x1="5" y1="9" x2="19" y2="9" />
+          <line x1="8" y1="5.5" x2="8" y2="7.5" />
+          <line x1="8" y1="12" x2="8" y2="15" />
+        </svg>
+      ), 
+      price: 'Starts from ₹299',
+      color: '#0d9488',       // Teal / Aqua
+      bgLight: '#f0fdfa',
+      borderLight: '#99f6e4',
+      bgSelected: '#ccfbf1',
+      borderSelected: '#0d9488',
+      glow: 'rgba(13, 148, 136, 0.25)'
+    },
+    { 
+      id: 'washer', 
+      categoryId: 'washing-machine', 
+      name: 'WASHING MACHINE', 
+      shortName: 'Washing Machine', 
+      icon: (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="4" y="2" width="16" height="20" rx="3" />
+          <circle cx="12" cy="13" r="5" />
+          <path d="M12 10a3 3 0 0 1 3 3" />
+          <circle cx="8" cy="5.5" r="1" fill="currentColor" />
+          <circle cx="12" cy="5.5" r="1" fill="currentColor" />
+        </svg>
+      ), 
+      price: 'Starts from ₹299',
+      color: '#6366f1',       // Indigo
+      bgLight: '#eef2ff',
+      borderLight: '#c7d2fe',
+      bgSelected: '#e0e7ff',
+      borderSelected: '#6366f1',
+      glow: 'rgba(99, 102, 241, 0.25)'
+    },
+    { 
+      id: 'oven', 
+      categoryId: 'oven', 
+      name: 'OVEN / MICROWAVE', 
+      shortName: 'Oven & Microwave', 
+      icon: <Microwave size={24} strokeWidth={2.2} />, 
+      price: 'Starts from ₹299',
+      color: '#ea580c',       // Vibrant Orange
+      bgLight: '#fff7ed',
+      borderLight: '#fed7aa',
+      bgSelected: '#ffedd5',
+      borderSelected: '#ea580c',
+      glow: 'rgba(234, 88, 12, 0.25)'
+    },
+    { 
+      id: 'geyser', 
+      categoryId: 'geyser', 
+      name: 'GEYSER / HEATER', 
+      shortName: 'Geyser & Water Heater', 
+      icon: (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="6" y="2" width="12" height="17" rx="3" />
+          <path d="M9 22v-3" />
+          <path d="M15 22v-3" />
+          <path d="M12 7v4" />
+          <circle cx="12" cy="14" r="1.5" fill="currentColor" />
+        </svg>
+      ), 
+      price: 'Starts from ₹299',
+      color: '#d97706',       // Amber / Warm Gold
+      bgLight: '#fffbeb',
+      borderLight: '#fde68a',
+      bgSelected: '#fef3c7',
+      borderSelected: '#d97706',
+      glow: 'rgba(217, 119, 6, 0.25)'
+    },
+    { 
+      id: 'tv', 
+      categoryId: 'tv', 
+      name: 'LED / SMART TV', 
+      shortName: 'LED & Smart TV', 
+      icon: <MonitorPlay size={24} strokeWidth={2.2} />, 
+      price: 'Starts from ₹299',
+      color: '#8b5cf6',       // Purple / Violet
+      bgLight: '#f5f3ff',
+      borderLight: '#ddd6fe',
+      bgSelected: '#ede9fe',
+      borderSelected: '#8b5cf6',
+      glow: 'rgba(139, 92, 246, 0.25)'
+    }
   ];
 
   // Helper to get subcategories for an appliance name
   const getSubcategoriesForAppliance = (applianceName) => {
+    if (!applianceName) return [];
     const opt = applianceOptions.find(o => o.name === applianceName);
     const cat = SERVICE_CATEGORIES.find(c => c.id === opt?.categoryId || c.id === opt?.id);
     return cat?.subcategories || [];
   };
 
-  // Set initial selected appliance with intelligent category & subcategory detection
+  // Set initial selected appliance with intelligent category & subcategory detection only if explicitly requested via props/URL
   const [selectedAppliance, setSelectedAppliance] = useState(() => {
     if (preselectedCategory) {
       const match = applianceOptions.find(o => o.categoryId === preselectedCategory || o.id === preselectedCategory);
@@ -370,10 +473,11 @@ export default function BookServicePage({
       );
       if (match) return match.name;
     }
+    // No default selection - user must choose an appliance category
     return null;
   });
 
-  // Set initial selected subcategory
+  // Set initial selected subcategory only if explicitly requested via props/URL
   const [selectedSubcategory, setSelectedSubcategory] = useState(() => {
     if (preselectedSubcategory) {
       for (const cat of SERVICE_CATEGORIES) {
@@ -397,6 +501,7 @@ export default function BookServicePage({
         if (found) return found.name;
       }
     }
+    // No default subcategory selected
     return '';
   });
 
@@ -522,6 +627,7 @@ export default function BookServicePage({
       }
     } else if (preselectedService) {
       const p = preselectedService.toLowerCase();
+      let matchedApp = null;
       for (const cat of SERVICE_CATEGORIES) {
         const found = cat.subcategories?.find(s => 
           s.name.toLowerCase() === p || 
@@ -530,9 +636,17 @@ export default function BookServicePage({
         );
         if (found) {
           setSelectedSubcategory(found.name);
+          matchedApp = applianceOptions.find(o => o.categoryId === cat.id || o.id === cat.id);
           break;
         }
       }
+      if (matchedApp) {
+        setSelectedAppliance(matchedApp.name);
+      }
+    } else if (!preselectedCategory && !preselectedSubcategory && !preselectedService) {
+      // General booking without preselection: clear selections
+      setSelectedAppliance(null);
+      setSelectedSubcategory('');
     }
   }, [preselectedCategory, preselectedSubcategory, preselectedService]);
 
@@ -720,6 +834,7 @@ export default function BookServicePage({
   };
 
   const availableSubcategories = selectedAppliance ? getSubcategoriesForAppliance(selectedAppliance) : [];
+  const activeAppliance = applianceOptions.find(o => o.name === selectedAppliance);
 
   return (
     <div style={{ backgroundColor: '#ffffff', minHeight: '100vh', padding: '56px 0 80px' }}>
@@ -973,9 +1088,9 @@ export default function BookServicePage({
                           onClick={() => handleApplianceSelect(opt)}
                           className={animClass}
                           style={{
-                            background: isSelected ? '#ecfeff' : '#ffffff',
-                            border: isSelected ? '2px solid #00c2e8' : '1.5px solid #cbd5e1',
-                            borderRadius: '12px',
+                            background: isSelected ? opt.bgSelected : opt.bgLight,
+                            border: isSelected ? `2.5px solid ${opt.borderSelected}` : `1.5px solid ${opt.borderLight}`,
+                            borderRadius: '14px',
                             padding: '14px 8px',
                             display: 'flex',
                             flexDirection: 'column',
@@ -983,45 +1098,67 @@ export default function BookServicePage({
                             justifyContent: 'center',
                             gap: '8px',
                             cursor: 'pointer',
-                            color: isSelected ? '#008ba6' : '#0f172a',
-                            position: 'relative'
+                            color: isSelected ? opt.color : '#0f172a',
+                            position: 'relative',
+                            boxShadow: isSelected ? `0 8px 22px ${opt.glow}` : '0 2px 6px rgba(0,0,0,0.03)',
+                            transform: isSelected ? 'scale(1.02)' : 'none',
+                            transition: 'all 0.22s ease'
                           }}
                         >
                           {isSelected && (
                             <span style={{
                               position: 'absolute',
-                              top: '6px',
-                              right: '6px',
-                              width: '16px',
-                              height: '16px',
+                              top: '7px',
+                              right: '7px',
+                              width: '18px',
+                              height: '18px',
                               borderRadius: '50%',
-                              backgroundColor: '#00c2e8',
+                              backgroundColor: opt.color,
                               color: '#ffffff',
-                              fontSize: '10px',
+                              fontSize: '11px',
                               display: 'flex',
                               alignItems: 'center',
                               justifyContent: 'center',
-                              fontWeight: 800
+                              fontWeight: 800,
+                              boxShadow: `0 2px 6px ${opt.glow}`
                             }}>
                               ✓
                             </span>
                           )}
-                          <div style={{ color: isSelected ? '#00c2e8' : '#0096b7' }}>
+                          <div style={{ 
+                            color: opt.color,
+                            width: '42px',
+                            height: '42px',
+                            borderRadius: '12px',
+                            background: isSelected ? '#ffffff' : 'rgba(255,255,255,0.7)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            boxShadow: isSelected ? `0 4px 10px ${opt.glow}` : 'none',
+                            transition: 'all 0.2s ease'
+                          }}>
                             {opt.icon}
                           </div>
-                          <span style={{ fontSize: '11px', fontWeight: 800, textAlign: 'center', lineHeight: 1.2 }}>
+                          <span style={{ 
+                            fontSize: '11px', 
+                            fontWeight: 800, 
+                            textAlign: 'center', 
+                            lineHeight: 1.2,
+                            color: isSelected ? opt.color : '#1e293b'
+                          }}>
                             {opt.name}
                           </span>
                           <span style={{
                             fontSize: '9.5px',
                             fontWeight: 700,
-                            color: isSelected ? '#008ba6' : '#0284c7',
-                            background: isSelected ? '#cffafe' : '#f0f9ff',
-                            border: isSelected ? '1px solid #a5f3fc' : '1px solid #e0f2fe',
-                            padding: '2px 7px',
+                            color: opt.color,
+                            background: '#ffffff',
+                            border: `1px solid ${isSelected ? opt.borderSelected : opt.borderLight}`,
+                            padding: '2px 8px',
                             borderRadius: '9999px',
                             marginTop: '2px',
-                            whiteSpace: 'nowrap'
+                            whiteSpace: 'nowrap',
+                            boxShadow: '0 1px 3px rgba(0,0,0,0.04)'
                           }}>
                             Starts from ₹299
                           </span>
@@ -1031,26 +1168,8 @@ export default function BookServicePage({
                   </div>
                 </div>
 
-                {/* 2. CHOOSE SPECIFIC SERVICE / REPAIR TYPE */}
-                {!selectedAppliance ? (
-                  <div style={{
-                    marginBottom: '24px',
-                    padding: '16px 20px',
-                    background: '#f8fafc',
-                    border: '1.5px dashed #cbd5e1',
-                    borderRadius: '12px',
-                    textAlign: 'center',
-                    color: '#64748b'
-                  }}>
-                    <div style={{ fontSize: '18px', marginBottom: '4px' }}>👆</div>
-                    <div style={{ fontSize: '13px', fontWeight: 700, color: '#334155' }}>
-                      Please tap an appliance category above
-                    </div>
-                    <div style={{ fontSize: '11.5px', color: '#94a3b8', marginTop: '3px' }}>
-                      Specific repair types and diagnostic pricing will appear right here once selected.
-                    </div>
-                  </div>
-                ) : availableSubcategories.length > 0 && (
+                {/* 2. CHOOSE SPECIFIC SERVICE / REPAIR TYPE (Only visible when Category is selected) */}
+                {selectedAppliance && availableSubcategories.length > 0 && (
                   <div className="subcategories-container-animated" key={selectedAppliance} style={{ marginBottom: '24px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
                       <label style={{
@@ -1059,7 +1178,7 @@ export default function BookServicePage({
                         fontWeight: 800,
                         textTransform: 'uppercase',
                         letterSpacing: '0.06em',
-                        color: '#008ba6'
+                        color: activeAppliance?.color || '#008ba6'
                       }}>
                         2. SELECT REPAIR / SERVICE TYPE
                       </label>
@@ -1076,6 +1195,11 @@ export default function BookServicePage({
                       {availableSubcategories.map((sub, idx) => {
                         const isSubSelected = selectedSubcategory === sub.name;
                         const cardAnimClass = `subcategory-card-item ${isSubSelected ? 'subcategory-card-selected' : 'subcategory-card-unselected'}`;
+                        const accentColor = activeAppliance?.color || '#00c2e8';
+                        const accentBg = activeAppliance?.bgSelected || '#ecfeff';
+                        const accentBorder = activeAppliance?.borderSelected || '#00c2e8';
+                        const accentGlow = activeAppliance?.glow || 'rgba(0, 194, 232, 0.2)';
+
                         return (
                           <div
                             key={sub.id}
@@ -1088,7 +1212,10 @@ export default function BookServicePage({
                               padding: '11px 16px',
                               borderRadius: '12px',
                               cursor: 'pointer',
-                              animationDelay: `${idx * 45}ms`
+                              animationDelay: `${idx * 45}ms`,
+                              background: isSubSelected ? accentBg : '#ffffff',
+                              border: isSubSelected ? `2px solid ${accentBorder}` : '1.5px solid #e2e8f0',
+                              boxShadow: isSubSelected ? `0 4px 16px ${accentGlow}` : 'none'
                             }}
                           >
                             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -1096,7 +1223,7 @@ export default function BookServicePage({
                                 width: '18px',
                                 height: '18px',
                                 borderRadius: '50%',
-                                border: isSubSelected ? '5px solid #00c2e8' : '2px solid #cbd5e1',
+                                border: isSubSelected ? `5px solid ${accentColor}` : '2px solid #cbd5e1',
                                 background: '#ffffff',
                                 flexShrink: 0,
                                 display: 'flex',
@@ -1108,7 +1235,7 @@ export default function BookServicePage({
                                     width: '6px',
                                     height: '6px',
                                     borderRadius: '50%',
-                                    background: '#00c2e8'
+                                    background: accentColor
                                   }} />
                                 )}
                               </div>
@@ -1116,7 +1243,7 @@ export default function BookServicePage({
                                 <div style={{
                                   fontSize: '13.5px',
                                   fontWeight: isSubSelected ? 800 : 600,
-                                  color: isSubSelected ? '#008ba6' : '#0f172a'
+                                  color: isSubSelected ? accentColor : '#0f172a'
                                 }}>
                                   {sub.name}
                                 </div>
@@ -1129,12 +1256,13 @@ export default function BookServicePage({
                             <div style={{
                               fontSize: '11.5px',
                               fontWeight: 700,
-                              color: isSubSelected ? '#008ba6' : '#0284c7',
-                              background: isSubSelected ? '#cffafe' : '#ecfeff',
-                              border: isSubSelected ? '1px solid #a5f3fc' : '1px solid #e0f2fe',
+                              color: isSubSelected ? accentColor : '#0284c7',
+                              background: isSubSelected ? '#ffffff' : '#f0f9ff',
+                              border: isSubSelected ? `1px solid ${accentBorder}` : '1px solid #e0f2fe',
                               padding: '4px 10px',
                               borderRadius: '6px',
-                              whiteSpace: 'nowrap'
+                              whiteSpace: 'nowrap',
+                              boxShadow: isSubSelected ? '0 1px 3px rgba(0,0,0,0.05)' : 'none'
                             }}>
                               {sub.price}
                             </div>
