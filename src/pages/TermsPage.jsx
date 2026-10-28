@@ -1,27 +1,10 @@
 import React from 'react';
 import { useSEO } from '../hooks/useSEO';
+import { getSEOMetadata } from '../utils/seoData';
 import { ShieldCheck, FileText } from 'lucide-react';
 
 export default function TermsPage() {
-  useSEO({
-    title: 'Terms of Service | Doorstep Appliance Repair Service',
-    description: 'Read the terms of service, transparent pricing policy, and 90-day warranty conditions for Doorstep Repair Service in Vijayawada, Guntur, and Nellore.',
-    keywords: 'terms of service, appliance repair warranty terms, doorstep service policies, warranty conditions vijayawada guntur nellore',
-    canonicalUrl: 'http://localhost:3001/terms',
-    ogType: 'website',
-    ogImage: '/hero-technician.jpg',
-    structuredData: {
-      '@context': 'https://schema.org',
-      '@type': 'WebPage',
-      'name': 'Terms of Service & Warranty Policy',
-      'description': 'Service terms, warranty conditions, and diagnostic fee adjustment policies for doorstep appliance repair.',
-      'publisher': {
-        '@type': 'Organization',
-        'name': 'Doorstep Repair Service',
-        'telephone': '+919515661677'
-      }
-    }
-  });
+  useSEO(getSEOMetadata({ page: 'terms' }));
 
   return (
     <div className="section-padding" style={{ backgroundColor: '#ffffff' }}>

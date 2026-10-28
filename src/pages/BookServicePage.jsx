@@ -837,17 +837,11 @@ export default function BookServicePage({
   const activeAppliance = applianceOptions.find(o => o.name === selectedAppliance);
 
   return (
-    <div style={{ backgroundColor: '#ffffff', minHeight: '100vh', padding: '56px 0 80px' }}>
+    <div className="book-page-wrapper" style={{ backgroundColor: '#ffffff', minHeight: '100vh', padding: '56px 0 80px' }}>
       <div className="container" style={{ maxWidth: '1180px' }}>
         
         {/* Main 2-Column Section matching screenshot */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr 1.25fr',
-          gap: '56px',
-          alignItems: 'flex-start',
-          marginBottom: '80px'
-        }} className="book-layout-responsive">
+        <div className="book-layout-responsive">
           
           {/* LEFT COLUMN: Informational text & trust cards */}
           <div className="book-info-col">
@@ -969,13 +963,7 @@ export default function BookServicePage({
           </div>
 
           {/* RIGHT COLUMN: Interactive Booking Form Card */}
-          <div className="book-form-col" style={{
-            background: '#ffffff',
-            border: '1.5px solid #e2e8f0',
-            borderRadius: '24px',
-            padding: '36px',
-            boxShadow: '0 10px 30px -5px rgba(0, 0, 0, 0.08)'
-          }}>
+          <div className="book-form-col">
             {successResult ? (
               <div style={{ textAlign: 'center', padding: '20px 8px' }}>
                 <div style={{
@@ -1070,11 +1058,7 @@ export default function BookServicePage({
                     1. TAP YOUR APPLIANCE
                   </label>
 
-                  <div style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(3, 1fr)',
-                    gap: '12px'
-                  }}>
+                  <div className="category-selection-grid">
                     {applianceOptions.map((opt) => {
                       const isSelected = selectedAppliance === opt.name;
                       const animClass = selectedAppliance 
@@ -1086,12 +1070,11 @@ export default function BookServicePage({
                           type="button"
                           key={opt.id}
                           onClick={() => handleApplianceSelect(opt)}
-                          className={animClass}
+                          className={`category-option-btn ${animClass}`}
                           style={{
                             background: isSelected ? opt.bgSelected : opt.bgLight,
                             border: isSelected ? `2.5px solid ${opt.borderSelected}` : `1.5px solid ${opt.borderLight}`,
                             borderRadius: '14px',
-                            padding: '14px 8px',
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
@@ -1106,7 +1089,7 @@ export default function BookServicePage({
                           }}
                         >
                           {isSelected && (
-                            <span style={{
+                            <span className="category-option-check" style={{
                               position: 'absolute',
                               top: '7px',
                               right: '7px',
@@ -1125,7 +1108,7 @@ export default function BookServicePage({
                               ✓
                             </span>
                           )}
-                          <div style={{ 
+                          <div className="category-option-icon" style={{ 
                             color: opt.color,
                             width: '42px',
                             height: '42px',
@@ -1139,7 +1122,7 @@ export default function BookServicePage({
                           }}>
                             {opt.icon}
                           </div>
-                          <span style={{ 
+                          <span className="category-option-name" style={{ 
                             fontSize: '11px', 
                             fontWeight: 800, 
                             textAlign: 'center', 
@@ -1148,7 +1131,7 @@ export default function BookServicePage({
                           }}>
                             {opt.name}
                           </span>
-                          <span style={{
+                          <span className="category-option-badge" style={{
                             fontSize: '9.5px',
                             fontWeight: 700,
                             color: opt.color,
@@ -1383,7 +1366,7 @@ export default function BookServicePage({
                     </button>
                   </div>
 
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+                  <div className="city-locality-grid-responsive" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
                     {/* Searchable City Select */}
                     <SearchableSelect
                       value={formData.city}
@@ -1712,7 +1695,7 @@ export default function BookServicePage({
                     </div>
 
                     {availableSlotsForSelectedDate.length > 0 ? (
-                      <div style={{
+                      <div className="time-slots-grid-responsive" style={{
                         display: 'grid',
                         gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))',
                         gap: '10px'

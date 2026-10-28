@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSEO } from '../hooks/useSEO';
+import { getSEOMetadata } from '../utils/seoData';
 import { COMPANY_PHONE_DISPLAY, COMPANY_CALL_LINK, COMPANY_WHATSAPP_LINK, CITIES } from '../constants/data';
 import { MapPin, Phone, Clock, MessageCircle, ExternalLink, ShieldAlert, CheckCircle2 } from 'lucide-react';
 
@@ -30,13 +31,9 @@ export default function ContactPage({ setActivePage }) {
   const currentCity = cityDetails[selectedCityId] || cityDetails.vijayawada;
 
   // 1. Industry-Level Location & Services Rich SEO Metadata
+  const seoMeta = getSEOMetadata({ page: 'contact' });
   useSEO({
-    title: 'Contact Us | Doorstep Appliance Repair Helpline & Support',
-    description: 'Get in touch with Doorstep Repair Service. Direct helpline: +91 9515661677, WhatsApp chat support, and service dispatch hubs in Vijayawada, Guntur, and Nellore.',
-    keywords: 'contact doorstep repair, appliance repair phone number, ac repair customer care, doorstep repair helpline 9515661677, vijayawada repair center, guntur repair center, nellore repair center',
-    canonicalUrl: 'http://localhost:3001/contact',
-    ogType: 'website',
-    ogImage: '/hero-technician.jpg',
+    ...seoMeta,
     structuredData: {
       '@context': 'https://schema.org',
       '@type': 'LocalBusiness',

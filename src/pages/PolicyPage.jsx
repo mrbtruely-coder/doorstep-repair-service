@@ -1,27 +1,10 @@
 import React from 'react';
 import { useSEO } from '../hooks/useSEO';
+import { getSEOMetadata } from '../utils/seoData';
 import { Lock, ShieldCheck } from 'lucide-react';
 
 export default function PolicyPage() {
-  useSEO({
-    title: 'Privacy Policy | Doorstep Appliance Repair Service',
-    description: 'Our privacy policy explains how we collect and protect your booking details when you request doorstep appliance repair services in Vijayawada, Guntur, and Nellore.',
-    keywords: 'privacy policy, customer data protection, doorstep repair privacy, customer confidentiality andhra pradesh',
-    canonicalUrl: 'http://localhost:3001/policy',
-    ogType: 'website',
-    ogImage: '/hero-technician.jpg',
-    structuredData: {
-      '@context': 'https://schema.org',
-      '@type': 'WebPage',
-      'name': 'Privacy Policy & Customer Data Protection',
-      'description': 'Information on customer data privacy, email dispatch protocols, and contact confidentiality.',
-      'publisher': {
-        '@type': 'Organization',
-        'name': 'Doorstep Repair Service',
-        'telephone': '+919515661677'
-      }
-    }
-  });
+  useSEO(getSEOMetadata({ page: 'policy' }));
 
   return (
     <div className="section-padding" style={{ backgroundColor: '#ffffff' }}>

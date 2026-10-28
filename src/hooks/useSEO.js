@@ -16,7 +16,7 @@ export function useSEO({
   description,
   keywords,
   canonicalUrl = window.location.href,
-  ogType = 'website',
+  ogType = 'home appliance service doorsteprepairservices.com',
   ogImage = '/hero-technician.jpg',
   structuredData = null
 }) {

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSEO } from '../hooks/useSEO';
+import { getSEOMetadata } from '../utils/seoData';
 import { COMPANY_PHONE_DISPLAY, COMPANY_WHATSAPP_LINK, COMPANY_CALL_LINK, CITIES } from '../constants/data';
 import { 
   ChevronDown, ChevronUp, ChevronLeft, ChevronRight, Star, 
@@ -7,14 +8,9 @@ import {
 } from 'lucide-react';
 
 export default function FAQPage({ setActivePage }) {
-  // 1. Industry-Level Location & Services Rich SEO Metadata
+  const seoMeta = getSEOMetadata({ page: 'faq' });
   useSEO({
-    title: 'Frequently Asked Questions (FAQ) | Doorstep Repair Service',
-    description: 'Find answers to common questions about appliance repair pricing, 90-minute arrival, 90-day warranty, genuine spare parts, and doorstep service coverage in Vijayawada, Guntur, and Nellore.',
-    keywords: 'appliance repair faq, doorstep service questions, repair warranty, repair pricing vijayawada guntur nellore, ac service faq, fridge repair cost',
-    canonicalUrl: 'http://localhost:3001/faq',
-    ogType: 'website',
-    ogImage: '/hero-technician.jpg',
+    ...seoMeta,
     structuredData: {
       '@context': 'https://schema.org',
       '@type': 'FAQPage',

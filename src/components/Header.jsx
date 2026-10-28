@@ -90,16 +90,16 @@ export default function Header({ activePage, setActivePage }) {
       <div style={{
         background: '#07152b',
         color: '#ffffff',
-        fontSize: '12px',
-        padding: '7px 0'
-      }}>
-        <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+        fontSize: '11.5px',
+        padding: '6px 0'
+      }} className="header-top-ticker">
+        <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '6px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '5px', flex: '1 1 auto', minWidth: '0' }} className="header-ticker-text">
             <span style={{ color: '#00c2e8', fontWeight: 800 }}>⚡</span>
-            <span>SAME-DAY DOORSTEP APPLIANCE REPAIR IN <strong>VIJAYAWADA</strong>, <strong>GUNTUR</strong> & <strong>NELLORE</strong></span>
+            <span style={{ fontSize: '11px', lineHeight: 1.3 }}>SAME-DAY DOORSTEP REPAIR IN <strong>VIJAYAWADA</strong>, <strong>GUNTUR</strong> & <strong>NELLORE</strong></span>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0 }} className="header-ticker-call">
             <span>CALL</span>
             <a href={COMPANY_CALL_LINK} style={{ color: '#00c2e8', fontWeight: 800, textDecoration: 'none' }}>
               {COMPANY_PHONE_DISPLAY}
@@ -529,6 +529,7 @@ export default function Header({ activePage, setActivePage }) {
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <button
               onClick={() => handleNavClick('book')}
+              className="header-book-btn"
               style={{
                 background: 'linear-gradient(135deg, #00d2e6 0%, #0096b7 100%)',
                 color: '#ffffff',
@@ -539,7 +540,8 @@ export default function Header({ activePage, setActivePage }) {
                 borderRadius: '8px',
                 cursor: 'pointer',
                 boxShadow: '0 4px 14px rgba(0, 194, 232, 0.35)',
-                transition: 'all 0.15s ease'
+                transition: 'all 0.15s ease',
+                whiteSpace: 'nowrap'
               }}
               onMouseOver={(e) => e.currentTarget.style.background = 'linear-gradient(135deg, #00c2e8 0%, #008ba6 100%)'}
               onMouseOut={(e) => e.currentTarget.style.background = 'linear-gradient(135deg, #00d2e6 0%, #0096b7 100%)'}
